@@ -15,7 +15,6 @@ export default function Handbook() {
     const fullName = `${employee.lastName} ${employee.firstName}`;
     const fullNameReversed = `${employee.firstName} ${employee.lastName}`;
     const query = searchQuery.toLowerCase();
-
     return (
       fullName.toLowerCase().includes(query) ||
       fullNameReversed.toLowerCase().includes(query) ||

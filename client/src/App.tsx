@@ -5,6 +5,7 @@ import { Route, Routes } from "react-router-dom"
 import Application from "./components/Application/Application"
 import Handbook from "./components/Handbook/Handbook"
 import FindEmployee from "./components/Handbook/FindEmployee"
+import Tree from "./components/Tree/Tree"
 
 
 function App() {
@@ -20,7 +21,7 @@ function App() {
       <Routes>
         <Route path="/handbook"  element={<Handbook />}/>
         <Route path="/employee/:id"  element={<FindEmployee />}/>
-        {/* <Route path="/tree"  element={<tree />}/> */}
+        <Route path="/tree"  element={<Tree />}/>
         <Route path="/applications"  element={<Application />}/>
         {/* News */}
         {/* <Route path="/info"  element={<info />}/> */}
