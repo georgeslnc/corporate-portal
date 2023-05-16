@@ -3,6 +3,7 @@ import { RootState, useAppDispatch, useAppSelector } from "./redux/type"
 import { getEmployees } from "./redux/Thunk/employees"
 import { Route, Routes } from "react-router-dom"
 import Application from "./components/Application/Application"
+import Handbook from "./components/Handbook/Handbook"
 
 
 function App() {
@@ -16,7 +17,7 @@ function App() {
   return (
     <>
       <Routes>
-        {/* <Route path="/handbook"  element={<HandBook />}/> */}
+        <Route path="/handbook"  element={<Handbook />}/>
         {/* <Route path="/tree"  element={<tree />}/> */}
         <Route path="/applications"  element={<Application />}/>
         {/* News */}
