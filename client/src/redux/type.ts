@@ -22,6 +22,8 @@ export type Employee = {
 
 export interface InititalStateEmployee {
   employees: Employee[]
+  group: unknown[],
+  department: unknown[],
 }
 
 

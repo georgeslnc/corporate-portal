@@ -1,5 +1,5 @@
 import React from "react";
 
-export default function Handbook() {
+export default function Application() {
   return <div>application</div>;
 }
