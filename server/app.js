@@ -7,11 +7,12 @@ const cors = require('cors');
 
 const express = require('express');
 const logger = require('morgan');
-const dbCheck = require('./src/middlewares/dbCheck');
+const dbCheck = require('./src/utils/dbCheck');
 
 const isAuth = require('./src/middlewares/isAuth');
 
 const getEmployeesRoute = require('./src/routes/getEmployees.route');
+const authRouter = require('./src/routes/auth.router');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -48,6 +49,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use('/employees', getEmployeesRoute);
+app.use('/auth', authRouter);
 
 app.listen(PORT, () => {
   console.log(`Server started on ${PORT}`);
