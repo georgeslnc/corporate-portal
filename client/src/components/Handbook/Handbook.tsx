@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Employee, RootState, useAppSelector } from '../../redux/type';
+import { Link } from 'react-router-dom';
 
 export default function Handbook() {
   const employees = useAppSelector((state: RootState) => state.employeesSlice.employees);
@@ -34,14 +35,13 @@ export default function Handbook() {
       {searchQuery && (
         filteredEmployees.map((employee: Employee) => (
           <div key={employee.id}>
-            <p>{employee.firstName}</p>
-            <p>{employee.lastName}</p>
+            <Link to={`/employee/${employee.id}`}>
+              <p>{employee.firstName}</p>
+              <p>{employee.lastName}</p>
+            </Link>
           </div>
         ))
       )}
     </div>
   );
 }
-
-
-
