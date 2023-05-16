@@ -3,6 +3,7 @@ require('@babel/register');
 
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
+const cors = require('cors');
 
 const express = require('express');
 
@@ -38,6 +39,12 @@ app.use(express.static('public'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(dbCheck);
+const corsOptions = {
+  origin: 'http://localhost:5173',
+  credentials: true,
+};
+
+app.use(cors(corsOptions));
 
 // РОУТЫ
 
