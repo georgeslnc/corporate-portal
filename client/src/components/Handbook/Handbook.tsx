@@ -28,13 +28,16 @@ export default function Handbook() {
         onChange={handleInputChange}
         placeholder="Введите фамилию или имя сотрудника"
       />
-      {filteredEmployees.map((employee: Employee) => (
-        <div key={employee.id}>
-          <p>{employee.firstName}</p>
-          <p>{employee.lastName}</p>
-        </div>
-      ))}
+      {searchQuery && (
+        filteredEmployees.map((employee: Employee) => (
+          <div key={employee.id}>
+            <p>{employee.firstName}</p>
+            <p>{employee.lastName}</p>
+          </div>
+        ))
+      )}
     </div>
   );
 }
+
 
