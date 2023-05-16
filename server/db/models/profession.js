@@ -1,7 +1,7 @@
-'use strict';
 const {
-  Model
+  Model,
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class Profession extends Model {
     /**
@@ -10,12 +10,12 @@ module.exports = (sequelize, DataTypes) => {
      * The `models/index` file will call this method automatically.
      */
     static associate(models) {
-      this.hasMany(models.Employee, {foreignKey: 'professionId'}),
+      this.hasMany(models.Employee, { foreignKey: 'professionId' });
     }
   }
   Profession.init({
     position: DataTypes.TEXT,
-    rank: DataTypes.INTEGER
+    rank: DataTypes.INTEGER,
   }, {
     sequelize,
     modelName: 'Profession',
