@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { RootState, useAppSelector } from '../../redux/type';
+import { Employee, Group, Profession, RootState, useAppSelector } from '../../redux/type';
 
 export default function FindEmployee() {
 
@@ -10,11 +10,14 @@ export default function FindEmployee() {
 
   const employees = useAppSelector((state: RootState) => state.employeesSlice.employees);
   const groups = useAppSelector((state: RootState) => state.employeesSlice.group);
+  const professions = useAppSelector((state: RootState) => state.employeesSlice.profession);
 
-  const selectedEmployee = employees.find((employee) => employee.id === Number(id));
-  const selectedGroup = groups.find((group:any) => group.id === selectedEmployee?.groupId)
-  const groupHead = employees.find((employee)=>employee.id === selectedGroup?.groupHeadId )
-
+  const selectedEmployee = employees.find((employee: Employee) => employee.id === Number(id));
+  const selectedGroup = groups.find((group:Group) => group.id === selectedEmployee?.groupId)
+  const groupHead = employees.find((employee: Employee)=>employee.id === selectedGroup?.groupHeadId )
+  const selectedProfession = professions.find((profession:Profession)=> profession.id === selectedEmployee?.professionId
+  )
+  
   
   
 
@@ -24,6 +27,7 @@ export default function FindEmployee() {
           <p>{selectedEmployee?.firstName}</p>
           <p>{selectedEmployee?.middleName}</p>
           <p>{selectedEmployee?.lastName}</p>
+          <p>Должность: {selectedProfession?.position}</p>
           <p>{selectedGroup?.title}</p>
           <p>{selectedEmployee?.phone}</p>
           <p>{selectedEmployee?.email}</p>
