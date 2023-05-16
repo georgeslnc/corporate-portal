@@ -13,7 +13,13 @@ module.exports = {
         type: Sequelize.STRING
       },
       departamentId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: {
+            tableName: "Departaments",
+          },
+          key: "id",
+        },
       },
       groupHeadId: {
         type: Sequelize.INTEGER

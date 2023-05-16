@@ -19,10 +19,22 @@ module.exports = {
         type: Sequelize.STRING
       },
       groupId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: {
+            tableName: "Groups",
+          },
+          key: "id",
+        },
       },
       professionId: {
-        type: Sequelize.INTEGER
+        type: Sequelize.INTEGER,
+        references: {
+          model: {
+            tableName: "Professions",
+          },
+          key: "id",
+        },
       },
       email: {
         type: Sequelize.STRING
