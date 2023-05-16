@@ -1,7 +1,7 @@
-'use strict';
 const {
-  Model
+  Model,
 } = require('sequelize');
+
 module.exports = (sequelize, DataTypes) => {
   class CorporateNews extends Model {
     /**
@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
   }
   CorporateNews.init({
     title: DataTypes.STRING,
-    body: DataTypes.TEXT
+    body: DataTypes.TEXT,
   }, {
     sequelize,
     modelName: 'CorporateNews',

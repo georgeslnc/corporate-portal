@@ -12,6 +12,7 @@ const dbCheck = require('./src/middlewares/dbCheck');
 const isAuth = require('./src/middlewares/isAuth');
 
 // реквайрим РОУТЫ
+const getEmployeesRoute = require('./src/routes/getEmployees.route');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -47,6 +48,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 // РОУТЫ
+app.use('/employees', getEmployeesRoute);
 
 app.listen(PORT, () => {
   console.log(`Server started on ${PORT}`);
