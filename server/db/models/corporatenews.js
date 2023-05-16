@@ -1,6 +1,4 @@
-const {
-  Model,
-} = require('sequelize');
+const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class CorporateNews extends Model {
@@ -13,12 +11,15 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  CorporateNews.init({
-    title: DataTypes.STRING,
-    body: DataTypes.TEXT,
-  }, {
-    sequelize,
-    modelName: 'CorporateNews',
-  });
+  CorporateNews.init(
+    {
+      title: DataTypes.STRING,
+      body: DataTypes.TEXT,
+    },
+    {
+      sequelize,
+      modelName: 'CorporateNews',
+    },
+  );
   return CorporateNews;
 };

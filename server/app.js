@@ -1,6 +1,6 @@
 require('dotenv').config();
 require('@babel/register');
-const path = require('path')
+const path = require('path');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 const cors = require('cors');
@@ -8,6 +8,7 @@ const cors = require('cors');
 const express = require('express');
 const logger = require('morgan');
 const dbCheck = require('./src/middlewares/dbCheck');
+
 const isAuth = require('./src/middlewares/isAuth');
 
 const getEmployeesRoute = require('./src/routes/getEmployees.route');
@@ -37,7 +38,7 @@ app.use('/login', (req, res, next) => {
 app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(dbCheck);
+// app.use(dbCheck);
 
 const corsOptions = {
   origin: 'http://localhost:5173',
@@ -50,4 +51,5 @@ app.use('/employees', getEmployeesRoute);
 
 app.listen(PORT, () => {
   console.log(`Server started on ${PORT}`);
+  dbCheck();
 });

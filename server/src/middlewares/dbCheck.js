@@ -2,15 +2,13 @@ const { Sequelize } = require('sequelize');
 
 const sequelize = new Sequelize(process.env.DEV_DB_URL);
 
-async function checkConnect(req, res, next) {
+async function checkConnect() {
   try {
     await sequelize.authenticate();
-    res.locals.bd = 'БАЗА ПОДКЛЮЧЕНА!';
-    console.log('БАЗА ПОДКЛЮЧЕНА!');
-    next();
+    console.log('Database connected!');
   } catch (error) {
-    console.log('БАЗА НЕ ПОДКЛЮЧЕНАЯ ==>', error);
-    res.send(error);
+    console.error('Database not connected ==>', error);
+    process.exit(1);
   }
 }
 
