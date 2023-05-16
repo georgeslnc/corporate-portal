@@ -12,14 +12,17 @@ export default function Handbook() {
 
   const filteredEmployees = employees.filter((employee: Employee) => {
     const fullName = `${employee.lastName} ${employee.firstName}`;
+    const fullNameReversed = `${employee.firstName} ${employee.lastName}`;
+    const query = searchQuery.toLowerCase();
+
     return (
-      fullName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      employee.lastName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      employee.firstName.toLowerCase().includes(searchQuery.toLowerCase())
+      fullName.toLowerCase().includes(query) ||
+      fullNameReversed.toLowerCase().includes(query) ||
+      employee.lastName.toLowerCase().includes(query) ||
+      employee.firstName.toLowerCase().includes(query)
     );
   });
 
-  console.log(employees);
   return (
     <div>
       <input
@@ -39,5 +42,6 @@ export default function Handbook() {
     </div>
   );
 }
+
 
 
