@@ -27,4 +27,20 @@ export interface InititalStateEmployee {
   department: unknown[],
 }
 
+export interface NewsState {
+  loading: boolean;
+  news: NewsItem[];
+  error: string;
+}
+
+export interface NewsItem {
+  id: number;
+  title: string;
+  content: string;
+  published_at: string;
+}
+
+
+
+
 
