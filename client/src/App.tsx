@@ -1,19 +1,18 @@
-import { useEffect } from "react"
-import { RootState, useAppDispatch, useAppSelector } from "./redux/type"
-import { getEmployees } from "./redux/Thunk/employees"
-import { Route, Routes } from "react-router-dom"
-
+import { useEffect } from 'react';
+import { RootState, useAppDispatch, useAppSelector } from './redux/type';
+import { getEmployees } from './redux/Thunk/employees';
+import { Route } from 'react-router-dom';
 
 function App() {
-
-  const dispatch = useAppDispatch()
-  const employees = useAppSelector( (state: RootState)=> state.employeesSlice.employees)
+  const dispatch = useAppDispatch();
+  const employees = useAppSelector(
+    (state: RootState) => state.employeesSlice.employees
+  );
   console.log(employees);
-  
 
-  useEffect(()=>{
-    dispatch(getEmployees())
-  },[])
+  useEffect(() => {
+    dispatch(getEmployees());
+  }, []);
 
   return (
     <>
@@ -26,7 +25,7 @@ function App() {
         {/* Chat */}
       </Routes>
     </>
-  )
+  );
 }
 
-export default App
+export default App;
