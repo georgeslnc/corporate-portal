@@ -11,6 +11,7 @@ const initialState: InititalStateEmployee = {
   offer: [],
 }
 
+
 const employeesSlice = createSlice({
   name: 'employees',
   initialState,
