@@ -9,6 +9,8 @@ import * as io from 'socket.io-client';
 const socket = io.connect('http://localhost:3000');
 import Application from "./components/Application/Application"
 import Handbook from "./components/Handbook/Handbook"
+import FindEmployee from "./components/Handbook/FindEmployee"
+import Tree from "./components/Tree/Tree"
 
 
 function App() {
@@ -29,7 +31,8 @@ function App() {
     <>
       <Routes>
         <Route path="/handbook"  element={<Handbook />}/>
-        {/* <Route path="/tree"  element={<tree />}/> */}
+        <Route path="/employee/:id"  element={<FindEmployee />}/>
+        <Route path="/tree"  element={<Tree />}/>
         <Route path="/applications"  element={<Application />}/>
         {/* News */}
         {/* <Route path="/info"  element={<info />}/> */}

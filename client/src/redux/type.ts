@@ -21,10 +21,36 @@ export type Employee = {
   updatedAt: Date;
 }
 
+export type Group = {
+  id: number,
+  title: string,
+  departamentId: number,
+  groupHeadId: number,
+  createdAt: Date,
+  updatedAt: Date,
+}
+
+export type Departament = {
+  id: number,
+  title: string,
+  location: string,
+  departamentHeadId: number,
+  createdAt: Date,
+  updatedAt: Date,
+}
+
+export type Profession = {
+  id: number,
+  position: string,
+  rank: number,
+  createdAt: Date,
+  updatedAt: Date,
+}
 export interface InititalStateEmployee {
   employees: Employee[]
-  group: unknown[],
-  department: unknown[],
+  group: Group[],
+  department: Departament[],
+  profession: Profession[]
 }
 
 
