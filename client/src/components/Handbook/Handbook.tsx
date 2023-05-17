@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Employee, RootState, useAppSelector } from '../../redux/type';
+import { Link } from 'react-router-dom';
 
 export default function Handbook() {
   const employees = useAppSelector((state: RootState) => state.employeesSlice.employees);
@@ -12,14 +13,16 @@ export default function Handbook() {
 
   const filteredEmployees = employees.filter((employee: Employee) => {
     const fullName = `${employee.lastName} ${employee.firstName}`;
+    const fullNameReversed = `${employee.firstName} ${employee.lastName}`;
+    const query = searchQuery.toLowerCase();
     return (
-      fullName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      employee.lastName.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      employee.firstName.toLowerCase().includes(searchQuery.toLowerCase())
+      fullName.toLowerCase().includes(query) ||
+      fullNameReversed.toLowerCase().includes(query) ||
+      employee.lastName.toLowerCase().includes(query) ||
+      employee.firstName.toLowerCase().includes(query)
     );
   });
 
-  console.log(employees);
   return (
     <div>
       <input
@@ -31,13 +34,13 @@ export default function Handbook() {
       {searchQuery && (
         filteredEmployees.map((employee: Employee) => (
           <div key={employee.id}>
-            <p>{employee.firstName}</p>
-            <p>{employee.lastName}</p>
+            <Link to={`/employee/${employee.id}`}>
+              <p>{employee.firstName}</p>
+              <p>{employee.lastName}</p>
+            </Link>
           </div>
         ))
       )}
     </div>
   );
 }
-
-
