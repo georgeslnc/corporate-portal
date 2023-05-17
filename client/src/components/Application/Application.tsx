@@ -1,4 +1,4 @@
-import React, { useReducer, useState } from "react";
+import React, { useState } from "react";
 import { RootState, useAppDispatch, useAppSelector } from "../../redux/type";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { postOffer } from "../../redux/Thunk/offer";

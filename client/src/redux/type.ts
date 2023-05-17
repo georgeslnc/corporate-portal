@@ -58,9 +58,10 @@ export interface InititalStateEmployee {
 export type Offer = {
   id: number;
   title: string;
-  groupId: string;
+  groupId: number;
   employeesId: string;
   deadline: string;
+  status:boolean;
   createdAt: Date;
   updatedAt: Date;
 };
