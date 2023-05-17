@@ -2,7 +2,7 @@ const router = require('express').Router();
 const bcrypt = require('bcrypt');
 const { Employee, AuthInfo } = require('../../db/models');
 
-router.post('/register', async (req, res) => {
+router.post('/login', async (req, res) => {
   const { email, password } = req.body;
 
   // Проверка ввода данных
@@ -20,7 +20,7 @@ router.post('/register', async (req, res) => {
     // Проверка существования AuthInfo для пользователя
     const checkUser = await AuthInfo.findOne({ where: { userId: user.id } }, { raw: true });
     if (checkUser) {
-      return res.status(409).send({ message: 'Вы уже зарегистрированы! Входите и вводите пароль :)' });
+      return res.status(200).send({ userId: user.id, groupId: user.groupId });
     }
 
     // Хеширование пароля и создание AuthInfo
