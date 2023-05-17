@@ -16,12 +16,6 @@ export default function LoginForm() {
 
  const watchedFields = watch();
 
-  // useEffect(() => {
-  //   // Сбрасываем сообщение об ошибке при каждом изменении
-  //   setErrorMessage("");
-  // }, [watchedFields]); // зависимость от watchedFields - значений полей формы
-
-
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
       const response = await fetch(url, {
