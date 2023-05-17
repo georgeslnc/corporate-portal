@@ -6,7 +6,6 @@ export default function Tree() {
 
   const departaments = useAppSelector((state: RootState) => state.employeesSlice.department);
   
-
   return (
     <div>
       {departaments.map((departament:Departament)=> (

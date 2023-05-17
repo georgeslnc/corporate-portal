@@ -1,5 +1,6 @@
 import React from 'react'
 import { Group, RootState, useAppSelector } from '../../redux/type';
+import { Link } from 'react-router-dom';
 
 type DepartamentId = {
   departamentId: number;
@@ -13,9 +14,11 @@ export default function OneGroup(departamentId: DepartamentId) {
 
   return (
     <ul>
-      {selectedGroup.map((group: Group) => (
-          <li key={group.id} >{group.title}</li>
-      ))}
-    </ul>
+    {selectedGroup.map((group: Group) => (
+      <li key={group.id}>
+        <Link to={`/group/${group.id}`}>{group.title}</Link>
+      </li>
+    ))}
+  </ul>
   )
 }
