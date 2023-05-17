@@ -11,6 +11,7 @@ import Handbook from "./components/Handbook/Handbook"
 import FindEmployee from "./components/Handbook/FindEmployee"
 import Tree from "./components/Tree/Tree"
 import News from "./components/News/News"
+import Room from './components/Room/Room';
 
 
 
@@ -38,6 +39,7 @@ function App() {
         {/* Chat */}
         <Route path="/" element={<Home socket={socket}/>} />
         <Route path="/chat" element={<Chat socket={socket} />} />
+        <Route path="/room"  element={<Room />}/>
       </Routes>
     </>
   );

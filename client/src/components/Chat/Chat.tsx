@@ -35,7 +35,4 @@ export default function Chat({ socket }:any) {
     </div>
   );
 }
-function setTypingStatus(data: any) {
-  throw new Error('Function not implemented.');
-}
 
