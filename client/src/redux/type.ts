@@ -46,11 +46,11 @@ export type Profession = {
   createdAt: Date,
   updatedAt: Date,
 }
+
 export interface InititalStateEmployee {
   employees: Employee[]
   group: Group[],
   department: Departament[],
   profession: Profession[]
 }
-
 

@@ -18,10 +18,7 @@ function App() {
   const employees = useAppSelector(
     (state: RootState) => state.employeesSlice.employees
   );
-  // console.log(employees);
-
-
-  const dispatch = useAppDispatch()
+  
 
   useEffect(()=>{
     dispatch(getEmployees())
@@ -30,6 +27,7 @@ function App() {
   return (
     <>
       <Routes>
+
         <Route path="/handbook"  element={<Handbook />}/>
         <Route path="/employee/:id"  element={<FindEmployee />}/>
         <Route path="/tree"  element={<Tree />}/>
