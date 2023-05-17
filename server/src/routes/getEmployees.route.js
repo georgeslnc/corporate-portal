@@ -1,7 +1,7 @@
 const router = require('express').Router();
 
 const {
-  Employee, Departament, Group, Profession,
+  Employee, Departament, Group, Profession, Offer
 } = require('../../db/models');
 
 router.get('/', async (req, res) => {
@@ -10,8 +10,9 @@ router.get('/', async (req, res) => {
     const allGroup = await Group.findAll({ raw: true });
     const allDepartment = await Departament.findAll({ raw: true });
     const allProfessions = await Profession.findAll({ raw: true });
+    const allOffer = await Offer.findAll({ raw: true });
     res.json({
-      allEmployees, allGroup, allDepartment, allProfessions,
+      allEmployees, allGroup, allDepartment, allProfessions, allOffer
     });
   } catch (err) {
     console.error(err);

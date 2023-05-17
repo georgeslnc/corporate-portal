@@ -1,6 +1,6 @@
 import { fetchNews } from './../Thunk/news';
 import { createSlice } from '@reduxjs/toolkit';
-import { NewsItem,NewsState } from '../type';
+import { NewsItem, NewsState } from '../type';
 
 const initialState: NewsState = {
   loading: false,
@@ -19,14 +19,13 @@ const newsSlice = createSlice({
       })
       .addCase(fetchNews.fulfilled, (state, action) => {
         state.loading = false;
-        state.news = action.payload;
+        state.news = [...action.payload.news];
         state.error = '';
       })
       .addCase(fetchNews.rejected, (state, action) => {
         state.loading = false;
         state.news = [];
-        state.error =
-          action.error.message || 'Произошла ошибка при выполнении запроса';
+        state.error = 'Произошла ошибка при выполнении запроса';
       });
   },
 });

@@ -1,25 +1,40 @@
-import { createSlice } from '@reduxjs/toolkit';
-import { InititalStateEmployee } from '../type'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { InititalStateEmployee, Offer } from '../type';
 import { getEmployees } from '../Thunk/employees';
+import { postOffer } from '../Thunk/offer';
 
 const initialState: InititalStateEmployee = {
   employees: [],
   group: [],
   department: [],
-  profession: []
+  profession: [],
+  offer: [],
 }
+
 
 const employeesSlice = createSlice({
   name: 'employees',
   initialState,
-  reducers:{},
+  reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getEmployees.fulfilled, (state, action) => {
-      state.employees = [...action.payload.allEmployees];
-      state.group = [...action.payload.allGroup];
-      state.department = [...action.payload.allDepartment];
-      state.profession = [...action.payload.allProfessions];
-    })}
-})
+      const {
+        allEmployees,
+        allGroup,
+        allDepartment,
+        allProfessions,
+        allOffer,
+      } = action.payload;
+      state.employees = [...allEmployees];
+      state.group = [...allGroup];
+      state.department = [...allDepartment];
+      state.profession = [...allProfessions];
+      state.offer = [...allOffer];
+    });
+    builder.addCase(postOffer.fulfilled, (state, action: PayloadAction<Offer>) => {
+      state.offer.push(action.payload);
+    });
+  }
+});
 
-export default employeesSlice.reducer
+export default employeesSlice.reducer;
