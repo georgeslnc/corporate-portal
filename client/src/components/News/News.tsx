@@ -24,7 +24,7 @@ export default function News() {
             <li key={item.id}>
               <h3>{item.title}</h3>
               <p>{item.content}</p>
-              <p>Опубликовано:{item.publishedAt}</p>
+              <p>Опубликовано:{new Date(item.publishedAt).toLocaleString()}</p>
             </li>
           ))}
         </ul>
