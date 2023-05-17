@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { InitialFilesState } from "../type";
+import { getFiles } from '../Thunk/files/getFiles'
 
 const initialState: InitialFilesState = {
   files: [],
@@ -20,7 +21,7 @@ const userFilesSlicer = createSlice({
       state.loading = true;
     })
     .addCase(getFiles.fulfilled, (state, action) => {
-      state.files = action.payload;
+      state.files =  [...action.payload]
       state.loading = false;
     })
   }

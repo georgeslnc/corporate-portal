@@ -1,14 +1,23 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import { setFiles } from '../../redux/slicers/file.slice';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
-import { RootState } from '../../redux/type';
+import { RootState, useAppDispatch, useAppSelector } from '../../redux/type';
+import { getFiles } from '../../redux/Thunk/files/getFiles';
 
 export default function Documents() {
 
-  const dispatch = useDispatch()
-  const files = useSelector((state: RootState) => state.userFilesSlicer.files)
+  const dispatch = useAppDispatch()
+
+  useEffect(() => {
+    dispatch(getFiles())
+  },[])
+
+  const files = useAppSelector(
+    (state: RootState) => state.userFilesSlicer.files
+  );
   console.log(files);
+  
   
   const uploadFileHandler = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -20,6 +29,7 @@ export default function Documents() {
       credentials: 'include',
     });
     const fileInfo = await response.json();
+    
     dispatch(setFiles(fileInfo))
   };
 

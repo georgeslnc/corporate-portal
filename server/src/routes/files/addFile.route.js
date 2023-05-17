@@ -25,8 +25,6 @@ router.post('/upload', upload.single('file'), async (req, res) => {
   try {
     const { file } = req;
     const { documentType } = req.body;
-    console.log('file from back====>', file);
-    console.log(documentType);
 
     const newFile = await Document.create({
       title: file.originalname,
@@ -37,6 +35,16 @@ router.post('/upload', upload.single('file'), async (req, res) => {
     res.json(newFile);
   } catch (error) {
     res.status(500).json({ msg: 'Something went wrong' });
+  }
+});
+
+router.get('/all', async (req, res) => {
+  try {
+    const allFiles = await Document.findAll({ raw: true });
+    res.json(allFiles);
+  } catch (error) {
+    console.log(error);
+    res.json(error);
   }
 });
 
