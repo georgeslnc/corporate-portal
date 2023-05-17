@@ -56,7 +56,6 @@ const getNewsRoute = require('./src/routes/getNews.route');
 const application = require('./src/routes/application.route');
 const authRouter = require('./src/routes/auth.router');
 
-
 const PORT = process.env.PORT || 3000;
 
 const sessionConfig = {
