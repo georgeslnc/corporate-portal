@@ -1,12 +1,13 @@
 const router = require('express').Router();
-const { News } = require('../../db/models');
+const { New } = require('../../db/models');
 
 router.get('/', async (req, res) => {
   try {
-    const news = await News.findAll();
+    const news = await New.findAll({ raw: true });
+    console.log('<<<<<<<<', news);
     res.json(news);
   } catch (error) {
-    res.status(500).json({ error: 'Ошибка при получении новостей' });
+    console.log(error);
   }
 });
 

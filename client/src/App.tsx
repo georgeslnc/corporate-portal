@@ -20,10 +20,10 @@ function App() {
   return (
     <>
       <Routes>
-        {/* <Route path="/handbook"  element={<Handbook />}/> */}
+        <Route path="/handbook"  element={<Handbook />}/>
         {/* <Route path="/tree"  element={<tree />}/> */}
-        {/* <Route path="/applications"  element={<Application />}/> */}
-        {/* <Route path="/news"  element={<News />}/> */}
+        <Route path="/applications"  element={<Application />}/>
+        <Route path="/newslist"  element={<News />}/>
         {/* <Route path="/info"  element={<info />}/> */}
         {/* Chat */}
       </Routes>

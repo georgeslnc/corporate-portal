@@ -1,8 +1,8 @@
 import { fetchNews } from './../Thunk/news';
 import { createSlice } from '@reduxjs/toolkit';
-import { NewsItem } from '../type';
+import { NewsItem,NewsState } from '../type';
 
-const initialState = {
+const initialState: NewsState = {
   loading: false,
   news: [] as NewsItem[],
   error: '',
