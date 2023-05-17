@@ -57,7 +57,6 @@ const authRouter = require('./src/routes/auth.router');
 const addFileRouter = require('./src/routes/files/addFile.route');
 const employeesRouter = require('./src/routes/admin/addEmployees.route');
 
-
 const PORT = process.env.PORT || 3000;
 
 const sessionConfig = {
@@ -97,7 +96,6 @@ app.use('/application', application);
 app.use('/auth', authRouter);
 app.use('/documents', addFileRouter);
 app.use('/admin', employeesRouter);
-
 
 http.listen(PORT, () => {
   console.log(`Server started on ${PORT}`);
