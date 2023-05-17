@@ -11,6 +11,8 @@ import Handbook from "./components/Handbook/Handbook"
 import FindEmployee from "./components/Handbook/FindEmployee"
 import Tree from "./components/Tree/Tree"
 import News from "./components/News/News"
+import LoginForm from './components/Auth/LoginForm';
+import FastNavigate from './components/_FastNavigate/FastNavigate';
 
 
 
@@ -23,7 +25,9 @@ function App() {
 
   return (
     <>
+      <FastNavigate />
       <Routes>
+        <Route path="/auth/login" element={<LoginForm />} />
         <Route path="/handbook"  element={<Handbook />}/>
         <Route path="/employee/:id"  element={<FindEmployee />}/>
         <Route path="/tree"  element={<Tree />}/>
