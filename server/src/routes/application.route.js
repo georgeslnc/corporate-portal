@@ -4,14 +4,16 @@ const { Offer } = require('../../db/models');
 
 router.post('/', async (req, res) => {
   try {
-    const { title, groupId, deadline } = req.body;
-    await Offer.create({
+    const {
+      title, groupId, employeesId, deadline
+    } = req.body;
+    const result = await Offer.create({
       title,
-      groupId,
-      employeesId: 1,
+      groupId: Number(groupId),
+      employeesId: Number(employeesId),
       deadline,
     });
-    res.statusCode(200);
+    res.json(result);
   } catch (err) {
     console.error(err);
   }
