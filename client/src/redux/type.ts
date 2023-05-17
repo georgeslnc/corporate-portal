@@ -21,10 +21,27 @@ export type Employee = {
   updatedAt: Date;
 }
 
-export interface InititalStateEmployee {
-  employees: Employee[]
-  group: unknown[],
-  department: unknown[],
+export type Group = {
+  id: number,
+  title: string,
+  departamentId: number,
+  groupHeadId: number,
+  createdAt: Date,
+  updatedAt: Date,
 }
 
+export type Departament = {
+  id: number,
+  title: string,
+  location: string,
+  departamentHeadId: number,
+  createdAt: Date,
+  updatedAt: Date,
+}
+
+export interface InititalStateEmployee {
+  employees: Employee[]
+  group: Group[],
+  department: Departament[],
+}
 

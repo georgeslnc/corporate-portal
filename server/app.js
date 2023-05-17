@@ -13,6 +13,7 @@ const isAuth = require('./src/middlewares/isAuth');
 
 // реквайрим РОУТЫ
 const getEmployeesRoute = require('./src/routes/getEmployees.route');
+const application = require('./src/routes/application.route');
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -49,6 +50,7 @@ app.use(cors(corsOptions));
 
 // РОУТЫ
 app.use('/employees', getEmployeesRoute);
+app.use('/application', application);
 
 app.listen(PORT, () => {
   console.log(`Server started on ${PORT}`);
