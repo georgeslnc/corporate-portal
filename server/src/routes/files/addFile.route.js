@@ -24,11 +24,14 @@ const upload = multer({ storage, fileFilter });
 router.post('/upload', upload.single('file'), async (req, res) => {
   try {
     const { file } = req;
+    const { documentType } = req.body;
     console.log('file from back====>', file);
+    console.log(documentType);
 
     const newFile = await Document.create({
       title: file.originalname,
       url: `fileStorage/${file.filename}`,
+      documentType,
     });
 
     res.json(newFile);
