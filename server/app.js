@@ -55,6 +55,7 @@ const getNewsRoute = require('./src/routes/getNews.route');
 
 const application = require('./src/routes/application.route');
 const authRouter = require('./src/routes/auth.router');
+const addFileRouter = require('./src/routes/files/addFile.route');
 
 const PORT = process.env.PORT || 3000;
 
@@ -93,6 +94,7 @@ app.use('/employees', getEmployeesRoute);
 app.use('/news', getNewsRoute);
 app.use('/application', application);
 app.use('/auth', authRouter);
+app.use('/documents', addFileRouter);
 
 http.listen(PORT, () => {
   console.log(`Server started on ${PORT}`);
