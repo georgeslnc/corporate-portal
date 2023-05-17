@@ -1,4 +1,5 @@
 const router = require('express').Router();
+// eslint-disable-next-line import/no-extraneous-dependencies
 const multer = require('multer');
 const fs = require('fs');
 const { Document } = require('../../../db/models');

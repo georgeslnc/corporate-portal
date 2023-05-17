@@ -1,5 +1,5 @@
 import React, { ChangeEvent, useEffect, useState } from 'react';
-import { setFiles } from '../../redux/slicers/file.slice';
+import { setFiles } from '../../redux/Thunk/files/setFiles';
 import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/type';
@@ -16,21 +16,12 @@ export default function Documents() {
   const files = useAppSelector(
     (state: RootState) => state.userFilesSlicer.files
   );
-  console.log(files);
   
   
   const uploadFileHandler = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-
-    const response = await fetch('http://localhost:3000/documents/upload', {
-      method: 'POST',
-      body: formData,
-      credentials: 'include',
-    });
-    const fileInfo = await response.json();
-    
-    dispatch(setFiles(fileInfo))
+    dispatch(setFiles(formData))
   };
 
   return (
