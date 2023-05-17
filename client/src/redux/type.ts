@@ -39,9 +39,18 @@ export type Departament = {
   updatedAt: Date,
 }
 
+export type Profession = {
+  id: number,
+  position: string,
+  rank: number,
+  createdAt: Date,
+  updatedAt: Date,
+}
+
 export interface InititalStateEmployee {
   employees: Employee[]
   group: Group[],
   department: Departament[],
+  profession: Profession[]
 }
 
