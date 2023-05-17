@@ -54,6 +54,12 @@ const FastNavigate = () => {
       >
         Chat
       </button>
+      <button 
+        className='buttonStyle' 
+        onClick={() => navigate("/documents")}
+      >
+        Documents
+      </button>
     </div>
   );
 };

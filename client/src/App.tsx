@@ -13,6 +13,8 @@ import Tree from "./components/Tree/Tree"
 import News from "./components/News/News"
 import LoginForm from './components/Auth/LoginForm';
 import FastNavigate from './components/_FastNavigate/FastNavigate';
+import OneGroup from './components/Tree/OneGroup';
+import Documents from './components/Documents/Documents';
 
 
 
@@ -31,12 +33,14 @@ function App() {
         <Route path="/handbook"  element={<Handbook />}/>
         <Route path="/employee/:id"  element={<FindEmployee />}/>
         <Route path="/tree"  element={<Tree />}/>
+        <Route path="/tree/:id"  element={<OneGroup />}/>
         <Route path="/applications"  element={<Application />}/>
         <Route path="/newslist"  element={<News />}/>
         {/* <Route path="/info"  element={<info />}/> */}
         {/* Chat */}
         <Route path="/" element={<Home socket={socket}/>} />
         <Route path="/chat" element={<Chat socket={socket} />} />
+        <Route path="/documents" element={<Documents />} />
       </Routes>
     </>
   );
