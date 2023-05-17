@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { RootState, useAppDispatch, useAppSelector } from './redux/type';
 import { getEmployees } from './redux/Thunk/employees';
 import { Route, Routes } from 'react-router-dom';
@@ -16,10 +16,6 @@ import News from "./components/News/News"
 
 function App() {
   const dispatch = useAppDispatch();
-  const employees = useAppSelector(
-    (state: RootState) => state.employeesSlice.employees
-  );
-  
 
   useEffect(()=>{
     dispatch(getEmployees())
@@ -28,7 +24,6 @@ function App() {
   return (
     <>
       <Routes>
-
         <Route path="/handbook"  element={<Handbook />}/>
         <Route path="/employee/:id"  element={<FindEmployee />}/>
         <Route path="/tree"  element={<Tree />}/>

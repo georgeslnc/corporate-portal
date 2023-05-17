@@ -26,7 +26,7 @@ export default function Application() {
   };
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
-    
+    console.log(data)
   }
 
   return (
