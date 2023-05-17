@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { Departament, RootState, useAppSelector } from '../../redux/type'
-import OneGroup from './OneGroup';
+import AllGroup from './AllGroup';
 
 export default function OneDepartment({departament}:{departament: Departament}) {
 
@@ -10,7 +10,7 @@ export default function OneDepartment({departament}:{departament: Departament}) 
     <div onClick={() => setShowGroup((prev)=> !prev)}>
       <h1>{departament.title}</h1>
       {showGroup && 
-      <OneGroup departamentId={departament.id} />
+      <AllGroup departamentId={departament.id} />
       }
     </div>
   )

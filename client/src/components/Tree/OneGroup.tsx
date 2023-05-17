@@ -1,24 +1,26 @@
 import React from 'react'
-import { Group, RootState, useAppSelector } from '../../redux/type';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate, useParams } from 'react-router-dom'
+import { Employee, Group, RootState, useAppSelector } from '../../redux/type';
 
-type DepartamentId = {
-  departamentId: number;
-};
+export default function OneGroup() {
 
-export default function OneGroup(departamentId: DepartamentId) {
-
-  const groups = useAppSelector((state: RootState) => state.employeesSlice.group);
-
-  const selectedGroup = groups.filter((group:Group) => group.departamentId === departamentId.departamentId)
-
+  const { id } = useParams()
+  const navigate = useNavigate()
+  const employees = useAppSelector((state: RootState) => state.employeesSlice.employees);
+   const selectedGroup = employees.filter((employee: Employee) => employee.groupId === Number(id) )
+  console.log(selectedGroup);
+  
   return (
     <ul>
-    {selectedGroup.map((group: Group) => (
-      <li key={group.id}>
-        <Link to={`/group/${group.id}`}>{group.title}</Link>
+    {selectedGroup.map((employee: Employee) => (
+      <li key={employee.id}>
+        <Link to={`/employee/${employee.id}`}>
+          <p>{employee.firstName}</p>
+          <p>{employee.lastName}</p>
+        </Link>
       </li>
     ))}
+    <button onClick={() => navigate(-1)}>Назад</button>
   </ul>
   )
 }
