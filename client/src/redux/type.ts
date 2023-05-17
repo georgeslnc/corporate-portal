@@ -54,3 +54,22 @@ export interface InititalStateEmployee {
   profession: Profession[]
 }
 
+
+export interface NewsItem {
+  id: number;
+  title: string;
+  content: string;
+  publishedAt: string;
+}
+
+export interface NewsState {
+  loading: boolean;
+  news: NewsItem[];
+  error: string;
+}
+
+
+
+
+
+

@@ -51,8 +51,11 @@ socketIO.on('connection', (socket) => {
 const isAuth = require('./src/middlewares/isAuth');
 
 const getEmployeesRoute = require('./src/routes/getEmployees.route');
+const getNewsRoute = require('./src/routes/getNews.route');
+
 const application = require('./src/routes/application.route');
 const authRouter = require('./src/routes/auth.router');
+
 
 const PORT = process.env.PORT || 3000;
 
@@ -88,6 +91,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use('/employees', getEmployeesRoute);
+app.use('/news', getNewsRoute);
 app.use('/application', application);
 app.use('/auth', authRouter);
 

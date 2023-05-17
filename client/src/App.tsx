@@ -1,4 +1,3 @@
-
 import { useEffect } from 'react';
 import { RootState, useAppDispatch, useAppSelector } from './redux/type';
 import { getEmployees } from './redux/Thunk/employees';
@@ -11,6 +10,8 @@ import Application from "./components/Application/Application"
 import Handbook from "./components/Handbook/Handbook"
 import FindEmployee from "./components/Handbook/FindEmployee"
 import Tree from "./components/Tree/Tree"
+import News from "./components/News/News"
+
 
 
 function App() {
@@ -32,7 +33,7 @@ function App() {
         <Route path="/employee/:id"  element={<FindEmployee />}/>
         <Route path="/tree"  element={<Tree />}/>
         <Route path="/applications"  element={<Application />}/>
-        {/* News */}
+        <Route path="/newslist"  element={<News />}/>
         {/* <Route path="/info"  element={<info />}/> */}
         {/* Chat */}
         <Route path="/" element={<Home socket={socket}/>} />
