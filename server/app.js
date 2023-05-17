@@ -7,6 +7,44 @@ const cors = require('cors');
 
 const express = require('express');
 
+const app = express();
+
+// new vadim
+
+const http = require('http').Server(app);
+// eslint-disable-next-line import/no-extraneous-dependencies
+const socketIO = require('socket.io')(http, {
+  cors: {
+  credentials: true,
+  origin: 'http://localhost:5173',
+  },
+});
+
+let users = [];
+socketIO.on('connection', (socket) => {
+  console.log(`⚡: ${socket.id} user just connected!`);
+  
+  socket.on('message', (data) => {
+    socketIO.emit('messageResponse', data);
+  });
+
+  socket.on('typing', (data) => socket.broadcast.emit('typingResponse', data));
+
+  socket.on('newUser', (data) => {
+    users.push(data);
+    socketIO.emit('newUserResponse', users);
+  });
+  
+  socket.on('disconnect', () => {
+    console.log('🔥: A user disconnected');
+    users = users.filter((user) => user.socketID !== socket.id);
+    socketIO.emit('newUserResponse', users);
+    socket.disconnect();
+  });
+});
+
+// end new
+
 // рекварим МИДЛВЕЙРЫ
 const dbCheck = require('./src/middlewares/dbCheck');
 const isAuth = require('./src/middlewares/isAuth');
@@ -14,8 +52,7 @@ const isAuth = require('./src/middlewares/isAuth');
 // реквайрим РОУТЫ
 const getEmployeesRoute = require('./src/routes/getEmployees.route');
 
-const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 
 // НАЧАЛО конфига Куки
 const sessionConfig = {
@@ -41,7 +78,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(dbCheck);
 const corsOptions = {
-  origin: 'http://localhost:5173',
+  origin: ['http://localhost:5173','http://localhost:3000'],
   credentials: true,
 };
 
@@ -50,6 +87,6 @@ app.use(cors(corsOptions));
 // РОУТЫ
 app.use('/employees', getEmployeesRoute);
 
-app.listen(PORT, () => {
+http.listen(PORT, () => {
   console.log(`Server started on ${PORT}`);
 });
