@@ -1,6 +1,4 @@
-const {
-  Model,
-} = require('sequelize');
+const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class Group extends Model {
@@ -15,13 +13,16 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.Departament, { foreignKey: 'departamentId' });
     }
   }
-  Group.init({
-    title: DataTypes.STRING,
-    departamentId: DataTypes.INTEGER,
-    groupHeadId: DataTypes.INTEGER,
-  }, {
-    sequelize,
-    modelName: 'Group',
-  });
+  Group.init(
+    {
+      title: DataTypes.STRING,
+      departamentId: DataTypes.INTEGER,
+      groupHeadId: DataTypes.INTEGER,
+    },
+    {
+      sequelize,
+      modelName: 'Group',
+    },
+  );
   return Group;
 };

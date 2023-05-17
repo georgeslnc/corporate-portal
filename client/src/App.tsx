@@ -1,3 +1,4 @@
+
 import { useEffect } from 'react';
 import { RootState, useAppDispatch, useAppSelector } from './redux/type';
 import { getEmployees } from './redux/Thunk/employees';
@@ -6,6 +7,9 @@ import Chat from './components/Chat/Chat';
 import Home from './components/Chat/Home';
 import * as io from 'socket.io-client';
 const socket = io.connect('http://localhost:3000');
+import Application from "./components/Application/Application"
+import Handbook from "./components/Handbook/Handbook"
+
 
 function App() {
   const dispatch = useAppDispatch();
@@ -14,16 +18,19 @@ function App() {
   );
   // console.log(employees);
 
-  useEffect(() => {
-    dispatch(getEmployees());
-  }, []);
+
+  const dispatch = useAppDispatch()
+
+  useEffect(()=>{
+    dispatch(getEmployees())
+  },[])
 
   return (
     <>
       <Routes>
-        {/* <Route path="/handbook"  element={<HandBook />}/> */}
+        <Route path="/handbook"  element={<Handbook />}/>
         {/* <Route path="/tree"  element={<tree />}/> */}
-        {/* <Route path="/applications"  element={<applications />}/> */}
+        <Route path="/applications"  element={<Application />}/>
         {/* News */}
         {/* <Route path="/info"  element={<info />}/> */}
         {/* Chat */}

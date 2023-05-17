@@ -1,6 +1,4 @@
-const {
-  Model,
-} = require('sequelize');
+const { Model } = require('sequelize');
 
 module.exports = (sequelize, DataTypes) => {
   class AuthInfo extends Model {
@@ -13,12 +11,15 @@ module.exports = (sequelize, DataTypes) => {
       // define association here
     }
   }
-  AuthInfo.init({
-    userId: DataTypes.INTEGER,
-    password: DataTypes.STRING,
-  }, {
-    sequelize,
-    modelName: 'AuthInfo',
-  });
+  AuthInfo.init(
+    {
+      userId: DataTypes.INTEGER,
+      password: DataTypes.STRING,
+    },
+    {
+      sequelize,
+      modelName: 'AuthInfo',
+    },
+  );
   return AuthInfo;
 };

@@ -1,11 +1,14 @@
 require('dotenv').config();
 require('@babel/register');
-
+const path = require('path');
 const session = require('express-session');
 const FileStore = require('session-file-store')(session);
 const cors = require('cors');
 
 const express = require('express');
+const logger = require('morgan');
+const dbCheck = require('./src/utils/dbCheck');
+
 
 const app = express();
 
@@ -42,41 +45,42 @@ socketIO.on('connection', (socket) => {
     socket.disconnect();
   });
 });
-
+const dbCheck = require('./src/middlewares/dbCheck');
 // end new
 
 // рекварим МИДЛВЕЙРЫ
-const dbCheck = require('./src/middlewares/dbCheck');
+
 const isAuth = require('./src/middlewares/isAuth');
 
-// реквайрим РОУТЫ
 const getEmployeesRoute = require('./src/routes/getEmployees.route');
+const authRouter = require('./src/routes/auth.router');
 
 const PORT = process.env.PORT || 3000;
 
-// НАЧАЛО конфига Куки
 const sessionConfig = {
   name: 'PortalCookie',
   store: new FileStore(),
-  secret: process.env.SESSION_SECRET ?? 'Секретное слово',
+  secret: process.env.SESSION_SECRET ?? 'Secret word',
   resave: false,
   saveUninitialized: false,
   cookie: {
-    maxAge: 9999999,
+    maxAge: 3 * 24 * 60 * 60 * 1000,
     httpOnly: true,
   },
 };
-app.use(session(sessionConfig)); // Подключаем сессии как middleware.
+app.use(session(sessionConfig));
+app.use(logger('dev'));
+
 app.use('/login', (req, res, next) => {
   // console.log('session=>', req.session);
   next();
 });
-// КОНЕЦ конфига Куки
 
-app.use(express.static('public'));
+app.use(express.static(path.join(__dirname, '../public')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(dbCheck);
+// app.use(dbCheck);
+
 const corsOptions = {
   origin: ['http://localhost:5173','http://localhost:3000'],
   credentials: true,
@@ -84,9 +88,10 @@ const corsOptions = {
 
 app.use(cors(corsOptions));
 
-// РОУТЫ
 app.use('/employees', getEmployeesRoute);
+app.use('/auth', authRouter);
 
 http.listen(PORT, () => {
   console.log(`Server started on ${PORT}`);
+  dbCheck();
 });
