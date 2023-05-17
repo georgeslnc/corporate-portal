@@ -14,6 +14,7 @@ import News from "./components/News/News"
 import LoginForm from './components/Auth/LoginForm';
 import FastNavigate from './components/_FastNavigate/FastNavigate';
 import OneGroup from './components/Tree/OneGroup';
+import Documents from './components/Documents/Documents';
 
 
 
@@ -39,6 +40,7 @@ function App() {
         {/* Chat */}
         <Route path="/" element={<Home socket={socket}/>} />
         <Route path="/chat" element={<Chat socket={socket} />} />
+        <Route path="/documents" element={<Documents />} />
       </Routes>
     </>
   );

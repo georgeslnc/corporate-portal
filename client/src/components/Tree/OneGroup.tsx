@@ -8,7 +8,6 @@ export default function OneGroup() {
   const navigate = useNavigate()
   const employees = useAppSelector((state: RootState) => state.employeesSlice.employees);
    const selectedGroup = employees.filter((employee: Employee) => employee.groupId === Number(id) )
-  console.log(selectedGroup);
   
   return (
     <ul>
