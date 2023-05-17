@@ -7,8 +7,6 @@ const cors = require('cors');
 
 const express = require('express');
 const logger = require('morgan');
-const dbCheck = require('./src/utils/dbCheck');
-
 
 const app = express();
 
@@ -18,15 +16,16 @@ const http = require('http').Server(app);
 // eslint-disable-next-line import/no-extraneous-dependencies
 const socketIO = require('socket.io')(http, {
   cors: {
-  credentials: true,
-  origin: 'http://localhost:5173',
+    credentials: true,
+    origin: 'http://localhost:5173',
   },
 });
+const dbCheck = require('./src/utils/dbCheck');
 
 let users = [];
 socketIO.on('connection', (socket) => {
   console.log(`⚡: ${socket.id} user just connected!`);
-  
+
   socket.on('message', (data) => {
     socketIO.emit('messageResponse', data);
   });
@@ -37,7 +36,7 @@ socketIO.on('connection', (socket) => {
     users.push(data);
     socketIO.emit('newUserResponse', users);
   });
-  
+
   socket.on('disconnect', () => {
     console.log('🔥: A user disconnected');
     users = users.filter((user) => user.socketID !== socket.id);
@@ -45,7 +44,6 @@ socketIO.on('connection', (socket) => {
     socket.disconnect();
   });
 });
-const dbCheck = require('./src/middlewares/dbCheck');
 // end new
 
 // рекварим МИДЛВЕЙРЫ
@@ -83,7 +81,7 @@ app.use(express.urlencoded({ extended: true }));
 // app.use(dbCheck);
 
 const corsOptions = {
-  origin: ['http://localhost:5173','http://localhost:3000'],
+  origin: ['http://localhost:5173', 'http://localhost:3000'],
   credentials: true,
 };
 
