@@ -9,13 +9,53 @@ const express = require('express');
 const logger = require('morgan');
 const dbCheck = require('./src/utils/dbCheck');
 
+
+const app = express();
+
+// new vadim
+
+const http = require('http').Server(app);
+// eslint-disable-next-line import/no-extraneous-dependencies
+const socketIO = require('socket.io')(http, {
+  cors: {
+  credentials: true,
+  origin: 'http://localhost:5173',
+  },
+});
+
+let users = [];
+socketIO.on('connection', (socket) => {
+  console.log(`⚡: ${socket.id} user just connected!`);
+  
+  socket.on('message', (data) => {
+    socketIO.emit('messageResponse', data);
+  });
+
+  socket.on('typing', (data) => socket.broadcast.emit('typingResponse', data));
+
+  socket.on('newUser', (data) => {
+    users.push(data);
+    socketIO.emit('newUserResponse', users);
+  });
+  
+  socket.on('disconnect', () => {
+    console.log('🔥: A user disconnected');
+    users = users.filter((user) => user.socketID !== socket.id);
+    socketIO.emit('newUserResponse', users);
+    socket.disconnect();
+  });
+});
+const dbCheck = require('./src/middlewares/dbCheck');
+// end new
+
+// рекварим МИДЛВЕЙРЫ
+
 const isAuth = require('./src/middlewares/isAuth');
 
 const getEmployeesRoute = require('./src/routes/getEmployees.route');
 const authRouter = require('./src/routes/auth.router');
 
-const app = express();
-const PORT = process.env.PORT || 3001;
+const PORT = process.env.PORT || 3000;
 
 const sessionConfig = {
   name: 'PortalCookie',
@@ -42,7 +82,7 @@ app.use(express.urlencoded({ extended: true }));
 // app.use(dbCheck);
 
 const corsOptions = {
-  origin: 'http://localhost:5173',
+  origin: ['http://localhost:5173','http://localhost:3000'],
   credentials: true,
 };
 
@@ -51,7 +91,7 @@ app.use(cors(corsOptions));
 app.use('/employees', getEmployeesRoute);
 app.use('/auth', authRouter);
 
-app.listen(PORT, () => {
+http.listen(PORT, () => {
   console.log(`Server started on ${PORT}`);
   dbCheck();
 });
