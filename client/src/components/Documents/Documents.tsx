@@ -4,6 +4,12 @@ import { useDispatch } from 'react-redux';
 import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/type';
 import { getFiles } from '../../redux/Thunk/files/getFiles';
+import { File } from '../../redux/type'
+import OneFile from './OneFile';
+import DocumentsAudit from './DocumentsAudit';
+import DocumentsHR from './DocumentsHR';
+
+
 
 export default function Documents() {
 
@@ -17,6 +23,9 @@ export default function Documents() {
     (state: RootState) => state.userFilesSlicer.files
   );
   
+  const filesHr = files.filter((file) => file.documentType === 'Документы по работе с персоналом')
+
+  const filesAudit = files.filter((file) => file.documentType === 'Документу бухгалтерии')
   
   const uploadFileHandler = async (e: ChangeEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -41,6 +50,8 @@ export default function Documents() {
         </div>
         <button type="submit">Загрузить документ</button>
       </form>
+      <DocumentsHR filesHr = {filesHr} />
+      <DocumentsAudit filesAudit = {filesAudit} />
     </div>
   );
 }
