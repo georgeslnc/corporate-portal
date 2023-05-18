@@ -15,6 +15,7 @@ import LoginForm from './components/Auth/LoginForm';
 import FastNavigate from './components/_FastNavigate/FastNavigate';
 import OneGroup from './components/Tree/OneGroup';
 import Documents from './components/Documents/Documents';
+import EmployeeForm from './components/EmployeeForm/EmployeeForm';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -39,6 +40,7 @@ function App() {
         <Route path="/" element={<Home socket={socket} />} />
         <Route path="/chat" element={<Chat socket={socket} />} />
         <Route path="/documents" element={<Documents />} />
+        <Route path="/admin/employee" element={<EmployeeForm />} />
       </Routes>
     </div>
   );
