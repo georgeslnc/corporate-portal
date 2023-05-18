@@ -54,7 +54,10 @@ export default function BasicTextFields() {
       />
       {searchQuery && (
         filteredEmployees.map((employee: Employee) => (
-          <ListItem key={employee.id} component={Link} to={`/employee/${employee.id}`}>
+          <ListItem 
+            key={employee.id} component={Link} 
+            to={`/employee/${employee.id}`} 
+            sx={{ marginLeft: '15px' }}>
             <ListItemAvatar>
               <Avatar src={employee.photoUrl}/>
             </ListItemAvatar>
