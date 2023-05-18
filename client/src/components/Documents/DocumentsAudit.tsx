@@ -1,6 +1,8 @@
 import React from 'react';
 import { File, useAppDispatch } from '../../redux/type';
 import { downloadedFile } from '../../redux/Thunk/files/downloadedFile';
+import { Typography, List, ListItem, Button } from '@mui/material';
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
 
 interface DocumentsAuditProps {
   filesAudit: File[];
@@ -15,15 +17,17 @@ export default function DocumentsAudit({ filesAudit }: DocumentsAuditProps) {
 
   return (
     <div>
-      <h1>Документы бухгалтерии</h1>
-      <ul>
+      <Typography variant="h5" component="h5">
+        Документы бухгалтерии
+      </Typography>
+      <List>
         {filesAudit.map((file: File) => (
-          <div key={file.id}>
-            <li key={file.id}>{file.title}</li>
-            <button onClick={() => downloadHandler(file.id, file.title)}>Скачать документ</button>
-          </div>
+          <ListItem key={file.id}>
+            {file.title}
+            <FileDownloadIcon onClick={() => downloadHandler(file.id, file.title)}>Скачать документ</FileDownloadIcon>
+          </ListItem>
         ))}
-      </ul>
+      </List>
     </div>
   );
 }
