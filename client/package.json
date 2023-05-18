@@ -9,6 +9,10 @@
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
     "preview": "vite preview"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/georgeslnc/corporate-portal.git"
+  },
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.5",
     "esbuild": "^0.17.19",
