@@ -18,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       groupId: DataTypes.INTEGER,
       employeesId: DataTypes.INTEGER,
       deadline: DataTypes.STRING,
+      status: DataTypes.STRING,
     },
     {
       sequelize,
