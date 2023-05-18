@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { Employee, Group, Profession } = require('../../../db/models');
 
-const phoneFormatter = require('../../utils/formatterUtils.js.');
+const phoneFormatter = require('../../utils/phoneFormatter.js.');
 const validateModel = require('../../utils/validateModel');
 
 router.post('/employees', async (req, res) => {

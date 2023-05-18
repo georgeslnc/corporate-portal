@@ -2,17 +2,27 @@ import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { RootState, useAppSelector } from '../../redux/type';
 
-import { Box, TextField, Button, FormControl, InputLabel, Select, MenuItem, FormHelperText } from '@mui/material';
+import {
+  Box,
+  TextField,
+  Button,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+  FormHelperText,
+  Snackbar,
+  Alert,
+} from '@mui/material';
+
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
-import { createTheme } from '@mui/material/styles';
 import { ruRU } from '@mui/x-date-pickers/locales';
 import ru from 'date-fns/locale/ru';
 import { addYears } from 'date-fns';
 
-import styled from '@emotion/styled';
-
+import { dateFormatter } from '../../utils/formatterHelpers';
 import {
   emailValidation,
   firstNameValidation,
@@ -20,6 +30,24 @@ import {
   middleNameValidation,
   phoneValidation,
 } from '../../utils/formValidation';
+
+type PopupProps = {
+  open: boolean;
+  message: string;
+  severity: 'success' | 'error';
+  handleClose: () => void;
+};
+
+// todo: проверить Popup/удалить код
+// function Popup({ open, message, severity, handleClose }: PopupProps) {
+//   return (
+//     <Snackbar open={open} autoHideDuration={3 * 1000} onClose={handleClose}>
+//       <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
+//         {message}
+//       </Alert>
+//     </Snackbar>
+//   );
+// }
 
 type Inputs = {
   firstName: string;
@@ -29,16 +57,17 @@ type Inputs = {
   profession: string;
   email: string;
   phoneNumber: string;
-  birthday: string | Date;
+  birthday: string;
   // photo: FileList;
 };
 
-const minDate = new Date(1930, 0, 1); // 1 Января 1900 года
+const minDate = new Date(1930, 0, 1);
 const maxDate = addYears(new Date(), -18);
 
 export default function EmployeeForm() {
   const [selectedDate, handleDateChange] = useState<Date | null>(maxDate);
   const [errorMessage, setErrorMessage] = useState('');
+  const [alertMessage, setAlertMessage] = useState('');
 
   const groups = useAppSelector((state: RootState) => state.employeesSlice.group);
   const professions = useAppSelector((state: RootState) => state.employeesSlice.profession);
@@ -51,13 +80,12 @@ export default function EmployeeForm() {
     reset,
     watch,
     formState: { errors, isDirty },
-  } = useForm<Inputs>();
+  } = useForm<Inputs>({
+    mode: 'onBlur',
+  });
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
-    // handleDateChange((prev) => cleanText(prev));
-
-    data = { ...data, birthday: selectedDate ? selectedDate.toISOString().slice(0, 10) : '' };
-    console.log('|______|  data:', data);
+    data = { ...data, birthday: selectedDate ? dateFormatter(selectedDate) : '' };
     try {
       const res = await fetch(`http://localhost:3000/admin/employees`, {
         method: 'POST',
@@ -67,11 +95,15 @@ export default function EmployeeForm() {
       });
 
       if (res.status === 200) {
-        const resData = await res.json();
-
-        console.log('|______|  resData:', resData);
+        const data = await res.json();
+        setAlertMessage(data.message);
+        setOpen(true);
         reset();
+        handleDateChange(maxDate);
         // navigate('/');
+        setTimeout(() => {
+          setAlertMessage('');
+        }, 6 * 1000);
       } else {
         console.error(`Error: ${res.status}`);
         const errorData = await res.json();
@@ -122,7 +154,6 @@ export default function EmployeeForm() {
           error={Boolean(errors.lastName)}
           helperText={errors.lastName?.message}
         />
-
         <FormControl error={Boolean(errors.groupTitle)} sx={{ flexGrow: 1 }}>
           <InputLabel id="group-label">Отдел</InputLabel>
           <Select {...register('groupTitle', { required: true })} label="Отдел">
@@ -134,7 +165,6 @@ export default function EmployeeForm() {
           </Select>
           <FormHelperText>{errors.groupTitle?.message}</FormHelperText>
         </FormControl>
-
         <FormControl error={Boolean(errors.profession)} sx={{ flexGrow: 1 }}>
           <InputLabel id="profession-label">Должность</InputLabel>
           <Select {...register('profession', { required: true })} label="Должность">
@@ -175,11 +205,12 @@ export default function EmployeeForm() {
             }
           }}
         />
-
         <Button type="submit" variant="outlined" sx={{ width: '200px' }}>
           Добавить сотрудника
         </Button>
         {errorMessage && <p>{errorMessage}</p>}
+        {/* <Popup open={open} message={alertMessage} severity="success" handleClose={handleClose} /> */}
+        {alertMessage && <Alert severity="success">{alertMessage}</Alert>}
       </Box>
     </LocalizationProvider>
   );
