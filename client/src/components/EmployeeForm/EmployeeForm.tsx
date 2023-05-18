@@ -1,10 +1,9 @@
 import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { TextField, Button, FormControl, InputLabel, Select, MenuItem, FormHelperText } from '@mui/material';
+import { TextField, Button, FormControl, InputLabel, Select, MenuItem, FormHelperText, FormLabel } from '@mui/material';
 import { DatePicker } from '@mui/lab';
 import AdapterDateFns from '@mui/lab/AdapterDateFns';
 import LocalizationProvider from '@mui/lab/LocalizationProvider';
-import { styled } from '@mui/system';
 
 type Inputs = {
   firstName: string;
@@ -18,11 +17,6 @@ type Inputs = {
   photo: FileList;
 };
 
-const Form = styled('form')({
-  display: 'flex',
-  flexDirection: 'column',
-  gap: '1em',
-});
 
 export default function EmployeeForm() {
   const { register, handleSubmit, setValue, control, formState: { errors } } = useForm<Inputs>();
@@ -64,50 +58,11 @@ const formData = new FormData();
   }
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <Form onSubmit={handleSubmit(onSubmit)}>
-        <TextField {...register("firstName")} label="First Name" error={Boolean(errors.firstName)} helperText={errors.firstName?.message} />
-        <TextField {...register("middleName")} label="Middle Name" error={Boolean(errors.middleName)} helperText={errors.middleName?.message} />
-        <TextField {...register("lastName")} label="Last Name" error={Boolean(errors.lastName)} helperText={errors.lastName?.message} />
-        
-        <FormControl error={Boolean(errors.groupId)}>
-          <InputLabel id="group-label">Group</InputLabel>
-          <Select {...register("groupId")}>
-            {/* Replace with your options */}
-            <MenuItem value="group1">Group 1</MenuItem>
-            <MenuItem value="group2">Group 2</MenuItem>
-          </Select>
-          <FormHelperText>{errors.groupId?.message}</FormHelperText>
-        </FormControl>
-
-        <FormControl error={Boolean(errors.professionId)}>
-          <InputLabel id="profession-label">Profession</InputLabel>
-          <Select {...register("professionId")}>
-            {/* Replace with your options */}
-            <MenuItem value="profession1">Profession 1</MenuItem>
-            <MenuItem value="profession2">Profession 2</MenuItem>
-          </Select>
-          <FormHelperText>{errors.professionId?.message}</FormHelperText>
-        </FormControl>
-
-        <TextField {...register("email")} label="Email" type="email" error={Boolean(errors.email)} helperText={errors.email?.message} />
-        <TextField {...register("phone")} label="Phone" type="tel" error={Boolean(errors.phone)} helperText={errors.phone?.message} />
-
-      <DatePicker
-          label="Birthday"
-          value={null}
-          onChange={(newValue: Date | null) => {
-            setValue('birthday', newValue);
-          }}
-          renderInput={(par : any) => <TextField {...par} />}
-      />
-
-
-        <input {...register("photo")} type="file" />
-
-        <Button type="submit">Submit</Button>
-        {errorMessage && <p>{errorMessage}</p>}
-      </Form>
-    </LocalizationProvider>
+     <FormLabel onSubmit={handleSubmit(onSubmit)}>
+        <TextField {...register("firstName")} label="Имя" error={Boolean(errors.firstName)} helperText={errors.firstName?.message} />
+        <TextField {...register("middleName")} label="Отчество" error={Boolean(errors.middleName)} helperText={errors.middleName?.message} />
+        <TextField {...register("lastName")} label="Фамилия" error={Boolean(errors.lastName)} helperText={errors.lastName?.message} />
+      </FormLabel>
   );
+     
 }
