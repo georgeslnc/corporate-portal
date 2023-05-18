@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/type';
 import { changeStatusOffer } from '../../redux/Thunk/changeStatusOffer';
 import useEffect from 'react';
+import { Box, Button, List, ListSubheader, Typography } from '@mui/material';
+import style from './application.module.scss';
 
 const userData: string | null = localStorage.getItem('userData');
 const parsedUserData: { groupId: number } = userData ? JSON.parse(userData) : {};
@@ -13,44 +15,76 @@ export default function Bid() {
   const group = useAppSelector((state: RootState) => state.employeesSlice.group);
   const dispatch = useAppDispatch();
 
-  const filteredOffers = offer.filter((el) => el.groupId === groupId && !el.status);
+  const filteredOffers = offer.filter((el: any) => el.groupId === groupId && !el.status);
 
-  const completedOffers = offer.filter((el) => el.groupId === groupId && el.status);
+  const completedOffers = offer.filter((el: any) => el.groupId === groupId && el.status);
 
   const renderAuthorInfo = (employeeId: string) => {
-    const employee = employees.find((element) => element.id === Number(employeeId));
+    const employee = employees.find((element: any) => element.id === Number(employeeId));
     if (!employee) return null;
 
-    const authorGroup = group.find((elem) => elem.id === employee.groupId);
+    const authorGroup = group.find((elem: any) => elem.id === employee.groupId);
     if (!authorGroup) return null;
 
     return (
-      <React.Fragment>
-        <span>{`Автор заявки: ${employee.firstName} ${employee.lastName}`}</span>
-        <span>{`Название отдела: ${authorGroup.title}`}</span>
-      </React.Fragment>
+      <div className={style.authorInfo}>
+        <Typography
+          sx={{ fontSize: '10px', marginRight: '20px' }}
+        >{`Автор заявки: ${employee.firstName} ${employee.lastName}`}</Typography>
+        <Typography sx={{ fontSize: '10px' }}>{`Название отдела: ${authorGroup.title}`}</Typography>
+      </div>
     );
   };
 
   return (
-    <>
+    <List
+      sx={{
+        width: '80%',
+        bgcolor: 'background.paper',
+        position: 'relative',
+        overflow: 'hidden',
+        overflowY: 'scroll',
+        maxHeight: 300,
+        marginTop: '30px',
+        padding: '0px',
+        '& ul': { padding: 0 },
+        border: 1,
+        borderColor: 'divider',
+        borderRadius: '5px',
+        backgroundColor: 'rgb(236, 239, 243)',
+      }}
+    >
       <ul>
-        {filteredOffers.map((el) => (
-          <li key={`${el.id}offers`}>
-            <h4>{el.title}</h4>
-            <button onClick={() => dispatch(changeStatusOffer(el.id))}>Сделано</button>
+        <ListSubheader sx={{ color: 'black', backgroundColor: ' rgb(221, 223, 226)', margin: '0px', width: '100%' }}>
+          <Typography variant="h5" component="h2">
+            Необходимо сделать
+          </Typography>
+        </ListSubheader>
+        {filteredOffers.map((el: any) => (
+          <li key={`${el.id}offers`} className={style.containerElement}>
+            <div className={style.containerValueButton}>
+              <Typography>{el.title}</Typography>
+              <Button sx={{ background: 'rgb(203, 210, 218)' }} onClick={() => changeStatusButton(el.id)}>
+                сделано
+              </Button>
+            </div>
             {renderAuthorInfo(el.employeesId)}
           </li>
         ))}
       </ul>
       <ul>
-        {completedOffers.map((el) => (
-          <li key={`${el.id}status`}>
-            <h5>{el.title}</h5>
+        <ListSubheader sx={{ color: 'black', backgroundColor: ' rgb(221, 223, 226)', margin: '0px', width: '100%' }}>
+          <Typography variant="h5" component="h2">
+            Выполненные задания
+          </Typography>
+        </ListSubheader>
+        {completedOffers.map((el: any) => (
+          <li key={`${el.id}status`} className={style.containerElement}>
+            <Typography>{el.title}</Typography>
             {renderAuthorInfo(el.employeesId)}
           </li>
         ))}
       </ul>
-    </>
+    </List>
   );
 }
