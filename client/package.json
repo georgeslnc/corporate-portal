@@ -14,6 +14,10 @@
     "url": "git+https://github.com/georgeslnc/corporate-portal.git"
   },
   "dependencies": {
+    "@emotion/styled": "^11.11.0",
+    "@mui/icons-material": "^5.11.16",
+    "@mui/material": "^5.13.1",
+    "@mui/system": "^5.13.1",
     "@reduxjs/toolkit": "^1.9.5",
     "esbuild": "^0.17.19",
     "react": "^18.2.0",
