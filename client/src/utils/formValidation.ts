@@ -6,7 +6,6 @@ const createNameValidation = (message: string) => ({
   },
 });
 
-// Используйте createNameValidation, чтобы создать правила валидации с разными сообщениями об ошибках:
 export const firstNameValidation = createNameValidation('Пожалуйста, введите корректное имя.');
 export const middleNameValidation = createNameValidation('Пожалуйста, введите корректное отчество.');
 export const lastNameValidation = createNameValidation('Пожалуйста, введите корректную фамилию.');

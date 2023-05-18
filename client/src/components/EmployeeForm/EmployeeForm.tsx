@@ -23,7 +23,7 @@ type Inputs = {
   groupId: string;
   professionId: string;
   email: string;
-  phone: string;
+  phoneNumber: string;
   birthday: Date | null;
   photo: FileList;
 };
@@ -139,11 +139,11 @@ export default function EmployeeForm() {
           sx={{ flexGrow: 1 }}
         />
         <TextField
-          {...register('phone', phoneValidation)}
+          {...register('phoneNumber', phoneValidation)}
           label="Телефон"
           type="tel"
-          error={Boolean(errors.phone)}
-          helperText={errors.phone?.message}
+          error={Boolean(errors.phoneNumber)}
+          helperText={errors.phoneNumber?.message}
           sx={{ flexGrow: 1 }}
         />
       </Box>

@@ -1,14 +1,17 @@
 const router = require('express').Router();
 const { Employee, AuthInfo } = require('../../../db/models');
-const { phoneHandler } = require('../../utils/formHandlers');
+const phoneHandler = require('../../utils/formHandlers');
 
 router.post('/employees', async (req, res) => {
   const {
-    firstName, middleName, lastName, groupId, professionId, email, phone,
+    firstName, middleName, lastName, groupId, professionId, email, phoneNumber,
   } = req.body;
 
-  const editPhone = phoneHandler(phone);
-  // birthday, photo
+  const phone = phoneHandler(phoneNumber);
+
+  // todo: удалить заглушки
+  const birthday = '1994-02-01';
+  const photo = '/sada/asdas/logo.jpg';
 
   console.log('|______|  req.body;:', req.body);
 
