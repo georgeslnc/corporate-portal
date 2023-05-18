@@ -5,7 +5,6 @@ import { useSelector } from 'react-redux';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/type';
 import { getFiles } from '../../redux/Thunk/files/getFiles';
 import { File } from '../../redux/type'
-import OneFile from './OneFile';
 import DocumentsAudit from './DocumentsAudit';
 import DocumentsHR from './DocumentsHR';
 
