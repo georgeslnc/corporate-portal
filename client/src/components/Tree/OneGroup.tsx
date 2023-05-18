@@ -21,28 +21,48 @@ export default function OneGroup() {
   )
 
   return (
-        <>
-         {selectedGroup.map((employee: Employee) => (
-           <ListItem 
-           key={employee.id} component='div' 
-           onClick={()=>handleClick(employee.id)}
-           sx={{ 
-            marginLeft: '15px', 
-            textDecoration: 'none', 
-            cursor: 'pointer','&:hover': {
+    <>
+    {selectedGroup.map((employee: Employee) => (
+      <ListItem
+        key={employee.id}
+        component='div'
+        onClick={() => handleClick(employee.id)}
+        sx={{
+          marginLeft: '15px',
+          textDecoration: 'none',
+          cursor: 'pointer',
+          '&:hover': {
             textDecoration: 'underline',
-           }, }}>
-           <ListItemAvatar>
-             <Avatar src={employee.photoUrl}/>
-           </ListItemAvatar>
-           <ListItemText primary={`${employee.firstName} ${employee.lastName}`} />
-         </ListItem>
-          ))}
-          
-        <p> Начальник отдела: {groupHead?.firstName} {groupHead?.lastName}</p>
-
-      <Button onClick={() => navigate(-1)}>Назад</Button>
-        </>
+          },
+        }}
+      >
+        <ListItemAvatar>
+          <Avatar src={employee.photoUrl} />
+        </ListItemAvatar>
+        <ListItemText primary={`${employee.firstName} ${employee.lastName}`} />
+      </ListItem>
+    ))}
+    <ListItem
+      key={groupHead?.id}
+      component='div'
+      onClick={() => handleClick(groupHead?.id)}
+      sx={{
+        marginLeft: '15px',
+        textDecoration: 'none',
+        cursor: 'pointer',
+        '&:hover': {
+          textDecoration: 'underline',
+        },
+      }}
+    >
+      <ListItemAvatar>
+        <Avatar src={groupHead?.photoUrl} />
+      </ListItemAvatar>
+      <ListItemText primary={`${groupHead?.firstName} ${groupHead?.lastName}`} />
+    </ListItem>
+    <Button onClick={() => navigate(-1)}>Назад</Button>
+  </>
+  
 
   );
 }
