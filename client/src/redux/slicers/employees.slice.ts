@@ -2,6 +2,7 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { InititalStateEmployee, Offer } from '../type';
 import { getEmployees } from '../Thunk/employees';
 import { postOffer } from '../Thunk/offer';
+import { changeStatusOffer } from '../Thunk/changeStatusOffer';
 
 const initialState: InititalStateEmployee = {
   employees: [],
@@ -33,6 +34,17 @@ const employeesSlice = createSlice({
     builder.addCase(postOffer.fulfilled, (state, action: PayloadAction<Offer>) => {
       state.offer.push(action.payload);
     });
+    builder.addMatcher(
+      (action) => action.type === changeStatusOffer.fulfilled.type,
+      (state, action: PayloadAction<number>) => {
+        state.offer = state.offer.map((el) => {
+          if (el.id === action.payload) {
+            return { ...el, status: true };
+          }
+          return el;
+        });
+      }
+    );
   }
 });
 

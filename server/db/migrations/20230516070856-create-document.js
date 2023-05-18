@@ -14,8 +14,8 @@ module.exports = {
       url: {
         type: Sequelize.TEXT,
       },
-      authorId: {
-        type: Sequelize.INTEGER,
+      documentType: {
+        type: Sequelize.TEXT,
       },
       createdAt: {
         allowNull: false,

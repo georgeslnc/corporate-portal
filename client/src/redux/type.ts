@@ -58,9 +58,10 @@ export interface InititalStateEmployee {
 export type Offer = {
   id: number;
   title: string;
-  groupId: string;
+  groupId: number;
   employeesId: string;
   deadline: string;
+  status:boolean;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -80,4 +81,18 @@ export interface NewsState {
   loading: boolean;
   news: NewsItem[];
   error: string;
+}
+
+export type File ={
+  id: number,
+  title: string,
+  url: string,
+  documentType: string,
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface InitialFilesState {
+  files: File[]
+  loading: boolean
 }

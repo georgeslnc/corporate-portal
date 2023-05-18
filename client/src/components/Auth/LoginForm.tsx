@@ -1,63 +1,106 @@
-import { useEffect, useState } from "react";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useEffect, useState } from 'react';
+import { useForm, SubmitHandler, ErrorMessage } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
+
+import { Box, Button, TextField } from '@mui/material';
 
 type Inputs = {
-  email: string,
-  password: string,
+  email: string;
+  password: string;
 };
 
-const url = `http://localhost:3000/auth/register`;
-
 export default function LoginForm() {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isDirty },
+    reset,
+    watch,
+  } = useForm<Inputs>();
+  const [errorMessage, setErrorMessage] = useState<string | null>('');
+  const navigate = useNavigate();
+  const watchedFields = watch();
 
-  // const [selectedValue, setSelectedValue] = useState<string | null>("");
-  const { register, handleSubmit, formState: { errors }, reset, watch} = useForm<Inputs>();
-  const [errorMessage, setErrorMessage] = useState("");
-
- const watchedFields = watch();
-
-  // useEffect(() => {
-  //   // Сбрасываем сообщение об ошибке при каждом изменении
-  //   setErrorMessage("");
-  // }, [watchedFields]); // зависимость от watchedFields - значений полей формы
-
+  useEffect(() => {
+    if (isDirty) {
+      setErrorMessage(null);
+    }
+  }, [watchedFields, isDirty]);
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     try {
-      const response = await fetch(url, {
-        method: "POST",
+      const response = await fetch(`http://localhost:3000/auth/login`, {
+        method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
-      })
-        
+        body: JSON.stringify(data),
+      });
+
       if (response.status === 200) {
-        const responseData = await response.json()
+        const responseData = await response.json();
         localStorage.setItem('userData', JSON.stringify(responseData));
-         reset();
+        reset();
+        navigate('/');
       } else {
         console.error(`Error: ${response.status}`);
-         const errorData = await response.json()
-         setErrorMessage(errorData.message);
+        const errorData = await response.json();
+        setErrorMessage(errorData.message);
+        localStorage.removeItem('userData');
+        reset();
       }
-      
     } catch (error) {
-        console.error(error)
+      console.error(error);
     }
-  }
+  };
 
   return (
-    <>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input type="email" {...register("email", { required: "Email is required" })} />
-        {errors.email && <p>{errors.email.message}</p>}
+    <Box
+      component="form"
+      onSubmit={handleSubmit(onSubmit)}
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        border: 1,
+        borderColor: 'divider',
+        p: 2,
+        width: '400px',
+        gap: 1.5,
+        marginTop: '100px',
+        marginLeft: '50px',
+      }}
+    >
+      <TextField
+        {...register('email', {
+          required: 'Поле обязательно для заполнения',
+          pattern: {
+            value: /^\S+@\S+$/i,
+            message: 'Пожалуйста, введите правильный адрес электронной почты',
+          },
+        })}
+        label="Почта"
+        type="email"
+        error={Boolean(errors.email)}
+        helperText={errors.email?.message}
+      />
 
-        <input type="password" {...register("password", { required: "Password is required" })}  />
-        {errors.password && <p>{errors.password.message}</p>}
-        
-        <button type="submit">Вход</button>
-        {errorMessage && <p>{errorMessage}</p>}
-      </form>
-    </>
+      <TextField
+        {...register('password', {
+          required: 'Поле обязательно для заполнения',
+          minLength: {
+            value: 3,
+            message: 'Пароль должен содержать не менее 3 символов',
+          },
+        })}
+        label="Пароль"
+        type="password"
+        error={Boolean(errors.password)}
+        helperText={errors.password?.message}
+      />
+
+      <Button type="submit" variant="outlined" sx={{ width: '200px' }}>
+        Войти
+      </Button>
+      {errorMessage && <p>{errorMessage}</p>}
+    </Box>
   );
 }
