@@ -12,6 +12,7 @@ import Avatar from '@mui/material/Avatar';
 import HomeIcon from '@mui/icons-material/Home';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
+import ReplyIcon from '@mui/icons-material/Reply';
 export default function FindEmployee() {
 
   const navigate = useNavigate()
@@ -80,7 +81,7 @@ export default function FindEmployee() {
         </Typography>
       </CardContent>
       <CardActions>
-        <Button size="small" onClick={() => navigate(-1)}>Назад</Button>
+        <ReplyIcon fontSize="large" onClick={() => navigate(-1)}>Назад</ReplyIcon>
       </CardActions>
     </Card>
   );
