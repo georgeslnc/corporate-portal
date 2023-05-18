@@ -61,7 +61,12 @@ export default function BasicTextFields() {
           <ListItem 
             key={employee.id} component='div' 
             onClick={()=>handleClick(employee.id)}
-            sx={{ marginLeft: '15px', textDecoration: 'none' }}>
+            sx={{ 
+              marginLeft: '15px', 
+              textDecoration: 'none', 
+              cursor: 'pointer','&:hover': {
+              textDecoration: 'underline',
+            }, }}>
             <ListItemAvatar>
               <Avatar src={employee.photoUrl}/>
             </ListItemAvatar>
