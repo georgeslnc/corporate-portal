@@ -55,15 +55,23 @@ export default function FindEmployee() {
         <Typography variant="body2" color="text.secondary">
           {selectedDepartament?.title}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          <HomeIcon  />{selectedDepartament?.location}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          <PhoneIcon fontSize="small" /> {selectedEmployee?.phone}
-        </Typography>
-        <Typography variant="body2" color="text.secondary">
-          <EmailIcon fontSize="small" /> {selectedEmployee?.email}
-        </Typography>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <HomeIcon fontSize="small" />
+          <Typography variant="body2" color="text.secondary" style={{ marginLeft: '8px' }}>
+            {selectedDepartament?.location}
+          </Typography>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <PhoneIcon fontSize="small" color="inherit" />
+          <Typography variant="body2" color="text.secondary" style={{ marginLeft: '8px' }}>
+            {selectedEmployee?.phone}
+          </Typography>
+        </div>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <Typography variant="body2" color="text.secondary">
+            <EmailIcon fontSize="small" color="inherit"   /> {selectedEmployee?.email}
+          </Typography>
+        </div>
         <Typography variant="body2" color="text.secondary">
           Руководитель: {' '}
           <Link to={`/employee/${groupHead?.id}`}>
