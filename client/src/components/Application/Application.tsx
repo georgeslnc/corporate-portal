@@ -4,6 +4,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { postOffer } from "../../redux/Thunk/offer";
 import Bid from "./Bid";
 import {
+  Box,
   FormControl,
   InputLabel,
   MenuItem,
@@ -30,17 +31,19 @@ export default function Application() {
   );
   const dispatch = useAppDispatch();
   const [selectedDepartment, setSelectedDepartment] = useState<string | null>(
-    "1"
+    "0"
   );
   const [titleDep, setTitleDep] = useState("");
   const [titleGroup, settitleGroup] = useState("");
   const [selectedValue, setSelectedValue] = useState<string>("1");
   const { register, handleSubmit, reset } = useForm<Inputs>();
+ // const { control, handleSubmit } = useForm<IFormInput>();
 
   const eventDepartment = (e: SelectChangeEvent) => {
     const selectedOption = e.target.value;
     const depId = department.find((el) => el.title === selectedOption)?.id;
     setTitleDep(selectedOption || "");
+    settitleGroup("");
     setSelectedDepartment(`${depId}` || null);
   };
 
@@ -63,13 +66,14 @@ export default function Application() {
 
   return (
     <>
+     <Box sx={{ width: 320, color: "black" }}>
       <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label"></InputLabel>
+        <InputLabel id="demo-simple-select-label">Выбор департамента</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={titleDep}
-          label="department"
+          label = "Выбор департамента"
           onChange={eventDepartment}
         >
           {department.map((element) => (
@@ -79,13 +83,13 @@ export default function Application() {
           ))}
         </Select>
       </FormControl>
-      <FormControl fullWidth>
-        <InputLabel id="demo-simple-select-label"></InputLabel>
+      <FormControl fullWidth sx={{ marginTop: "30px"}}>
+        <InputLabel id="demo-simple-select-label">Выбор отдела</InputLabel>
         <Select
           labelId="demo-simple-select-label"
           id="demo-simple-select"
           value={titleGroup}
-          label="department"
+          label="Выбор отдела"
           onChange={selectGroup}
         >
           {group.map((element) =>
@@ -97,11 +101,15 @@ export default function Application() {
           )}
         </Select>
       </FormControl>
+     </Box>
+     {
+      titleGroup && 
       <form onSubmit={handleSubmit(onSubmit)}>
         <input type="text" {...register("value")} />
         <input type="number" {...register("time")} />
         <button>Подать заявку</button>
       </form>
+     }
       <Bid />
     </>
   );

@@ -4,7 +4,7 @@ import { changeStatusOffer } from "../../redux/Thunk/changeStatusOffer";
 
 const userData: string | null = localStorage.getItem('userData');
 const parsedUserData: { groupId: number } = userData ? JSON.parse(userData) : null;
-const groupId: number = parsedUserData ? parsedUserData.groupId : 5 ;
+const groupId: number = parsedUserData ? parsedUserData.groupId : 4 ;
 
 export default function Bid() {
   const offer = useAppSelector((state: RootState) => state.employeesSlice.offer);
