@@ -15,7 +15,7 @@ module.exports = (sequelize, DataTypes) => {
     {
       title: DataTypes.STRING,
       url: DataTypes.TEXT,
-      authorId: DataTypes.INTEGER,
+      documentType: DataTypes.TEXT,
     },
     {
       sequelize,

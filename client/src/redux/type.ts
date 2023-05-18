@@ -82,3 +82,17 @@ export interface NewsState {
   news: NewsItem[];
   error: string;
 }
+
+export type File ={
+  id: number,
+  title: string,
+  url: string,
+  documentType: string,
+  createdAt: Date;
+  updatedAt: Date;
+}
+
+export interface InitialFilesState {
+  files: File[]
+  loading: boolean
+}
