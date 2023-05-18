@@ -30,13 +30,13 @@ const StyledDrawer = styled(Drawer)({
     width: drawerWidth,
     borderRadius: 16,
     height: '590px',
-    marginTop: '170px',
+    marginTop: '73px',
     marginLeft: '10px',
     backgroundImage: `url('./img/фон.png')`,
     // backgroundColor: 'white',
     backgroundSize: 'cover',
     backgroundPosition: 'center center',
-    boxShadow: '1px 0px 5px 3px rgba(0,0,0,0.3)',
+    boxShadow: '1px 2px 5px 3px rgba(0,0,0,0.3)',
   },
   '& .MuiTypography-root': {
     color: 'black',
@@ -63,7 +63,7 @@ const Navbar = () => {
 
   const user = {
     name: 'Иван Иванов',
-    avatarUrl: './img/avatar.jpg',
+    avatarUrl: './img/default-avatar.png',
   };
 
   const navLinks = [
