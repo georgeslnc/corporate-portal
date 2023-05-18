@@ -3,6 +3,13 @@ import { RootState, useAppDispatch, useAppSelector } from "../../redux/type";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { postOffer } from "../../redux/Thunk/offer";
 import Bid from "./Bid";
+import {
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+} from "@mui/material";
 
 type Inputs = {
   value: string;
@@ -25,19 +32,23 @@ export default function Application() {
   const [selectedDepartment, setSelectedDepartment] = useState<string | null>(
     "1"
   );
-  const [selectedValue, setSelectedValue] = useState<string | null>("1");
+  const [titleDep, setTitleDep] = useState("");
+  const [titleGroup, settitleGroup] = useState("");
+  const [selectedValue, setSelectedValue] = useState<string>("1");
   const { register, handleSubmit, reset } = useForm<Inputs>();
 
-  const eventDepartment = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedOption = e.target.options[e.target.selectedIndex];
-    const selectedId = selectedOption.getAttribute("data-id");
-    setSelectedDepartment(selectedId);
+  const eventDepartment = (e: SelectChangeEvent) => {
+    const selectedOption = e.target.value;
+    const depId = department.find((el) => el.title === selectedOption)?.id;
+    setTitleDep(selectedOption || "");
+    setSelectedDepartment(`${depId}` || null);
   };
 
-  const selectGroup = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const selectedOption = e.target.options[e.target.selectedIndex];
-    const selectedId = selectedOption.getAttribute("data-id");
-    setSelectedValue(selectedId);
+  const selectGroup = (e: SelectChangeEvent) => {
+    const selectedOption = e.target.value;
+    const groupId = group.find((el) => el.title === selectedOption)?.id;
+    settitleGroup(selectedOption || "");
+    setSelectedValue(`${groupId}`);
   };
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
@@ -52,22 +63,40 @@ export default function Application() {
 
   return (
     <>
-      <select onChange={eventDepartment}>
-        {department.map((element) => (
-          <option key={element.id} value={element.title} data-id={element.id}>
-            {element.title}
-          </option>
-        ))}
-      </select>
-      <select onChange={selectGroup}>
-        {group.map((element) =>
-          element.departamentId === Number(selectedDepartment) ? (
-            <option key={element.id} value={element.title} data-id={element.id}>
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label"></InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={titleDep}
+          label="department"
+          onChange={eventDepartment}
+        >
+          {department.map((element) => (
+            <MenuItem key={element.id} value={element.title}>
               {element.title}
-            </option>
-          ) : null
-        )}
-      </select>
+            </MenuItem>
+          ))}
+        </Select>
+      </FormControl>
+      <FormControl fullWidth>
+        <InputLabel id="demo-simple-select-label"></InputLabel>
+        <Select
+          labelId="demo-simple-select-label"
+          id="demo-simple-select"
+          value={titleGroup}
+          label="department"
+          onChange={selectGroup}
+        >
+          {group.map((element) =>
+            element.departamentId === Number(selectedDepartment) ? (
+              <MenuItem key={element.id} value={element.title}>
+                {element.title}
+              </MenuItem>
+            ) : null
+          )}
+        </Select>
+      </FormControl>
       <form onSubmit={handleSubmit(onSubmit)}>
         <input type="text" {...register("value")} />
         <input type="number" {...register("time")} />

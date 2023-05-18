@@ -7,6 +7,7 @@ router.post('/', async (req, res) => {
     const {
       title, groupId, employeesId, deadline
     } = req.body;
+    console.log(">>>>>>>>>>>>>>>>>>>",title, groupId, employeesId, deadline)
     const result = await Offer.create({
       title,
       groupId: Number(groupId),
@@ -26,7 +27,6 @@ router.post('/status', async (req, res) => {
       id
     } = req.body;
     const result = await Offer.findByPk(id);
-    console.log(">>>>>>>>>>>>>>>>>>>>>.", result);
     await result.update({ status: true });
     res.sendStatus(200);
   } catch (err) {
