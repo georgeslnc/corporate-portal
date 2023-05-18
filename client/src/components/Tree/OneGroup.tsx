@@ -1,25 +1,49 @@
-import React from 'react'
-import { Link, useNavigate, useParams } from 'react-router-dom'
+import React from 'react';
+import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Employee, Group, RootState, useAppSelector } from '../../redux/type';
+import Button from '@mui/material/Button';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Avatar from '@mui/material/Avatar';
 
 export default function OneGroup() {
-
-  const { id } = useParams()
-  const navigate = useNavigate()
+  const { id } = useParams();
+  const navigate = useNavigate();
   const employees = useAppSelector((state: RootState) => state.employeesSlice.employees);
-   const selectedGroup = employees.filter((employee: Employee) => employee.groupId === Number(id) )
+  const selectedGroup = employees.filter((employee: Employee) => employee.groupId === Number(id)).filter((el:Employee) => el.professionId !== 3);
+  const selectedGroupAll = employees.filter((employee: Employee) => employee.groupId === Number(id))
+  const groupHead = selectedGroupAll.find((employee: Employee) => employee.professionId === 3 )
+  console.log(selectedGroupAll);
   
-  return (
-    <ul>
-    {selectedGroup.map((employee: Employee) => (
-      <li key={employee.id}>
-        <Link to={`/employee/${employee.id}`}>
-          <p>{employee.firstName}</p>
-          <p>{employee.lastName}</p>
-        </Link>
-      </li>
-    ))}
-    <button onClick={() => navigate(-1)}>Назад</button>
-  </ul>
+  const handleClick = (id:number) => (
+    navigate(`/employee/${id}`)
   )
+
+  return (
+        <>
+         {selectedGroup.map((employee: Employee) => (
+           <ListItem 
+           key={employee.id} component='div' 
+           onClick={()=>handleClick(employee.id)}
+           sx={{ 
+            marginLeft: '15px', 
+            textDecoration: 'none', 
+            cursor: 'pointer','&:hover': {
+            textDecoration: 'underline',
+           }, }}>
+           <ListItemAvatar>
+             <Avatar src={employee.photoUrl}/>
+           </ListItemAvatar>
+           <ListItemText primary={`${employee.firstName} ${employee.lastName}`} />
+         </ListItem>
+          ))}
+          
+        <p> Начальник отдела: {groupHead?.firstName} {groupHead?.lastName}</p>
+
+      <Button onClick={() => navigate(-1)}>Назад</Button>
+        </>
+
+  );
 }
+
