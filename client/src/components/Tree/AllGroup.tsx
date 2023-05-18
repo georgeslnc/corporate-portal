@@ -2,6 +2,7 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { Group, RootState, useAppSelector } from '../../redux/type';
 import { List, ListItem, ListItemText, Divider } from '@mui/material';
+import GroupsIcon from '@mui/icons-material/Groups';
 
 type DepartamentId = {
   departamentId: number;
@@ -10,16 +11,15 @@ type DepartamentId = {
 export default function AllGroup(departamentId: DepartamentId) {
   const groups = useAppSelector((state: RootState) => state.employeesSlice.group);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const handleClick = (id:number) => (
-    navigate(`/tree/${id}`)
-  )
+  const handleClick = (id: number) => {
+    navigate(`/tree/${id}`);
+  };
 
   const selectedGroup = groups.filter(
     (group: Group) => group.departamentId === departamentId.departamentId
   );
-
 
   return (
     <List component="nav" aria-label="mailbox folders">
@@ -29,19 +29,21 @@ export default function AllGroup(departamentId: DepartamentId) {
           component="div"
           onClick={() => handleClick(group.id)}
           sx={{
+            display: 'flex',
+            alignItems: 'center',
             marginLeft: '15px',
             textDecoration: 'none',
+            fontSize: '20px',
             cursor: 'pointer',
             '&:hover': {
               textDecoration: 'underline',
             },
           }}
         >
-          {group.title}
+          <GroupsIcon sx={{ marginRight: '10px' }} />
+          <ListItemText primary={group.title} />
         </ListItem>
       ))}
     </List>
   );
 }
-
-
