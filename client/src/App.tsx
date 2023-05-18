@@ -24,7 +24,7 @@ function App() {
   }, []);
 
   return (
-    <div style={{ paddingLeft: '270px', paddingTop: '75px' }}>
+    <div style={{ paddingLeft: '266px', paddingTop: '66px' }}>
       <FastNavigate />
       <Routes>
         <Route path="/auth/login" element={<LoginForm />} />
