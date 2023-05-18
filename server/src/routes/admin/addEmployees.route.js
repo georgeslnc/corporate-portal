@@ -4,16 +4,16 @@ const phoneHandler = require('../../utils/formHandlers');
 
 router.post('/employees', async (req, res) => {
   const {
-    firstName, middleName, lastName, groupId, professionId, email, phoneNumber,
+    firstName, middleName, lastName, groupId, professionId, email, phoneNumber, birthday
   } = req.body;
 
   const phone = phoneHandler(phoneNumber);
 
   // todo: удалить заглушки
-  const birthday = '1994-02-01';
+  // const birthday = '1994-02-01';
   const photo = '/sada/asdas/logo.jpg';
 
-  console.log('|______|  req.body;:', req.body);
+  console.log('|______|  req.bodyrs;:', req.body);
 
   const fields = Object.keys(req.body);
   const checkData = fields.every((field) => req.body[field]);
