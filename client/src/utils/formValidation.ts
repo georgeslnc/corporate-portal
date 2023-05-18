@@ -23,6 +23,6 @@ export const phoneValidation = {
   required: 'Введите номер телефона',
   pattern: {
     value: /^7[0-9]{10}$/,
-    message: 'Телефон должен быть в формате 79*******',
+    message: 'В формате 79xxxxxxx',
   },
 };
