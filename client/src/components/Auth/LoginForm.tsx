@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useForm, SubmitHandler } from 'react-hook-form';
+import { useForm, SubmitHandler, ErrorMessage } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+
+import { Box, Button, TextField } from '@mui/material';
 
 type Inputs = {
   email: string;
@@ -52,25 +54,76 @@ export default function LoginForm() {
   };
 
   return (
-    <>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <input
-          type="email"
-          {...register('email', { required: 'Введите email' })}
-          placeholder="@email"
-        />
-        {errors.email && <p>{errors.email.message}</p>}
+    <Box
+      component="form"
+      onSubmit={handleSubmit(onSubmit)}
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        border: 1,
+        borderColor: 'divider',
+        p: 2,
+        width: '400px',
+        gap: 1.5,
+        marginTop: '100px',
+        marginLeft: '50px',
+      }}
+    >
+      <TextField
+        {...register('email', {
+          required: 'Поле обязательно для заполнения',
+          pattern: {
+            value: /^\S+@\S+$/i,
+            message: 'Пожалуйста, введите правильный адрес электронной почты',
+          },
+        })}
+        label="Почта"
+        type="email"
+        error={Boolean(errors.email)}
+        helperText={errors.email?.message}
+      />
 
-        <input
-          type="password"
-          {...register('password', { required: 'Введите пароль' })}
-          placeholder="password"
-        />
-        {errors.password && <p>{errors.password.message}</p>}
+      <TextField
+        {...register('password', {
+          required: 'Поле обязательно для заполнения',
+          minLength: {
+            value: 3,
+            message: 'Пароль должен содержать не менее 3 символов',
+          },
+        })}
+        label="Пароль"
+        type="password"
+        error={Boolean(errors.password)}
+        helperText={errors.password?.message}
+      />
 
-        <button type="submit">Вход</button>
-        {errorMessage && <p>{errorMessage}</p>}
-      </form>
-    </>
+      <Button type="submit" variant="outlined" sx={{ width: '200px' }}>
+        Добавить сотрудника
+      </Button>
+      {errorMessage && <p>{errorMessage}</p>}
+    </Box>
   );
+
+  // return (
+  //   <>
+  //     <form onSubmit={handleSubmit(onSubmit)}>
+  //       <input
+  //         type="email"
+  //         {...register('email', { required: 'Введите email' })}
+  //         placeholder="@email"
+  //       />
+  //       {errors.email && <p>{errors.email.message}</p>}
+
+  //       <input
+  //         type="password"
+  //         {...register('password', { required: 'Введите пароль' })}
+  //         placeholder="password"
+  //       />
+  //       {errors.password && <p>{errors.password.message}</p>}
+
+  //       <button type="submit">Вход</button>
+  //       {errorMessage && <p>{errorMessage}</p>}
+  //     </form>
+  //   </>
+  // );
 }
