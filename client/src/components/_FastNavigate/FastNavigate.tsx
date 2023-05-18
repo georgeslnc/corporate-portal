@@ -47,13 +47,13 @@ const Navbar = () => {
   const location = useLocation();
   const [selectedLink, setSelectedLink] = useState(location.pathname);
 
-  const handleLinkClick = (path) => {
+  const handleLinkClick = (path: any) => {
     setSelectedLink(path);
   };
 
   const [anchorEl, setAnchorEl] = useState(null);
 
-  const handleMenuOpen = (event) => {
+  const handleMenuOpen = (event: any) => {
     setAnchorEl(event.currentTarget);
   };
 
@@ -75,6 +75,7 @@ const Navbar = () => {
     { path: '/', name: 'Главная', icon: <Home /> },
     { path: '/chat', name: 'Чат', icon: <Chat /> },
     { path: '/documents', name: 'Документы', icon: <Description /> },
+    { path: '/admin/employee', name: 'Добавить сотрудника', icon: <Description /> },
   ];
 
   return (
@@ -92,11 +93,7 @@ const Navbar = () => {
             <IconButton onClick={handleMenuOpen} color="inherit">
               <Avatar alt={user.name} src={user.avatarUrl} />
             </IconButton>
-            <Menu
-              anchorEl={anchorEl}
-              open={Boolean(anchorEl)}
-              onClose={handleMenuClose}
-            >
+            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
               <MenuItem onClick={handleMenuClose}>Профиль</MenuItem>
               <MenuItem onClick={handleMenuClose}>Выйти</MenuItem>
             </Menu>

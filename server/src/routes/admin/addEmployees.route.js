@@ -6,6 +6,8 @@ router.post('/employees', async (req, res) => {
     firstName, middleName, lastName, groupId, professionId, email, phone, birthday, photo
   } = req.body;
 
+  console.log('|______|  req.body;:', req.body);
+
   const fields = Object.keys(req.body);
   const checkData = fields.every((field) => req.body[field]);
 
