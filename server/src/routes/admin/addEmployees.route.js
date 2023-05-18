@@ -1,10 +1,16 @@
 const router = require('express').Router();
 const { Employee, AuthInfo } = require('../../../db/models');
+const { phoneHandler } = require('../../utils/formHandlers');
 
 router.post('/employees', async (req, res) => {
   const {
-    firstName, middleName, lastName, groupId, professionId, email, phone, birthday, photo
+    firstName, middleName, lastName, groupId, professionId, email, phone,
   } = req.body;
+
+  const editPhone = phoneHandler(phone);
+  // birthday, photo
+
+  console.log('|______|  req.body;:', req.body);
 
   const fields = Object.keys(req.body);
   const checkData = fields.every((field) => req.body[field]);

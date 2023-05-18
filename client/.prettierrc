@@ -1,0 +1,12 @@
+{
+  "singleQuote": true,
+  "trailingComma": "all",
+  "printWidth": 130,
+  "parser": "",
+  "indent": "none",
+  "tabWidth": 2,
+  "endOfLine": "auto",
+  "jClosingBracketSameLine": false,
+  "jsxEmptyTagSpacing": false,
+  "bracketSpacing": true
+}
