@@ -6,6 +6,8 @@ import { Box, TextField, Button, FormControl, InputLabel, Select, MenuItem, Form
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { createTheme } from '@mui/material/styles';
+import { ruRU } from '@mui/x-date-pickers/locales';
 import ru from 'date-fns/locale/ru';
 import { addYears } from 'date-fns';
 
@@ -23,12 +25,12 @@ type Inputs = {
   firstName: string;
   middleName: string;
   lastName: string;
-  groupId: string;
-  professionId: string;
+  groupTitle: string;
+  profession: string;
   email: string;
   phoneNumber: string;
   birthday: string | Date;
-  photo: FileList;
+  // photo: FileList;
 };
 
 const minDate = new Date(1930, 0, 1); // 1 Января 1900 года
@@ -49,19 +51,7 @@ export default function EmployeeForm() {
     reset,
     watch,
     formState: { errors, isDirty },
-  } = useForm<Inputs>({
-    defaultValues: {
-      firstName: '',
-      middleName: '',
-      lastName: '',
-      groupId: '',
-      professionId: '',
-      email: '',
-      phoneNumber: '',
-      birthday: '',
-      photo: null || undefined,
-    },
-  });
+  } = useForm<Inputs>();
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     // handleDateChange((prev) => cleanText(prev));
@@ -69,22 +59,22 @@ export default function EmployeeForm() {
     data = { ...data, birthday: selectedDate ? selectedDate.toISOString().slice(0, 10) : '' };
     console.log('|______|  data:', data);
     try {
-      const response = await fetch(`http://localhost:3000/admin/employees`, {
+      const res = await fetch(`http://localhost:3000/admin/employees`, {
         method: 'POST',
         credentials: 'include',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(data),
       });
 
-      if (response.status === 200) {
-        const responseData = await response.json();
+      if (res.status === 200) {
+        const resData = await res.json();
 
-        console.log('|______|  responseData:', responseData);
+        console.log('|______|  resData:', resData);
         reset();
         // navigate('/');
       } else {
-        console.error(`Error: ${response.status}`);
-        const errorData = await response.json();
+        console.error(`Error: ${res.status}`);
+        const errorData = await res.json();
         setErrorMessage(errorData.message);
         // reset();
       }
@@ -94,7 +84,11 @@ export default function EmployeeForm() {
   };
 
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFns} adapterLocale={ru}>
+    <LocalizationProvider
+      dateAdapter={AdapterDateFns}
+      adapterLocale={ru}
+      localeText={ruRU.components.MuiLocalizationProvider.defaultProps.localeText}
+    >
       <Box
         component="form"
         onSubmit={handleSubmit(onSubmit)}
@@ -129,28 +123,28 @@ export default function EmployeeForm() {
           helperText={errors.lastName?.message}
         />
 
-        <FormControl error={Boolean(errors.groupId)} sx={{ flexGrow: 1 }}>
+        <FormControl error={Boolean(errors.groupTitle)} sx={{ flexGrow: 1 }}>
           <InputLabel id="group-label">Отдел</InputLabel>
-          <Select {...register('groupId', { required: true })} label="Отдел">
+          <Select {...register('groupTitle', { required: true })} label="Отдел">
             {groups.map((group) => (
               <MenuItem value={group.title} key={group.id}>
                 {group.title}
               </MenuItem>
             ))}
           </Select>
-          <FormHelperText>{errors.groupId?.message}</FormHelperText>
+          <FormHelperText>{errors.groupTitle?.message}</FormHelperText>
         </FormControl>
 
-        <FormControl error={Boolean(errors.professionId)} sx={{ flexGrow: 1 }}>
+        <FormControl error={Boolean(errors.profession)} sx={{ flexGrow: 1 }}>
           <InputLabel id="profession-label">Должность</InputLabel>
-          <Select {...register('professionId', { required: true })} label="Должность">
+          <Select {...register('profession', { required: true })} label="Должность">
             {professions.map((profession) => (
               <MenuItem value={profession.position} key={profession.id}>
                 {profession.position}
               </MenuItem>
             ))}
           </Select>
-          <FormHelperText>{errors.professionId?.message}</FormHelperText>
+          <FormHelperText>{errors.profession?.message}</FormHelperText>
         </FormControl>
         <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>
           <TextField
@@ -170,15 +164,8 @@ export default function EmployeeForm() {
             sx={{ flexGrow: 1 }}
           />
         </Box>
-
-        {/* selectedDate, handleDateChange */}
         <DatePicker
           label="Дата рождения"
-          slotProps={{
-            textField: {
-              helperText: 'ДД/ММ/ГГГГ',
-            },
-          }}
           minDate={minDate}
           maxDate={maxDate}
           value={selectedDate}
