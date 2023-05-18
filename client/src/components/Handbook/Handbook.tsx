@@ -3,10 +3,17 @@ import { Employee, RootState, useAppSelector } from '../../redux/type';
 import { Link } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
+import ListItem from '@mui/material/ListItem';
+import ListItemText from '@mui/material/ListItemText';
+import ListItemAvatar from '@mui/material/ListItemAvatar';
+import Avatar from '@mui/material/Avatar';
+import ImageIcon from '@mui/icons-material/Image';
 
 export default function BasicTextFields() {
   const employees = useAppSelector((state: RootState) => state.employeesSlice.employees);
   const [searchQuery, setSearchQuery] = useState('');
+
+  
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const query = event.target.value;
@@ -47,15 +54,14 @@ export default function BasicTextFields() {
       />
       {searchQuery && (
         filteredEmployees.map((employee: Employee) => (
-          <div key={employee.id}>
-            <Link to={`/employee/${employee.id}`}>
-              <p>{employee.firstName}</p>
-              <p>{employee.lastName}</p>
-            </Link>
-          </div>
+          <ListItem key={employee.id} component={Link} to={`/employee/${employee.id}`}>
+            <ListItemAvatar>
+              <Avatar src={employee.photoUrl}/>
+            </ListItemAvatar>
+            <ListItemText primary={`${employee.firstName} ${employee.lastName}`} />
+          </ListItem>
         ))
       )}
     </Box>
   );
 }
-
