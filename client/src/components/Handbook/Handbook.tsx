@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Employee, RootState, useAppSelector } from '../../redux/type';
 import { Link } from 'react-router-dom';
+import Box from '@mui/material/Box';
+import TextField from '@mui/material/TextField';
 
-export default function Handbook() {
+export default function BasicTextFields() {
   const employees = useAppSelector((state: RootState) => state.employeesSlice.employees);
   const [searchQuery, setSearchQuery] = useState('');
 
@@ -24,12 +26,24 @@ export default function Handbook() {
   });
 
   return (
-    <div>
-      <input
-        type="text"
+    <Box
+      component="form"
+      sx={{
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        marginLeft: '50px'
+      }}
+      noValidate
+      autoComplete="off"
+    >
+      <TextField
+        id="searchQuery"
+        label="Введите фамилию или имя сотрудника"
+        variant="outlined"
         value={searchQuery}
         onChange={handleInputChange}
-        placeholder="Введите фамилию или имя сотрудника"
+        sx={{ width: '500px', marginTop: '100px', marginLeft: '25px' }}
       />
       {searchQuery && (
         filteredEmployees.map((employee: Employee) => (
@@ -41,6 +55,7 @@ export default function Handbook() {
           </div>
         ))
       )}
-    </div>
+    </Box>
   );
 }
+
