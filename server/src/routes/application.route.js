@@ -7,7 +7,6 @@ router.post('/', async (req, res) => {
     const {
       title, groupId, employeesId, deadline
     } = req.body;
-    console.log(">>>>>>>>>>>>>>>>>>>",title, groupId, employeesId, deadline)
     const result = await Offer.create({
       title,
       groupId: Number(groupId),
