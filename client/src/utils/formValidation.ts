@@ -21,7 +21,7 @@ export const emailValidation = {
 export const phoneValidation = {
   required: 'Введите номер телефона',
   pattern: {
-    value: /^8[0-9]{10}$/,
-    message: 'В формате 89xxxxxxx',
+    value: /^(8|7)[0-9]{10}$/,
+    message: 'Формат 79xx или 89хх',
   },
 };

@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const { Employee, Group, Profession } = require('../../../db/models');
 
-const phoneFormatter = require('../../utils/phoneFormatter.js.');
+const phoneFormatter = require('../../utils/phoneFormatter');
 const validateModel = require('../../utils/validateModel');
 
 router.post('/employees', async (req, res) => {
@@ -11,7 +11,7 @@ router.post('/employees', async (req, res) => {
     } = req.body;
 
     const phone = phoneFormatter(phoneNumber);
-    const photo = 'https://i.pravatar.cc/300'; //*  удалить заглушку
+    const photoUrl = 'https://i.pravatar.cc/300'; //*  удалить заглушку
 
     const groupId = await validateModel(Group, { title: groupTitle });
     const professionId = await validateModel(Profession, { position: profession });
@@ -31,7 +31,7 @@ router.post('/employees', async (req, res) => {
     }
 
     const user = await Employee.create({
-      firstName, middleName, lastName, groupId, professionId, email, phone, birthday, photo
+      firstName, middleName, lastName, groupId, professionId, email, phone, birthday, photoUrl
     });
 
     return res.status(200).send({ message: 'Сотрудник успешно создан' });

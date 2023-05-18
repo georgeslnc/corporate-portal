@@ -33,13 +33,13 @@ export default function EmployeeForm() {
     register,
     handleSubmit,
     reset,
+    setValue,
     formState: { errors },
   } = useForm<FormInputs>({
     mode: 'onBlur',
   });
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
-    console.log('|______|  data:', data);
     data = { ...data, birthday: selectedDate ? dateFormatter(selectedDate) : '' };
 
     try {
@@ -55,6 +55,7 @@ export default function EmployeeForm() {
         setAlertMessage(data.message);
         reset();
         handleDateChange(maxDate);
+
         setTimeout(() => {
           setAlertMessage('');
         }, 6 * 1000);

@@ -17,7 +17,7 @@ export default function ProfFormControl({ register, errors, reset }: Props) {
     <>
       <FormControl error={Boolean(errors.groupTitle)} sx={{ flexGrow: 1 }}>
         <InputLabel id="group-label">Отдел</InputLabel>
-        <Select {...register('groupTitle', { required: true })} label="Отдел">
+        <Select {...register('groupTitle', { required: true })} label="Отдел" defaultValue="">
           {groups.map((group) => (
             <MenuItem value={group.title} key={group.id}>
               {group.title}
@@ -28,7 +28,7 @@ export default function ProfFormControl({ register, errors, reset }: Props) {
       </FormControl>
       <FormControl error={Boolean(errors.profession)} sx={{ flexGrow: 1 }}>
         <InputLabel id="profession-label">Должность</InputLabel>
-        <Select {...register('profession', { required: true })} label="Должность">
+        <Select {...register('profession', { required: true })} label="Должность" defaultValue="">
           {professions.map((profession) => (
             <MenuItem value={profession.position} key={profession.id}>
               {profession.position}
