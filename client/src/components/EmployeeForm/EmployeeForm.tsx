@@ -30,15 +30,18 @@ export default function EmployeeForm() {
 
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     // convert birthday to ISO string
-    if (data.birthday) {
-      data.birthday = data.birthday.toISOString();
-    }
+    // if (data.birthday) {
+    //   data.birthday = data.birthday.toISOString();
+    // }
 
     // create FormData for image upload
-    const formData = new FormData();
-    Object.keys(data).forEach(key => {
-      formData.append(key, data[key]);
-    });
+const formData = new FormData();
+// Object.keys(data).forEach((key) => {
+//   if (key in data) {
+//     formData.append(key, data[key as keyof Inputs]);
+//   }
+// })
+
 
     try {
       const response = await fetch(`http://localhost:3000/auth/register`, {
@@ -90,14 +93,15 @@ export default function EmployeeForm() {
         <TextField {...register("email")} label="Email" type="email" error={Boolean(errors.email)} helperText={errors.email?.message} />
         <TextField {...register("phone")} label="Phone" type="tel" error={Boolean(errors.phone)} helperText={errors.phone?.message} />
 
-        <DatePicker
+      <DatePicker
           label="Birthday"
           value={null}
-          onChange={(newValue) => {
+          onChange={(newValue: Date | null) => {
             setValue('birthday', newValue);
           }}
-          renderInput={(params) => <TextField {...params} />}
-        />
+          renderInput={(par : any) => <TextField {...par} />}
+      />
+
 
         <input {...register("photo")} type="file" />
 

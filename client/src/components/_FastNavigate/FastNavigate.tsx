@@ -60,6 +60,13 @@ const FastNavigate = () => {
       >
         Documents
       </button>
+      <button 
+        className='buttonStyle' 
+        onClick={() => navigate("/admin/employee")}
+      >
+        Employee Form
+      </button>
+      
     </div>
   );
 };
