@@ -7,24 +7,23 @@ interface DocumentsAuditProps {
 }
 
 export default function DocumentsAudit({ filesAudit }: DocumentsAuditProps) {
-  const dispatch = useAppDispatch()
-  const downloadHandler = (id:number, title: string) => {
+  const dispatch = useAppDispatch();
+  const downloadHandler = (id: number, title: string) => {
     console.log(id, title);
-    dispatch(downloadedFile(id, title))
-    
-  }
+    dispatch(downloadedFile(id, title));
+  };
 
   return (
     <div>
       <h1>Документы бухгалтерии</h1>
       <ul>
-        {filesAudit.map((file: File) =>(
+        {filesAudit.map((file: File) => (
           <div key={file.id}>
             <li key={file.id}>{file.title}</li>
-            <button onClick={()=> downloadHandler(file.id, file.title)}>Скачать документ</button>
+            <button onClick={() => downloadHandler(file.id, file.title)}>Скачать документ</button>
           </div>
-          ))}
-      </ul>   
+        ))}
+      </ul>
     </div>
   );
 }

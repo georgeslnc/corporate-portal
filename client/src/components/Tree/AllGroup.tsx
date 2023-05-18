@@ -17,9 +17,7 @@ export default function AllGroup(departamentId: DepartamentId) {
     navigate(`/tree/${id}`);
   };
 
-  const selectedGroup = groups.filter(
-    (group: Group) => group.departamentId === departamentId.departamentId
-  );
+  const selectedGroup = groups.filter((group: Group) => group.departamentId === departamentId.departamentId);
 
   return (
     <List component="nav" aria-label="mailbox folders">
