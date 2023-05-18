@@ -29,7 +29,7 @@ const StyledDrawer = styled(Drawer)({
   '& .MuiDrawer-paper': {
     width: drawerWidth,
     borderRadius: 16,
-    height: '590px',
+    height: '690px',
     marginTop: '73px',
     marginLeft: '10px',
     backgroundImage: `url('./img/фон.png')`,

@@ -37,7 +37,7 @@ export const NewsContainer = styled('div')({
   padding: '2rem',
   fontFamily: 'Arial, sans-serif',
   borderRadius: 16,
-  minHeight: '526px',
+  minHeight: '626px',
 });
 
 export const PublishedAtText = styled(Typography)({
