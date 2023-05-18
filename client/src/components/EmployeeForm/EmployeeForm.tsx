@@ -1,19 +1,8 @@
 import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { RootState, useAppSelector } from '../../redux/type';
+import { FormInputs } from './types';
 
-import {
-  Box,
-  TextField,
-  Button,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  FormHelperText,
-  Snackbar,
-  Alert,
-} from '@mui/material';
+import { Box, TextField, Button, Alert } from '@mui/material';
 
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -30,36 +19,7 @@ import {
   middleNameValidation,
   phoneValidation,
 } from '../../utils/formValidation';
-
-type PopupProps = {
-  open: boolean;
-  message: string;
-  severity: 'success' | 'error';
-  handleClose: () => void;
-};
-
-// todo: проверить Popup/удалить код
-// function Popup({ open, message, severity, handleClose }: PopupProps) {
-//   return (
-//     <Snackbar open={open} autoHideDuration={3 * 1000} onClose={handleClose}>
-//       <Alert onClose={handleClose} severity={severity} sx={{ width: '100%' }}>
-//         {message}
-//       </Alert>
-//     </Snackbar>
-//   );
-// }
-
-type Inputs = {
-  firstName: string;
-  middleName: string;
-  lastName: string;
-  groupTitle: string;
-  profession: string;
-  email: string;
-  phoneNumber: string;
-  birthday: string;
-  // photo: FileList;
-};
+import ProfFormControl from './ProfFormControl';
 
 const minDate = new Date(1930, 0, 1);
 const maxDate = addYears(new Date(), -18);
@@ -69,23 +29,19 @@ export default function EmployeeForm() {
   const [errorMessage, setErrorMessage] = useState('');
   const [alertMessage, setAlertMessage] = useState('');
 
-  const groups = useAppSelector((state: RootState) => state.employeesSlice.group);
-  const professions = useAppSelector((state: RootState) => state.employeesSlice.profession);
-
   const {
     register,
     handleSubmit,
-    setValue,
-    control,
     reset,
-    watch,
-    formState: { errors, isDirty },
-  } = useForm<Inputs>({
+    formState: { errors },
+  } = useForm<FormInputs>({
     mode: 'onBlur',
   });
 
-  const onSubmit: SubmitHandler<Inputs> = async (data) => {
+  const onSubmit: SubmitHandler<FormInputs> = async (data) => {
+    console.log('|______|  data:', data);
     data = { ...data, birthday: selectedDate ? dateFormatter(selectedDate) : '' };
+
     try {
       const res = await fetch(`http://localhost:3000/admin/employees`, {
         method: 'POST',
@@ -97,10 +53,8 @@ export default function EmployeeForm() {
       if (res.status === 200) {
         const data = await res.json();
         setAlertMessage(data.message);
-        setOpen(true);
         reset();
         handleDateChange(maxDate);
-        // navigate('/');
         setTimeout(() => {
           setAlertMessage('');
         }, 6 * 1000);
@@ -108,7 +62,6 @@ export default function EmployeeForm() {
         console.error(`Error: ${res.status}`);
         const errorData = await res.json();
         setErrorMessage(errorData.message);
-        // reset();
       }
     } catch (error) {
       console.error(error);
@@ -154,28 +107,7 @@ export default function EmployeeForm() {
           error={Boolean(errors.lastName)}
           helperText={errors.lastName?.message}
         />
-        <FormControl error={Boolean(errors.groupTitle)} sx={{ flexGrow: 1 }}>
-          <InputLabel id="group-label">Отдел</InputLabel>
-          <Select {...register('groupTitle', { required: true })} label="Отдел">
-            {groups.map((group) => (
-              <MenuItem value={group.title} key={group.id}>
-                {group.title}
-              </MenuItem>
-            ))}
-          </Select>
-          <FormHelperText>{errors.groupTitle?.message}</FormHelperText>
-        </FormControl>
-        <FormControl error={Boolean(errors.profession)} sx={{ flexGrow: 1 }}>
-          <InputLabel id="profession-label">Должность</InputLabel>
-          <Select {...register('profession', { required: true })} label="Должность">
-            {professions.map((profession) => (
-              <MenuItem value={profession.position} key={profession.id}>
-                {profession.position}
-              </MenuItem>
-            ))}
-          </Select>
-          <FormHelperText>{errors.profession?.message}</FormHelperText>
-        </FormControl>
+        <ProfFormControl register={register} errors={errors} reset={reset} />
         <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>
           <TextField
             {...register('email', emailValidation)}
@@ -209,7 +141,6 @@ export default function EmployeeForm() {
           Добавить сотрудника
         </Button>
         {errorMessage && <p>{errorMessage}</p>}
-        {/* <Popup open={open} message={alertMessage} severity="success" handleClose={handleClose} /> */}
         {alertMessage && <Alert severity="success">{alertMessage}</Alert>}
       </Box>
     </LocalizationProvider>
