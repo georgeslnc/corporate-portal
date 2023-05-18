@@ -98,32 +98,9 @@ export default function LoginForm() {
       />
 
       <Button type="submit" variant="outlined" sx={{ width: '200px' }}>
-        Добавить сотрудника
+        Войти
       </Button>
       {errorMessage && <p>{errorMessage}</p>}
     </Box>
   );
-
-  // return (
-  //   <>
-  //     <form onSubmit={handleSubmit(onSubmit)}>
-  //       <input
-  //         type="email"
-  //         {...register('email', { required: 'Введите email' })}
-  //         placeholder="@email"
-  //       />
-  //       {errors.email && <p>{errors.email.message}</p>}
-
-  //       <input
-  //         type="password"
-  //         {...register('password', { required: 'Введите пароль' })}
-  //         placeholder="password"
-  //       />
-  //       {errors.password && <p>{errors.password.message}</p>}
-
-  //       <button type="submit">Вход</button>
-  //       {errorMessage && <p>{errorMessage}</p>}
-  //     </form>
-  //   </>
-  // );
 }

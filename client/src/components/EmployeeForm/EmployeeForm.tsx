@@ -2,22 +2,19 @@ import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { RootState, useAppSelector } from '../../redux/type';
 
-import {
-  Box,
-  TextField,
-  Button,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  FormHelperText,
-  FormLabel,
-} from '@mui/material';
-import styled from '@emotion/styled';
-
+import { Box, TextField, Button, FormControl, InputLabel, Select, MenuItem, FormHelperText } from '@mui/material';
 // import { DatePicker } from '@mui/lab';
 // import AdapterDateFns from '@mui/lab/AdapterDateFns';
 // import LocalizationProvider from '@mui/lab/LocalizationProvider';
+import styled from '@emotion/styled';
+
+import {
+  emailValidation,
+  firstNameValidation,
+  lastNameValidation,
+  middleNameValidation,
+  phoneValidation,
+} from '../../utils/formValidation';
 
 type Inputs = {
   firstName: string;
@@ -91,19 +88,19 @@ export default function EmployeeForm() {
       }}
     >
       <TextField
-        {...register('firstName')}
+        {...register('firstName', firstNameValidation)}
         label="Имя"
         error={Boolean(errors.firstName)}
         helperText={errors.firstName?.message}
       />
       <TextField
-        {...register('middleName')}
+        {...register('middleName', middleNameValidation)}
         label="Отчество"
         error={Boolean(errors.middleName)}
         helperText={errors.middleName?.message}
       />
       <TextField
-        {...register('lastName')}
+        {...register('lastName', lastNameValidation)}
         label="Фамилия"
         error={Boolean(errors.lastName)}
         helperText={errors.lastName?.message}
@@ -111,7 +108,7 @@ export default function EmployeeForm() {
 
       <FormControl error={Boolean(errors.groupId)} sx={{ flexGrow: 1 }}>
         <InputLabel id="group-label">Отдел</InputLabel>
-        <Select {...register('groupId')} label="Отдел">
+        <Select {...register('groupId', { required: true })} label="Отдел">
           {groups.map((group) => (
             <MenuItem value={group.title} key={group.id}>
               {group.title}
@@ -122,8 +119,8 @@ export default function EmployeeForm() {
       </FormControl>
 
       <FormControl error={Boolean(errors.professionId)} sx={{ flexGrow: 1 }}>
-        <InputLabel id="profession-label">Profession</InputLabel>
-        <Select {...register('professionId')} label="Должность">
+        <InputLabel id="profession-label">Должность</InputLabel>
+        <Select {...register('professionId', { required: true })} label="Должность">
           {professions.map((profession) => (
             <MenuItem value={profession.position} key={profession.id}>
               {profession.position}
@@ -134,7 +131,7 @@ export default function EmployeeForm() {
       </FormControl>
       <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>
         <TextField
-          {...register('email')}
+          {...register('email', emailValidation)}
           label="Почта"
           type="email"
           error={Boolean(errors.email)}
@@ -142,7 +139,7 @@ export default function EmployeeForm() {
           sx={{ flexGrow: 1 }}
         />
         <TextField
-          {...register('phone')}
+          {...register('phone', phoneValidation)}
           label="Телефон"
           type="tel"
           error={Boolean(errors.phone)}
@@ -157,19 +154,3 @@ export default function EmployeeForm() {
     </Box>
   );
 }
-
-{
-  /* <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>das</Box>; */
-}
-
-//  <FormControl error={Boolean(errors.professionId)} sx={{ flexGrow: 1 }}>
-//     <InputLabel id="profession-label">Profession</InputLabel>
-//     <Select {...register('professionId')} label="Должность">
-//       {professions.map((profession) => (
-//         <MenuItem value={profession.position} key={profession.id}>
-//           {profession.position}
-//         </MenuItem>
-//       ))}
-//     </Select>
-//     <FormHelperText>{errors.professionId?.message}</FormHelperText>
-//   </FormControl>
