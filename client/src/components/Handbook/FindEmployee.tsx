@@ -1,7 +1,17 @@
 import React from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Departament, Employee, Group, Profession, RootState, useAppSelector } from '../../redux/type';
-
+import Card from '@mui/material/Card';
+import CardActions from '@mui/material/CardActions';
+import CardContent from '@mui/material/CardContent';
+import CardMedia from '@mui/material/CardMedia';
+import Button from '@mui/material/Button';
+import Typography from '@mui/material/Typography';
+import { styled } from '@mui/material/styles';
+import Avatar from '@mui/material/Avatar';
+import HomeIcon from '@mui/icons-material/Home';
+import PhoneIcon from '@mui/icons-material/Phone';
+import EmailIcon from '@mui/icons-material/Email';
 export default function FindEmployee() {
 
   const navigate = useNavigate()
@@ -18,26 +28,54 @@ export default function FindEmployee() {
   const selectedProfession = professions.find((profession:Profession)=> profession.id === selectedEmployee?.professionId)
   const selectedDepartament = departaments.find((department:Departament)=> department.id === selectedGroup?.departamentId)
   
+  const StyledAvatar = styled(Avatar)({
+    width: 140,
+    height: 140,
+    marginTop:40,
+    borderRadius: '50%',
+  });
+
   return (
-        <div>
-          <img src ={`${selectedEmployee?.photoUrl}`} alt='photo' />
-          <p>{selectedEmployee?.firstName}</p>
-          <p>{selectedEmployee?.middleName}</p>
-          <p>{selectedEmployee?.lastName}</p>
-          <p>Должность: {selectedProfession?.position}</p>
-          <p>{selectedGroup?.title}</p>
-          <p>{selectedDepartament?.title}</p>
-          <p>Расположение: {selectedDepartament?.location}</p>
-          <p>{selectedEmployee?.phone}</p>
-          <p>{selectedEmployee?.email}</p>
-          <p>
-              Руководитель{' '}
-              <Link to={`/employee/${groupHead?.id}`}>
-                {groupHead?.firstName} {groupHead?.lastName}
-              </Link>
-            </p>
-          <button onClick={()=> navigate(-1)}>Назад</button>
-        </div>
+    <Card sx={{ 
+      display: 'flex', 
+      maxWidth: 500, 
+      maxHeight: 250,
+      marginTop: '100px' }}>
+      <StyledAvatar alt="Employee Photo" src={selectedEmployee?.photoUrl} />
+      <CardContent sx={{ flex: 1 }}>
+        <Typography gutterBottom variant="h5" component="div">
+          {selectedEmployee?.firstName} {selectedEmployee?.lastName}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+         {selectedProfession?.position}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {selectedGroup?.title}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          {selectedDepartament?.title}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          <HomeIcon  />{selectedDepartament?.location}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          <PhoneIcon fontSize="small" /> {selectedEmployee?.phone}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          <EmailIcon fontSize="small" /> {selectedEmployee?.email}
+        </Typography>
+        <Typography variant="body2" color="text.secondary">
+          Руководитель: {' '}
+          <Link to={`/employee/${groupHead?.id}`}>
+            {groupHead?.firstName} {groupHead?.lastName}
+          </Link>
+        </Typography>
+      </CardContent>
+      <CardActions>
+        <Button size="small" onClick={() => navigate(-1)}>Назад</Button>
+      </CardActions>
+    </Card>
   );
+  
 }
 
