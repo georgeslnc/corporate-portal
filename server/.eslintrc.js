@@ -50,7 +50,7 @@ module.exports = {
     {
       files: ['db/**'],
       rules: {
-        'no-console': 'off',
+        'no-console': 1,
         'global-require': 0,
         'no-unused-vars': 0,
       },

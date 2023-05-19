@@ -4,9 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node app.js",
-    "dev": "nodemon app.js --ignore session --ext js,jsx,json",
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node ./src/app.js",
+    "dev": "nodemon ./src/app.js --ignore session --ext js,jsx,json",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix"
   },
