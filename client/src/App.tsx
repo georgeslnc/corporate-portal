@@ -15,6 +15,8 @@ import LoginForm from './components/Auth/LoginForm';
 import FastNavigate from './components/_FastNavigate/FastNavigate';
 import OneGroup from './components/Tree/OneGroup';
 import Documents from './components/Documents/Documents';
+import Room from './components/Room/Room';
+
 import EmployeeForm from './components/EmployeeForm/EmployeeForm';
 
 function App() {
@@ -39,6 +41,7 @@ function App() {
         {/* Chat */}
         <Route path="/" element={<Home socket={socket} />} />
         <Route path="/chat" element={<Chat socket={socket} />} />
+        <Route path="/room" element={<Room />} />
         <Route path="/documents" element={<Documents />} />
         <Route path="/admin/employee" element={<EmployeeForm />} />
       </Routes>

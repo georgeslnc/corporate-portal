@@ -10,7 +10,7 @@ const initialState: InititalStateEmployee = {
   department: [],
   profession: [],
   offer: [],
-}
+};
 
 const employeesSlice = createSlice({
   name: 'employees',
@@ -18,13 +18,7 @@ const employeesSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getEmployees.fulfilled, (state, action) => {
-      const {
-        allEmployees,
-        allGroup,
-        allDepartment,
-        allProfessions,
-        allOffer,
-      } = action.payload;
+      const { allEmployees, allGroup, allDepartment, allProfessions, allOffer } = action.payload;
       state.employees = [...allEmployees];
       state.group = [...allGroup];
       state.department = [...allDepartment];
@@ -43,9 +37,9 @@ const employeesSlice = createSlice({
           }
           return el;
         });
-      }
+      },
     );
-  }
+  },
 });
 
 export default employeesSlice.reducer;

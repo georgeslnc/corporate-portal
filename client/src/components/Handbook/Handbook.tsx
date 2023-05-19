@@ -12,17 +12,14 @@ import ImageIcon from '@mui/icons-material/Image';
 export default function BasicTextFields() {
   const employees = useAppSelector((state: RootState) => state.employeesSlice.employees);
   const [searchQuery, setSearchQuery] = useState('');
-  const navigate = useNavigate()
-  
+  const navigate = useNavigate();
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const query = event.target.value;
     setSearchQuery(query);
   };
 
-  const handleClick = (id:number) =>(
-    navigate(`/employee/${id}`)
-  )
+  const handleClick = (id: number) => navigate(`/employee/${id}`);
 
   const filteredEmployees = employees.filter((employee: Employee) => {
     const fullName = `${employee.lastName} ${employee.firstName}`;
@@ -43,7 +40,7 @@ export default function BasicTextFields() {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'flex-start',
-        marginLeft: '50px'
+        marginLeft: '50px',
       }}
       noValidate
       autoComplete="off"
@@ -56,24 +53,27 @@ export default function BasicTextFields() {
         onChange={handleInputChange}
         sx={{ width: '500px', marginTop: '100px', marginLeft: '25px' }}
       />
-      {searchQuery && (
+      {searchQuery &&
         filteredEmployees.map((employee: Employee) => (
-          <ListItem 
-            key={employee.id} component='div' 
-            onClick={()=>handleClick(employee.id)}
-            sx={{ 
-              marginLeft: '15px', 
-              textDecoration: 'none', 
-              cursor: 'pointer','&:hover': {
-              textDecoration: 'underline',
-            }, }}>
+          <ListItem
+            key={employee.id}
+            component="div"
+            onClick={() => handleClick(employee.id)}
+            sx={{
+              marginLeft: '15px',
+              textDecoration: 'none',
+              cursor: 'pointer',
+              '&:hover': {
+                textDecoration: 'underline',
+              },
+            }}
+          >
             <ListItemAvatar>
-              <Avatar src={employee.photoUrl}/>
+              <Avatar src={employee.photoUrl} />
             </ListItemAvatar>
             <ListItemText primary={`${employee.firstName} ${employee.lastName}`} />
           </ListItem>
-        ))
-      )}
+        ))}
     </Box>
   );
 }

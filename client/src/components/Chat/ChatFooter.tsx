@@ -1,14 +1,13 @@
 import React, { useState } from 'react';
 
-export default function ChatFooter({ socket }:any) {
+export default function ChatFooter({ socket }: any) {
   const [message, setMessage] = useState('');
 
-  const handleTyping = () =>
-    socket.emit('typing', `${localStorage.getItem('userName')} is typing`);
+  const handleTyping = () => socket.emit('typing', `${localStorage.getItem('userName')} is typing`);
 
-  const handleSendMessage = (e:any) => {
+  const handleSendMessage = (e: any) => {
     e.preventDefault();
-    if(message.trim() && localStorage.getItem('userName')) {
+    if (message.trim() && localStorage.getItem('userName')) {
       socket.emit('message', {
         text: message,
         name: localStorage.getItem('userName'),
