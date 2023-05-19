@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { useForm, SubmitHandler, ErrorMessage } from 'react-hook-form';
+import { useForm, SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
-import { Box, Button, TextField } from '@mui/material';
+import { Box, Button, TextField, Alert, AlertTitle } from '@mui/material';
 
 type Inputs = {
   email: string;
@@ -17,12 +17,15 @@ export default function LoginForm() {
     reset,
     watch,
   } = useForm<Inputs>();
-  const [errorMessage, setErrorMessage] = useState<string | null>('');
+
+  const [errorMessage, setErrorMessage] = useState<object | null>(null);
+  const [isErrorVisible, setIsErrorVisible] = useState(false);
+
   const navigate = useNavigate();
   const watchedFields = watch();
 
   useEffect(() => {
-    if (isDirty) {
+    if (isDirty && !isErrorVisible) {
       setErrorMessage(null);
     }
   }, [watchedFields, isDirty]);
@@ -40,16 +43,27 @@ export default function LoginForm() {
         const responseData = await response.json();
         localStorage.setItem('userData', JSON.stringify(responseData));
         reset();
-        navigate('/');
+        setErrorMessage({ title: 'Успешный вход!', message: 'Добро пожаловать в корпоративный портал' });
+        setTimeout(() => {
+          navigate('/');
+          setIsErrorVisible(false);
+        }, 3000);
       } else {
         console.error(`Error: ${response.status}`);
         const errorData = await response.json();
-        setErrorMessage(errorData.message);
+        setErrorMessage(errorData);
         localStorage.removeItem('userData');
         reset();
+        setIsErrorVisible(true);
       }
     } catch (error) {
-      console.error(error);
+      console.error('===> error', error);
+      setErrorMessage({ title: 'Ошибка сервера.', message: 'Попробуйте повторить попытку позже.' });
+      setIsErrorVisible(true);
+
+      setTimeout(() => {
+        setIsErrorVisible(false);
+      }, 3000);
     }
   };
 
@@ -62,11 +76,15 @@ export default function LoginForm() {
         flexDirection: 'column',
         border: 1,
         borderColor: 'divider',
+        borderRadius: '10px',
         p: 2,
         width: '400px',
-        gap: 1.5,
+        height: '350px',
+        gap: 2,
+        padding: '20px 30px',
         marginTop: '100px',
         marginLeft: '50px',
+        boxShadow: '0px 0px 4px rgba(0, 0, 0, 0.25)',
       }}
     >
       <TextField
@@ -81,6 +99,11 @@ export default function LoginForm() {
         type="email"
         error={Boolean(errors.email)}
         helperText={errors.email?.message}
+        sx={{
+          width: '400px',
+          height: '70px',
+          marginTop: '40px',
+        }}
       />
 
       <TextField
@@ -95,12 +118,23 @@ export default function LoginForm() {
         type="password"
         error={Boolean(errors.password)}
         helperText={errors.password?.message}
+        sx={{
+          width: '400px',
+          height: '70px',
+        }}
       />
 
-      <Button type="submit" variant="outlined" sx={{ width: '200px' }}>
+      <Button type="submit" variant="outlined" sx={{ width: '400px', padding: '10px' }}>
         Войти
       </Button>
-      {errorMessage && <p>{errorMessage}</p>}
+      {/* {errorMessage && <p>{errorMessage}</p>} */}
+      {/* {errorMessage && <Alert severity="error">{errorMessage}</Alert>} */}
+      {isErrorVisible && (
+        <Alert severity={errorMessage?.title === 'Успешный вход!' ? 'success' : 'error'}>
+          <AlertTitle>{errorMessage?.title}</AlertTitle>
+          {errorMessage?.message}
+        </Alert>
+      )}
     </Box>
   );
 }
