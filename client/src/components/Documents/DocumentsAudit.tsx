@@ -14,14 +14,13 @@ export default function DocumentsAudit({ filesAudit }: DocumentsAuditProps) {
   const dispatch = useAppDispatch();
 
   const downloadHandler = (id: number, title: string) => {
-    console.log(id, title);
     dispatch(downloadedFile(id, title));
   };
   const deleteHandler = (id: number) => dispatch(delFileFromBack(id));
 
   const userDataString = localStorage.getItem('userData');
-  const userData = JSON.parse(userDataString);
-  const professionId = userData.professionId;
+  const userData = userDataString ? JSON.parse(userDataString) : null;
+  const professionId = userData?.professionId;
 
   return (
     <div>
