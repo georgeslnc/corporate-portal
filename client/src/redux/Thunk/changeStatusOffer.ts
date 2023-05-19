@@ -1,17 +1,17 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
-export const changeStatusOffer = createAsyncThunk("offer/fetchOffer", async (id:number) => {
+export const changeStatusOffer = createAsyncThunk('offer/fetchOffer', async (id: number) => {
   try {
-    const response = await fetch("http://localhost:3000/application/status", {
-      method: "Post",
-      credentials: "include",
+    const response = await fetch('http://localhost:3000/application/status', {
+      method: 'Post',
+      credentials: 'include',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({  id }),
+      body: JSON.stringify({ id }),
     });
-      if(response.ok) {
-        return id
-      }
+    if (response.ok) {
+      return id;
+    }
   } catch (error) {
-    return Promise.reject(new Error("400"));
+    return Promise.reject(new Error('400'));
   }
 });

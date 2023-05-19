@@ -20,7 +20,7 @@ const socketIO = require('socket.io')(http, {
     origin: 'http://localhost:5173',
   },
 });
-const dbCheck = require('./src/utils/dbCheck');
+const dbCheck = require('./utils/dbCheck');
 
 let users = [];
 socketIO.on('connection', (socket) => {
@@ -48,15 +48,15 @@ socketIO.on('connection', (socket) => {
 
 // рекварим МИДЛВЕЙРЫ
 
-const isAuth = require('./src/middlewares/isAuth');
+const isAuth = require('./middlewares/isAuth');
 
-const getEmployeesRoute = require('./src/routes/getEmployees.route');
-const getNewsRoute = require('./src/routes/getNews.route');
-const application = require('./src/routes/application.route');
-const authRouter = require('./src/routes/auth.router');
-const addFileRouter = require('./src/routes/files/addFile.route');
-const employeesRouter = require('./src/routes/admin/addEmployees.route');
-
+const getEmployeesRoute = require('./routes/getEmployees.route');
+const getNewsRoute = require('./routes/getNews.route');
+const application = require('./routes/application.route');
+const authRouter = require('./routes/auth.router');
+const addFileRouter = require('./routes/files/addFile.route');
+const employeesRouter = require('./routes/admin/addEmployees.route');
+const deleteEmployeesRouter = require('./routes/deleteEmployees.route');
 
 const PORT = process.env.PORT || 3000;
 
@@ -97,7 +97,7 @@ app.use('/application', application);
 app.use('/auth', authRouter);
 app.use('/documents', addFileRouter);
 app.use('/admin', employeesRouter);
-
+app.use('/deleteemployees', deleteEmployeesRouter);
 
 http.listen(PORT, () => {
   console.log(`Server started on ${PORT}`);

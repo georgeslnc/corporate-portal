@@ -1,21 +1,22 @@
 import React from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Departament, Employee, Group, Profession, RootState, useAppSelector } from '../../redux/type';
+import { Departament, Employee, Group, Profession, RootState, useAppDispatch, useAppSelector } from '../../redux/type';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
 import HomeIcon from '@mui/icons-material/Home';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
-import ReplyIcon from '@mui/icons-material/Reply';
-export default function FindEmployee() {
+import DeleteIcon from '@mui/icons-material/Delete';
+import { delEmployees } from '../../redux/Thunk/deleteEmployees';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
 
-  const navigate = useNavigate()
+export default function FindEmployee() {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { id } = useParams();
 
   const employees = useAppSelector((state: RootState) => state.employeesSlice.employees);
@@ -23,32 +24,40 @@ export default function FindEmployee() {
   const professions = useAppSelector((state: RootState) => state.employeesSlice.profession);
   const departaments = useAppSelector((state: RootState) => state.employeesSlice.department);
 
+  const deleteHandler = (id: number) => dispatch(delEmployees(id));
+
   const selectedEmployee = employees.find((employee: Employee) => employee.id === Number(id));
-  const selectedGroup = groups.find((group:Group) => group.id === selectedEmployee?.groupId)
-  const groupHead = employees.find((employee: Employee)=>employee.id === selectedGroup?.groupHeadId )
-  const selectedProfession = professions.find((profession:Profession)=> profession.id === selectedEmployee?.professionId)
-  const selectedDepartament = departaments.find((department:Departament)=> department.id === selectedGroup?.departamentId)
-  
+  const selectedGroup = groups.find((group: Group) => group.id === selectedEmployee?.groupId);
+  const groupHead = employees.find((employee: Employee) => employee.id === selectedGroup?.groupHeadId);
+  const selectedProfession = professions.find((profession: Profession) => profession.id === selectedEmployee?.professionId);
+  const selectedDepartament = departaments.find((department: Departament) => department.id === selectedGroup?.departamentId);
+
   const StyledAvatar = styled(Avatar)({
     width: 140,
     height: 140,
-    marginTop:40,
+    marginTop: 40,
     borderRadius: '50%',
   });
 
+  const userDataString = localStorage.getItem('userData');
+  const userData = userDataString ? JSON.parse(userDataString) : null;
+  const professionId = userData?.professionId;
+
   return (
-    <Card sx={{ 
-      display: 'flex', 
-      maxWidth: 500, 
-      maxHeight: 250,
-      marginTop: '100px' }}>
+    <Card
+      sx={{
+        display: 'flex',
+        maxWidth: 500,
+        maxHeight: 250,
+      }}
+    >
       <StyledAvatar alt="Employee Photo" src={selectedEmployee?.photoUrl} />
       <CardContent sx={{ flex: 1 }}>
         <Typography gutterBottom variant="h5" component="div">
           {selectedEmployee?.firstName} {selectedEmployee?.lastName}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-         {selectedProfession?.position}
+          {selectedProfession?.position}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           {selectedGroup?.title}
@@ -70,21 +79,32 @@ export default function FindEmployee() {
         </div>
         <div style={{ display: 'flex', alignItems: 'center' }}>
           <Typography variant="body2" color="text.secondary">
-            <EmailIcon fontSize="small" color="inherit"   /> {selectedEmployee?.email}
+            <EmailIcon fontSize="small" color="inherit" /> {selectedEmployee?.email}
           </Typography>
         </div>
         <Typography variant="body2" color="text.secondary">
-          Руководитель: {' '}
+          Руководитель:{' '}
           <Link to={`/employee/${groupHead?.id}`}>
             {groupHead?.firstName} {groupHead?.lastName}
           </Link>
         </Typography>
       </CardContent>
       <CardActions>
-        <ReplyIcon fontSize="large" onClick={() => navigate(-1)}>Назад</ReplyIcon>
+        <HighlightOffIcon fontSize="large" onClick={() => navigate(-1)}>
+          Назад
+        </HighlightOffIcon>
       </CardActions>
+      {professionId === 5 ? (
+        <DeleteIcon
+          onClick={() => {
+            if (selectedEmployee?.id) {
+              deleteHandler(selectedEmployee.id);
+            }
+          }}
+        >
+          Удалить сотрудника
+        </DeleteIcon>
+      ) : null}
     </Card>
   );
-  
 }
-

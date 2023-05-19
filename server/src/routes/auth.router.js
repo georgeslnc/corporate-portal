@@ -14,13 +14,13 @@ router.post('/login', async (req, res) => {
     // Проверка существования пользователя
     const user = await Employee.findOne({ where: { email } }, { raw: true });
     if (!user) {
-      return res.status(400).send({ message: 'Пользователь не найден' });
+      return res.status(400).send({ title: 'Ошибка входа', message: 'Пользователь не найден' });
     }
 
     // Проверка существования AuthInfo для пользователя
     const checkUser = await AuthInfo.findOne({ where: { userId: user.id } }, { raw: true });
     if (checkUser) {
-      return res.status(200).send({ userId: user.id, groupId: user.groupId });
+      return res.status(200).send({ userId: user.id, groupId: user.groupId, professionId: user.professionId });
     }
 
     // Хеширование пароля и создание AuthInfo
@@ -37,11 +37,11 @@ router.post('/login', async (req, res) => {
 
     req.session.email = user.email;
     req.session.userId = user.id;
-    return res.status(200).send({ userId: user.id, groupId: user.groupId });
+    return res.status(200).send({ userId: user.id, groupId: user.groupId, professionId: user.professionId });
     // Сохранение данных в сессию и отправка ответа
   } catch (error) {
     console.log('===> error', error);
-    return res.status(500).send({ message: 'Ошибка сервера.' });
+    return res.status(500).send({ title: 'Ошибка сервера.', message: 'Попробуйте повторить попытку.' });
   }
 });
 

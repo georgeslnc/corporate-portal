@@ -3,6 +3,7 @@ import { InititalStateEmployee, Offer } from '../type';
 import { getEmployees } from '../Thunk/employees';
 import { postOffer } from '../Thunk/offer';
 import { changeStatusOffer } from '../Thunk/changeStatusOffer';
+import { delEmployees } from '../Thunk/deleteEmployees';
 
 const initialState: InititalStateEmployee = {
   employees: [],
@@ -10,7 +11,7 @@ const initialState: InititalStateEmployee = {
   department: [],
   profession: [],
   offer: [],
-}
+};
 
 const employeesSlice = createSlice({
   name: 'employees',
@@ -18,13 +19,7 @@ const employeesSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(getEmployees.fulfilled, (state, action) => {
-      const {
-        allEmployees,
-        allGroup,
-        allDepartment,
-        allProfessions,
-        allOffer,
-      } = action.payload;
+      const { allEmployees, allGroup, allDepartment, allProfessions, allOffer } = action.payload;
       state.employees = [...allEmployees];
       state.group = [...allGroup];
       state.department = [...allDepartment];
@@ -43,9 +38,15 @@ const employeesSlice = createSlice({
           }
           return el;
         });
-      }
+      },
     );
-  }
+    builder.addMatcher(
+      (action) => action.type === delEmployees.fulfilled.type,
+      (state, action: PayloadAction<number>) => {
+        state.employees = state.employees.filter((employee) => employee.id !== action.payload);
+      },
+    );
+  },
 });
 
 export default employeesSlice.reducer;

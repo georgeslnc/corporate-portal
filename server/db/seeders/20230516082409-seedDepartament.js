@@ -26,7 +26,7 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          title: 'Админстративно-хозяйственный отдел',
+          title: 'Админстративно-хозяйственный департамент',
           location: '4 этаж',
           departamentHeadId: 4,
           createdAt: new Date(),
