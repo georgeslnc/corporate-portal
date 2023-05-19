@@ -6,22 +6,13 @@ import { Departament, Employee, Group, Profession, RootState, useAppSelector } f
 export default function Room() {
 
   const  { id } = useParams();
-  console.log('id-------------',id);
  
   const navigate = useNavigate()
 
-  // add user from localstorage
-  function getUser() {
-    const middleName = localStorage.getItem('middleName');
-    const lastName = localStorage.getItem('lastName');
-  }
-  const fullName = localStorage.getItem('fullName');
-  console.log(fullName);
-  
-  // let user2 = JSON.parse( localStorage.user );
-  // console.log(user2);
-  
-  
+  // get user from local storage
+  const localData = localStorage.userData;
+  const currUserId = JSON.parse(localData).userId
+
   const handSendToTheChat = () => {
     navigate('/chat');
   };
@@ -31,30 +22,49 @@ export default function Room() {
   const professions = useAppSelector((state: RootState) => state.employeesSlice.profession);
   const departaments = useAppSelector((state: RootState) => state.employeesSlice.department);
 
-  const selectedEmployee = employees.find((employee: Employee) => employee.id === Number(id));
-  console.log('-------------',selectedEmployee);
+  const currUser = employees.find((employee: Employee) => employee.id === Number(currUserId));
   
+  const userGroupId = currUser?.groupId;
+  const userGroup = groups[userGroupId-1];
+  
+  const professionsId = currUser?.professionId
+  const userProfession = professions[professionsId-1]
+  
+  const departamentsId = currUser?.groupId
+  const currDepartamnt = departaments[departamentsId-1]
+
+  const bossDepId = currUser?.groupId
+  const currDepartamntBoss = departaments[departamentsId-1]
+  const myBoss = currDepartamntBoss?.departamentHeadId
+  
+  const selectedEmployee = employees.find((employee: Employee) => employee.id === Number(id));
   const selectedGroup = groups.find((group:Group) => group.id === selectedEmployee?.groupId)
   const groupHead = employees.find((employee: Employee)=>employee.id === selectedGroup?.groupHeadId )
   const selectedProfession = professions.find((profession:Profession)=> profession.id === selectedEmployee?.professionId)
   const selectedDepartament = departaments.find((department:Departament)=> department.id === selectedGroup?.departamentId)
   
+  console.log('groups------------', groups);
+  console.log('currUser------------', currUser);
+  console.log('departaments------------', departaments);
+  console.log('professions------------', professions);
+  
 
-  console.log('emploe------', groupHead);
 
+  
   return (
     <div>
-        <img src ={`${selectedEmployee?.photoUrl}`} alt='photo' />
-          <p>Фамилия:{selectedEmployee?.lastName}</p>
-          <p>Фамилия local:{fullName}</p>
-          <p>Имя:{selectedEmployee?.firstName}</p>
-          <p>Отчество:{selectedEmployee?.middleName}</p>
-          <p>Телефон:{selectedEmployee?.phone}</p>
-          <p>Почта:{selectedEmployee?.email}</p>
-          <p>Должность: {selectedProfession?.position}</p>
-          <p>{selectedGroup?.title}</p>
-          <p>{selectedDepartament?.title}</p>
-          <p>Расположение: {selectedDepartament?.location}</p>
+        <img src ={`${currUser?.photoUrl}`} alt='photo' />
+          {/* <p>Фамилия:{selectedEmployee?.lastName}</p> */}
+          {/* <p>Фамилия local:{fullName3?.firstName}</p> */}
+          <p>Имя: {currUser?.firstName}</p>
+          <p>Отчество: {currUser?.middleName}</p>
+          <p>Отчество: {currUser?.lastName}</p>
+          <p>Телефон: {currUser?.phone}</p>
+          <p>Почта: {currUser?.email}</p>
+          <p>Должность: {userProfession?.position}</p>
+          <p>Отдел: {userGroup?.title}</p>
+          <p>{currDepartamnt?.title}</p>
+          <p>Расположение: {currDepartamnt?.location}</p>
           <p>
               Руководитель{' '}
               <Link to={`/employee/${groupHead?.id}`}>

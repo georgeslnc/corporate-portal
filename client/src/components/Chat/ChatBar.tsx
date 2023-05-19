@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 
-export default function ChatBar({ socket }:any) {
+export default function ChatBar({ socket, currUser }:any) {
 
   const [users, setUsers] = useState([]);
 

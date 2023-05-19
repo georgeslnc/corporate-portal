@@ -3,11 +3,24 @@ import ChatBar from './ChatBar';
 import ChatBody from './ChatBody';
 import ChatFooter from './ChatFooter';
 import { Link } from 'react-router-dom';
+import { Departament, Employee, Group, Profession, RootState, useAppSelector } from '../../redux/type';
+
 
 export default function Chat({ socket }:any) {
   const [messages, setMessages] = useState([]);
   const [typingStatus, setTypingStatus] = useState('');
   const lastMessageRef = useRef(null);
+
+    // get user from local storage
+    const localData = localStorage.userData;
+    const currUserId = JSON.parse(localData).userId
+
+    const employees = useAppSelector((state: RootState) => state.employeesSlice.employees);
+    const currUser = employees.find((employee: Employee) => employee.id === Number(currUserId));
+    // console.log('currUser', currUser);
+    
+
+    
 
   // Оповещение
   const [hasNewMessages, setHasNewMessages] = useState(false);
@@ -48,7 +61,7 @@ export default function Chat({ socket }:any) {
 
   return (
     <div className="chat">
-      <ChatBar socket={socket}/>
+      <ChatBar socket={socket} currUser={currUser}/>
       <div className="chat__main">
         <ChatBody 
         messages={messages}
@@ -60,7 +73,7 @@ export default function Chat({ socket }:any) {
       {
       hasNewMessages 
       ? <div>{showNotification()}</div>
-      : <>{showNotification()}</>
+      : <></>
       }
     </div>
   );
