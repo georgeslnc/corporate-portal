@@ -41,11 +41,16 @@ export default function LoginForm() {
       });
 
       if (response.status === 200) {
-        const responseData = await response.json();
-        localStorage.setItem('userData', JSON.stringify(responseData));
-        reset();
-        setErrorMessage({ title: 'Успешный вход!', message: 'Добро пожаловать в корпоративный портал' });
+        const res = await response.json();
+
+        console.log('|______|  res:', res);
+        if (res.userData) {
+          localStorage.setItem('userData', JSON.stringify(res.userData));
+        }
+        setErrorMessage(res.message);
         setIsErrorVisible(true);
+        reset();
+
         setTimeout(() => {
           navigate('/');
           setIsErrorVisible(false);
@@ -53,10 +58,12 @@ export default function LoginForm() {
       } else {
         console.error(`Error: ${response.status}`);
         const errorData = await response.json();
-        setErrorMessage(errorData);
+
+        setErrorMessage(errorData.message);
         localStorage.removeItem('userData');
-        reset();
         setIsErrorVisible(true);
+        reset();
+
         setTimeout(() => {
           setIsErrorVisible(false);
         }, 2000);
