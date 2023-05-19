@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Departament, Employee, Group, Profession, RootState, useAppSelector } from '../../redux/type';
+import { Departament, Employee, Group, Profession, RootState, useAppDispatch, useAppSelector } from '../../redux/type';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
@@ -13,14 +13,18 @@ import HomeIcon from '@mui/icons-material/Home';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
 import ReplyIcon from '@mui/icons-material/Reply';
+import { delEmployees } from '../../redux/Thunk/deleteEmployees';
 export default function FindEmployee() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { id } = useParams();
 
   const employees = useAppSelector((state: RootState) => state.employeesSlice.employees);
   const groups = useAppSelector((state: RootState) => state.employeesSlice.group);
   const professions = useAppSelector((state: RootState) => state.employeesSlice.profession);
   const departaments = useAppSelector((state: RootState) => state.employeesSlice.department);
+
+  const deleteHandler = (id: number) => dispatch(delEmployees(id));
 
   const selectedEmployee = employees.find((employee: Employee) => employee.id === Number(id));
   const selectedGroup = groups.find((group: Group) => group.id === selectedEmployee?.groupId);
@@ -34,6 +38,10 @@ export default function FindEmployee() {
     marginTop: 40,
     borderRadius: '50%',
   });
+
+  const userDataString = localStorage.getItem('userData');
+  const userData = userDataString ? JSON.parse(userDataString) : null;
+  const professionId = userData?.professionId;
 
   return (
     <Card
@@ -87,6 +95,7 @@ export default function FindEmployee() {
           Назад
         </ReplyIcon>
       </CardActions>
+      {professionId === 5 ? <Button onClick={() => deleteHandler(selectedEmployee?.id)}>Удалить сотрудника</Button> : null}
     </Card>
   );
 }
