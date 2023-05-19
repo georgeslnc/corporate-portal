@@ -13,7 +13,6 @@ export default function ChatBody({ messages, lastMessageRef, typingStatus }:any)
   return (
     <>
       <header className="chat__mainHeader">
-        <p>Hangout with Colleagues</p>
         <button className="leaveChat__btn" onClick={handleLeaveChat}>
           LEAVE CHAT
         </button>
