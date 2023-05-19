@@ -3,6 +3,8 @@ import { File, useAppDispatch } from '../../redux/type';
 import { downloadedFile } from '../../redux/Thunk/files/downloadedFile';
 import { Typography, List, ListItem, Button } from '@mui/material';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
+import { delFileFromBack } from '../../redux/Thunk/files/deleteFile';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 interface DocumentsHRProps {
   filesHr: File[];
@@ -15,6 +17,12 @@ export default function DocumentsHR({ filesHr }: DocumentsHRProps) {
     dispatch(downloadedFile(id, title));
   };
 
+  const deleteHandler = (id: number) => dispatch(delFileFromBack(id));
+
+  const userDataString = localStorage.getItem('userData');
+  const userData = JSON.parse(userDataString);
+  const professionId = userData.professionId;
+
   return (
     <div>
       <Typography variant="h5" component="h5">
@@ -24,7 +32,8 @@ export default function DocumentsHR({ filesHr }: DocumentsHRProps) {
         {filesHr.map((file: File) => (
           <ListItem key={file.id}>
             {file.title}
-            <FileDownloadIcon onClick={() => downloadHandler(file.id, file.title)}>Скачать документ</FileDownloadIcon>
+            <FileDownloadIcon onClick={() => downloadHandler(file.id, file.title)}></FileDownloadIcon>
+            {professionId === 5 ? <DeleteIcon onClick={() => deleteHandler(file.id)}></DeleteIcon> : null}
           </ListItem>
         ))}
       </List>

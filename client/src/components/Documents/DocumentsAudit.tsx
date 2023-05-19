@@ -32,8 +32,8 @@ export default function DocumentsAudit({ filesAudit }: DocumentsAuditProps) {
         {filesAudit.map((file: File) => (
           <ListItem key={file.id}>
             {file.title}
-            <FileDownloadIcon onClick={() => downloadHandler(file.id, file.title)}>Скачать документ</FileDownloadIcon>
-            {professionId === 5 ? <DeleteIcon onClick={() => deleteHandler(file.id)}>Скачать документ</DeleteIcon> : null}
+            <FileDownloadIcon onClick={() => downloadHandler(file.id, file.title)}></FileDownloadIcon>
+            {professionId === 5 ? <DeleteIcon onClick={() => deleteHandler(file.id)}></DeleteIcon> : null}
           </ListItem>
         ))}
       </List>
