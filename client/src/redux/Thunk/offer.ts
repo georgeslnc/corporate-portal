@@ -3,7 +3,7 @@ import { OfferData } from '../../components/Application/Application';
 
 const userData: string | null = localStorage.getItem('userData');
 const parsedUserData: { userId: number } = userData ? JSON.parse(userData) : null;
-const userId: number = parsedUserData.userId;
+const userId: number = parsedUserData?.userId;
 
 export const postOffer = createAsyncThunk('offer/fetchOffer', async (offerData: OfferData) => {
   const { title, groupId, deadline } = offerData;

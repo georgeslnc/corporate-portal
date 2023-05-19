@@ -16,7 +16,7 @@ import ReplyIcon from '@mui/icons-material/Reply';
 export default function FindEmployee() {
   const navigate = useNavigate();
   const { id } = useParams();
-  
+
   const employees = useAppSelector((state: RootState) => state.employeesSlice.employees);
   const groups = useAppSelector((state: RootState) => state.employeesSlice.group);
   const professions = useAppSelector((state: RootState) => state.employeesSlice.profession);

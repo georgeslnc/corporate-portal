@@ -1,11 +1,8 @@
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
-
-export const setFiles = createAsyncThunk("files/fetchSetFiles", async (formData:any) => {
-
-
+export const setFiles = createAsyncThunk('files/fetchSetFiles', async (formData: any) => {
   try {
-      const response = await fetch('http://localhost:3000/documents/upload', {
+    const response = await fetch('http://localhost:3000/documents/upload', {
       method: 'POST',
       body: formData,
       credentials: 'include',
@@ -13,6 +10,6 @@ export const setFiles = createAsyncThunk("files/fetchSetFiles", async (formData:
     const fileInfo = await response.json();
     return fileInfo;
   } catch (error) {
-    return Promise.reject(new Error("400"));
+    return Promise.reject(new Error('400'));
   }
 });

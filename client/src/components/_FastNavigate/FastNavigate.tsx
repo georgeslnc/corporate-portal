@@ -10,15 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import {
-  AccountCircle,
-  Chat,
-  Description,
-  Home,
-  Inbox,
-  MenuBook,
-  PeopleAlt,
-} from '@mui/icons-material';
+import { AccountCircle, Chat, Description, Home, Inbox, MenuBook, PeopleAlt } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 import { AppBar, Toolbar, Typography, ListItemButton } from '@mui/material';
 

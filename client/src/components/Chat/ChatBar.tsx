@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from 'react';
 
-export default function ChatBar({ socket, currUser }:any) {
-
+export default function ChatBar({ socket, currUser }: any) {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    socket.on('newUserResponse', (data:any) => setUsers(data));
+    socket.on('newUserResponse', (data: any) => setUsers(data));
   }, [socket, users]);
 
   return (
@@ -15,7 +14,7 @@ export default function ChatBar({ socket, currUser }:any) {
       <div>
         <h4 className="chat__header">Сейчас на сайте</h4>
         <div className="chat__users">
-        {users.map((user) => (
+          {users.map((user) => (
             <p key={user.socketID}>{user.userName}</p>
           ))}
         </div>

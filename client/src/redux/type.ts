@@ -1,5 +1,5 @@
-import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
-import store from "./store";
+import { TypedUseSelectorHook, useDispatch, useSelector } from 'react-redux';
+import store from './store';
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
@@ -61,7 +61,7 @@ export type Offer = {
   groupId: number;
   employeesId: string;
   deadline: string;
-  status:boolean;
+  status: boolean;
   createdAt: Date;
   updatedAt: Date;
 };
@@ -83,16 +83,16 @@ export interface NewsState {
   error: string;
 }
 
-export type File ={
-  id: number,
-  title: string,
-  url: string,
-  documentType: string,
+export type File = {
+  id: number;
+  title: string;
+  url: string;
+  documentType: string;
   createdAt: Date;
   updatedAt: Date;
-}
+};
 
 export interface InitialFilesState {
-  files: File[]
-  loading: boolean
+  files: File[];
+  loading: boolean;
 }
