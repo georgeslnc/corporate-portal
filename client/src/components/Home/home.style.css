@@ -86,3 +86,22 @@
   padding-bottom: 11px;
   padding-left: 5px;
 }
+
+.error-container {
+  text-align: center;
+}
+
+.oval-container {
+  display: inline-block;
+  position: relative;
+}
+
+.overlay {
+  position: absolute;
+  top: 208px;
+  left: 423px;
+  width: 43%;
+  height: 28%;
+  border-radius: 20px;
+  background-color: white;
+}

@@ -4,7 +4,7 @@ import { fetchNews } from '../../redux/Thunk/news';
 import { NewsItem } from '../../redux/type';
 import Slider from 'react-slick';
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import { Typography, Box } from '@mui/material';
+import { Typography, Box, Alert } from '@mui/material';
 import 'slick-carousel/slick/slick.css';
 import 'slick-carousel/slick/slick-theme.css';
 import './home.style.css';
@@ -39,6 +39,22 @@ const NewsSlider = () => {
     }
   };
   const [activeSlide, setActiveSlide] = useState(0);
+
+  // if (news.loading) {
+  //   return <div>Loading...</div>;
+  // }
+
+  if (news.error) {
+    return (
+      <div className="error-container">
+        <Alert severity="error">Error: {news.error}</Alert>
+        <div className="oval-container">
+          <img src="./img/404.gif" alt="Error GIF" className="error-image" />
+          <div className="overlay"></div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="news-slider">
