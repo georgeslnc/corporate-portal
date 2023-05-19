@@ -61,4 +61,28 @@ router.get('/download/:id', async (req, res) => {
   }
 });
 
+router.delete('/delete/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    const file = await Document.findOne({ where: { id } });
+
+    if (!file) {
+      res.status(404).json({ msg: 'File not found' });
+      return;
+    }
+
+    const filePath = `fileStorage/${file.title}`;
+
+    fs.unlinkSync(filePath);
+
+    const deletedFile = await Document.destroy({ where: { id } });
+    if (deletedFile) {
+      res.json({ msg: 'File deleted' });
+    }
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ msg: 'Something went wrong' });
+  }
+});
+
 module.exports = router;

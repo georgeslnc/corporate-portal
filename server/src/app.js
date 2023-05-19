@@ -56,6 +56,7 @@ const application = require('./routes/application.route');
 const authRouter = require('./routes/auth.router');
 const addFileRouter = require('./routes/files/addFile.route');
 const employeesRouter = require('./routes/admin/addEmployees.route');
+const deleteEmployeesRouter = require('./routes/deleteEmployees.route');
 
 const PORT = process.env.PORT || 3000;
 
@@ -96,6 +97,7 @@ app.use('/application', application);
 app.use('/auth', authRouter);
 app.use('/documents', addFileRouter);
 app.use('/admin', employeesRouter);
+app.use('/deleteemployees', deleteEmployeesRouter);
 
 http.listen(PORT, () => {
   console.log(`Server started on ${PORT}`);
