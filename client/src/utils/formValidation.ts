@@ -6,7 +6,6 @@ const createNameValidation = (message: string) => ({
   },
 });
 
-// Используйте createNameValidation, чтобы создать правила валидации с разными сообщениями об ошибках:
 export const firstNameValidation = createNameValidation('Пожалуйста, введите корректное имя.');
 export const middleNameValidation = createNameValidation('Пожалуйста, введите корректное отчество.');
 export const lastNameValidation = createNameValidation('Пожалуйста, введите корректную фамилию.');
@@ -22,7 +21,7 @@ export const emailValidation = {
 export const phoneValidation = {
   required: 'Введите номер телефона',
   pattern: {
-    value: /^7[0-9]{10}$/,
-    message: 'В формате 79xxxxxxx',
+    value: /^(8|7)[0-9]{10}$/,
+    message: 'Формат 79xx или 89хх',
   },
 };
