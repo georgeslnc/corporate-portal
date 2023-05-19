@@ -4,6 +4,8 @@ import ChatBody from './ChatBody';
 import ChatFooter from './ChatFooter';
 import { Link } from 'react-router-dom';
 import { Departament, Employee, Group, Profession, RootState, useAppSelector } from '../../redux/type';
+import * as io from 'socket.io-client';
+const socket = io.connect('http://localhost:3000');
 
 export default function Chat({ socket }: any) {
   const [messages, setMessages] = useState([]);
@@ -16,36 +18,13 @@ export default function Chat({ socket }: any) {
 
   const employees = useAppSelector((state: RootState) => state.employeesSlice.employees);
   const currUser = employees.find((employee: Employee) => employee.id === Number(currUserId));
-  // console.log('currUser', currUser);
+  console.log('currUser', currUser);
+  // end of get user
 
-  // Оповещение
-  const [hasNewMessages, setHasNewMessages] = useState(false);
+  const userName: string = `${currUser?.firstName} ${currUser?.lastName}`
 
-  function showNotification() {
-    return (
-      <Link to={'/chat'}>
-        <span>🔔</span>
-      </Link>
-    );
-  }
 
-  function handleNewMessage() {
-    setHasNewMessages(true);
-    showNotification();
-  }
-
-  function handlePageFocus() {
-    setHasNewMessages(false);
-  }
-
-  useEffect(() => {
-    window.addEventListener('focus', handlePageFocus);
-    return () => {
-      window.removeEventListener('focus', handlePageFocus);
-    };
-  }, []);
-  // end off alert
-
+  
   useEffect(() => {
     socket.on('messageResponse', (data: any) => setMessages([...messages, data]));
   }, [socket, messages]);
@@ -62,10 +41,44 @@ export default function Chat({ socket }: any) {
     <div className="chat">
       <ChatBar socket={socket} currUser={currUser} />
       <div className="chat__main">
-        <ChatBody messages={messages} typingStatus={typingStatus} lastMessageRef={lastMessageRef} />
+        <ChatBody messages={messages} 
+        typingStatus={typingStatus} 
+        lastMessageRef={lastMessageRef} 
+        currUser={currUser}
+        />
         <ChatFooter socket={socket} />
       </div>
-      {hasNewMessages ? <div>{showNotification()}</div> : <></>}
+      {/* {hasNewMessages ? <div>{showNotification()}</div> : <></>} */}
     </div>
   );
 }
+ 
+
+
+// Оповещение
+  // const [hasNewMessages, setHasNewMessages] = useState(false);
+
+  // function showNotification() {
+  //   return (
+  //     <Link to={'/chat'}>
+  //       <span>🔔</span>
+  //     </Link>
+  //   );
+  // }
+
+  // function handleNewMessage() {
+  //   setHasNewMessages(true);
+  //   showNotification();
+  // }
+
+  // function handlePageFocus() {
+  //   setHasNewMessages(false);
+  // }
+
+  // useEffect(() => {
+  //   window.addEventListener('focus', handlePageFocus);
+  //   return () => {
+  //     window.removeEventListener('focus', handlePageFocus);
+  //   };
+  // }, []);
+  // // end off alert

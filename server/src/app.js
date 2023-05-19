@@ -17,12 +17,15 @@ const http = require('http').Server(app);
 const socketIO = require('socket.io')(http, {
   cors: {
     credentials: true,
-    origin: 'http://localhost:5173',
+    // origin: 'http://localhost:5173',
+    origin: '*',
+    method: ['GET', 'POST']
   },
 });
 const dbCheck = require('./utils/dbCheck');
 
 let users = [];
+
 socketIO.on('connection', (socket) => {
   console.log(`⚡: ${socket.id} user just connected!`);
 
@@ -36,6 +39,7 @@ socketIO.on('connection', (socket) => {
     users.push(data);
     socketIO.emit('newUserResponse', users);
   });
+  // console.log('serv data----------------------------',data);
 
   socket.on('disconnect', () => {
     console.log('🔥: A user disconnected');

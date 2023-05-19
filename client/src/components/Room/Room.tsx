@@ -9,7 +9,7 @@ export default function Room() {
 
   // get user from local storage
   const localData = localStorage.userData;
-  const currUserId = JSON.parse(localData).userId;
+  const currUserId = JSON.parse(localData)?.userId;
 
   const handSendToTheChat = () => {
     navigate('/chat');
