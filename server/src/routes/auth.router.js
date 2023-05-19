@@ -14,7 +14,7 @@ router.post('/login', async (req, res) => {
     // Проверка существования пользователя
     const user = await Employee.findOne({ where: { email } }, { raw: true });
     if (!user) {
-      return res.status(400).send({ message: 'Пользователь не найден' });
+      return res.status(400).send({ title: 'Ошибка входа', message: 'Пользователь не найден' });
     }
 
     // Проверка существования AuthInfo для пользователя
@@ -41,7 +41,7 @@ router.post('/login', async (req, res) => {
     // Сохранение данных в сессию и отправка ответа
   } catch (error) {
     console.log('===> error', error);
-    return res.status(500).send({ message: 'Ошибка сервера.' });
+    return res.status(500).send({ title: 'Ошибка сервера.', message: 'Попробуйте повторить попытку.' });
   }
 });
 

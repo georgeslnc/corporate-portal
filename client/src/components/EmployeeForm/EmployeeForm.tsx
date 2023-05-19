@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { FormInputs } from './types';
 
-import { Box, TextField, Button, Alert } from '@mui/material';
+import { Box, TextField, Button, Alert, SelectChangeEvent } from '@mui/material';
 
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -25,19 +25,34 @@ const minDate = new Date(1930, 0, 1);
 const maxDate = addYears(new Date(), -18);
 
 export default function EmployeeForm() {
-  const [selectedDate, handleDateChange] = useState<Date | null>(maxDate);
+  const [selectedDate, setSelectedDate] = useState<Date | null>(maxDate);
   const [errorMessage, setErrorMessage] = useState('');
   const [alertMessage, setAlertMessage] = useState('');
+  const [selectedGroup, setSelectedGroup] = useState('');
+  const [selectedProfession, setSelectedProfession] = useState('');
 
   const {
     register,
     handleSubmit,
     reset,
-    setValue,
     formState: { errors },
   } = useForm<FormInputs>({
     mode: 'onBlur',
   });
+
+  const handleGroupChange = (event: SelectChangeEvent<string>) => {
+    setSelectedGroup(event.target.value);
+  };
+
+  const handleProfessionChange = (event: SelectChangeEvent<string>) => {
+    setSelectedProfession(event.target.value);
+  };
+
+  const handleResetClick = () => {
+    setSelectedGroup('');
+    setSelectedProfession('');
+    reset();
+  };
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
     data = { ...data, birthday: selectedDate ? dateFormatter(selectedDate) : '' };
@@ -54,15 +69,17 @@ export default function EmployeeForm() {
         const data = await res.json();
         setAlertMessage(data.message);
         reset();
-        handleDateChange(maxDate);
+        setSelectedDate(maxDate);
+        setSelectedGroup('');
+        setSelectedProfession('');
 
         setTimeout(() => {
           setAlertMessage('');
         }, 6 * 1000);
       } else {
-        console.error(`Error: ${res.status}`);
         const errorData = await res.json();
         setErrorMessage(errorData.message);
+        console.error(`Error: ${res.status}`);
       }
     } catch (error) {
       console.error(error);
@@ -108,7 +125,16 @@ export default function EmployeeForm() {
           error={Boolean(errors.lastName)}
           helperText={errors.lastName?.message}
         />
-        <ProfFormControl register={register} errors={errors} reset={reset} />
+
+        <ProfFormControl
+          register={register}
+          errors={errors}
+          selectedGroup={selectedGroup}
+          selectedProfession={selectedProfession}
+          handleGroupChange={handleGroupChange}
+          handleProfessionChange={handleProfessionChange}
+        />
+
         <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>
           <TextField
             {...register('email', emailValidation)}
@@ -127,6 +153,7 @@ export default function EmployeeForm() {
             sx={{ flexGrow: 1 }}
           />
         </Box>
+
         <DatePicker
           label="Дата рождения"
           minDate={minDate}
@@ -134,13 +161,25 @@ export default function EmployeeForm() {
           value={selectedDate}
           onChange={(newValue) => {
             if (newValue !== null) {
-              handleDateChange(newValue);
+              setSelectedDate(newValue);
             }
           }}
         />
-        <Button type="submit" variant="outlined" sx={{ width: '200px' }}>
-          Добавить сотрудника
-        </Button>
+
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2, marginTop: '20px' }}>
+          <Button type="submit" variant="outlined" sx={{ flexGrow: 2, padding: '10px' }} size="large">
+            Добавить сотрудника
+          </Button>
+          <Button
+            type="button"
+            variant="outlined"
+            sx={{ flexGrow: 1, border: 1, borderColor: 'divider' }}
+            color="warning"
+            onClick={handleResetClick}
+          >
+            Очистить
+          </Button>
+        </Box>
         {errorMessage && <p>{errorMessage}</p>}
         {alertMessage && <Alert severity="success">{alertMessage}</Alert>}
       </Box>
