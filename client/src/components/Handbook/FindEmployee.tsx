@@ -4,7 +4,6 @@ import { Departament, Employee, Group, Profession, RootState, useAppDispatch, us
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
@@ -12,8 +11,10 @@ import Avatar from '@mui/material/Avatar';
 import HomeIcon from '@mui/icons-material/Home';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
-import ReplyIcon from '@mui/icons-material/Reply';
+import DeleteIcon from '@mui/icons-material/Delete';
 import { delEmployees } from '../../redux/Thunk/deleteEmployees';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+
 export default function FindEmployee() {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
@@ -49,7 +50,6 @@ export default function FindEmployee() {
         display: 'flex',
         maxWidth: 500,
         maxHeight: 250,
-        marginTop: '100px',
       }}
     >
       <StyledAvatar alt="Employee Photo" src={selectedEmployee?.photoUrl} />
@@ -91,11 +91,21 @@ export default function FindEmployee() {
         </Typography>
       </CardContent>
       <CardActions>
-        <ReplyIcon fontSize="large" onClick={() => navigate(-1)}>
+        <HighlightOffIcon fontSize="large" onClick={() => navigate(-1)}>
           Назад
-        </ReplyIcon>
+        </HighlightOffIcon>
       </CardActions>
-      {professionId === 5 ? <Button onClick={() => deleteHandler(selectedEmployee?.id)}>Удалить сотрудника</Button> : null}
+      {professionId === 5 ? (
+        <DeleteIcon
+          onClick={() => {
+            if (selectedEmployee?.id) {
+              deleteHandler(selectedEmployee.id);
+            }
+          }}
+        >
+          Удалить сотрудника
+        </DeleteIcon>
+      ) : null}
     </Card>
   );
 }

@@ -40,7 +40,6 @@ export default function BasicTextFields() {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'flex-start',
-        marginLeft: '50px',
       }}
       noValidate
       autoComplete="off"
@@ -51,7 +50,7 @@ export default function BasicTextFields() {
         variant="outlined"
         value={searchQuery}
         onChange={handleInputChange}
-        sx={{ width: '500px', marginTop: '100px', marginLeft: '25px' }}
+        sx={{ width: '500px' }}
       />
       {searchQuery &&
         filteredEmployees.map((employee: Employee) => (
@@ -60,7 +59,6 @@ export default function BasicTextFields() {
             component="div"
             onClick={() => handleClick(employee.id)}
             sx={{
-              marginLeft: '15px',
               textDecoration: 'none',
               cursor: 'pointer',
               '&:hover': {
