@@ -37,7 +37,7 @@ router.post('/login', async (req, res) => {
 
     req.session.email = user.email;
     req.session.userId = user.id;
-    return res.status(200).send({ userId: user.id, groupId: user.groupId });
+    return res.status(200).send({ userId: user.id, groupId: user.groupId, professionId: user.professionId });
     // Сохранение данных в сессию и отправка ответа
   } catch (error) {
     console.log('===> error', error);
