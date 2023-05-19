@@ -5,14 +5,16 @@ import MailIcon from '@mui/icons-material/Mail';
 import Divider from '@mui/material/Divider';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import IconButton from '@mui/material/IconButton';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { AccountCircle, Chat, Description, Home, Inbox, MenuBook, PeopleAlt } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
-import { AppBar, Toolbar, Typography, ListItemButton } from '@mui/material';
+import { AppBar, Toolbar, Typography, ListItemButton, Badge } from '@mui/material';
+import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
+import { RootState, useAppSelector } from '../../redux/type';
 
 const drawerWidth = 250;
 
@@ -35,10 +37,15 @@ const StyledDrawer = styled(Drawer)({
   },
 });
 
+const userData: string | null = localStorage.getItem('userData');
+const parsedUserData: { groupId: number } = userData ? JSON.parse(userData) : {};
+const groupId: number = parsedUserData.groupId || 0;
+
 const Navbar = () => {
   const location = useLocation();
   const [selectedLink, setSelectedLink] = useState(location.pathname);
-
+  const offer = useAppSelector((state: RootState) => state.employeesSlice.offer);
+  const navigate = useNavigate();
   const handleLinkClick = (path: any) => {
     setSelectedLink(path);
   };
@@ -79,6 +86,17 @@ const Navbar = () => {
           </Typography>
           <div style={{ flexGrow: 1 }} />
           <div style={{ display: 'flex', alignItems: 'center' }}>
+            <Badge
+              badgeContent={
+                offer.filter((el) => {
+                  return el.groupId === groupId && el.status === false;
+                }).length
+              }
+              color="error"
+              sx={{ marginRight: '20px' }}
+            >
+              <CircleNotificationsIcon sx={{ cursor: 'pointer' }} fontSize="large" onClick={() => navigate('/room')} />
+            </Badge>
             <Typography variant="subtitle1" style={{ marginRight: 8 }}>
               {user.name}
             </Typography>
