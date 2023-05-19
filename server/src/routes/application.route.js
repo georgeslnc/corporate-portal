@@ -12,8 +12,22 @@ router.post('/', async (req, res) => {
       groupId: Number(groupId),
       employeesId: Number(employeesId),
       deadline,
+      status: false,
     });
     res.json(result);
+  } catch (err) {
+    console.error(err);
+  }
+});
+
+router.post('/status', async (req, res) => {
+  try {
+    const {
+      id
+    } = req.body;
+    const result = await Offer.findByPk(id);
+    await result.update({ status: true });
+    res.sendStatus(200);
   } catch (err) {
     console.error(err);
   }
