@@ -15,6 +15,9 @@ module.exports = {
       content: {
         type: Sequelize.TEXT
       },
+      image: {
+        type: Sequelize.TEXT
+      },
       publishedAt: {
         type: Sequelize.DATE
       },

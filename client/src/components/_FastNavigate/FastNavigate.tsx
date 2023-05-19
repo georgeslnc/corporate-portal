@@ -10,15 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import {
-  AccountCircle,
-  Chat,
-  Description,
-  Home,
-  Inbox,
-  MenuBook,
-  PeopleAlt,
-} from '@mui/icons-material';
+import { AccountCircle, Chat, Description, Home, Inbox, MenuBook, PeopleAlt } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 import { AppBar, Toolbar, Typography, ListItemButton } from '@mui/material';
 
@@ -28,7 +20,7 @@ const StyledDrawer = styled(Drawer)({
   width: drawerWidth,
   '& .MuiDrawer-paper': {
     width: drawerWidth,
-    borderRadius: 16,
+    borderRadius: 10,
     height: '690px',
     marginTop: '73px',
     marginLeft: '10px',
@@ -36,7 +28,6 @@ const StyledDrawer = styled(Drawer)({
     // backgroundColor: 'white',
     backgroundSize: 'cover',
     backgroundPosition: 'center center',
-    boxShadow: '1px 2px 5px 3px rgba(0,0,0,0.3)',
   },
   '& .MuiTypography-root': {
     color: 'black',

@@ -3,7 +3,7 @@ import { RootState, useAppDispatch, useAppSelector } from './redux/type';
 import { getEmployees } from './redux/Thunk/employees';
 import { Route, Routes } from 'react-router-dom';
 import Chat from './components/Chat/Chat';
-import Home from './components/Chat/Home';
+import Home from './components/Home/Home';
 import * as io from 'socket.io-client';
 const socket = io.connect('http://localhost:3000');
 import Application from './components/Application/Application';
