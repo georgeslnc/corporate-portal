@@ -10,15 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import {
-  AccountCircle,
-  Chat,
-  Description,
-  Home,
-  Inbox,
-  MenuBook,
-  PeopleAlt,
-} from '@mui/icons-material';
+import { AccountCircle, Chat, Description, Home, Inbox, MenuBook, PeopleAlt } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 import { AppBar, Toolbar, Typography, ListItemButton } from '@mui/material';
 
@@ -29,14 +21,14 @@ const StyledDrawer = styled(Drawer)({
   '& .MuiDrawer-paper': {
     width: drawerWidth,
     borderRadius: 16,
-    height: '590px',
-    marginTop: '170px',
+    height: '690px',
+    marginTop: '73px',
     marginLeft: '10px',
     backgroundImage: `url('./img/фон.png')`,
     // backgroundColor: 'white',
     backgroundSize: 'cover',
     backgroundPosition: 'center center',
-    boxShadow: '1px 0px 5px 3px rgba(0,0,0,0.3)',
+    boxShadow: '1px 2px 5px 3px rgba(0,0,0,0.3)',
   },
   '& .MuiTypography-root': {
     color: 'black',
@@ -63,7 +55,7 @@ const Navbar = () => {
 
   const user = {
     name: 'Иван Иванов',
-    avatarUrl: './img/avatar.jpg',
+    avatarUrl: './img/default-avatar.png',
   };
 
   const navLinks = [
