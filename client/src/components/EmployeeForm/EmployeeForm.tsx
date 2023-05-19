@@ -51,6 +51,7 @@ export default function EmployeeForm() {
   const handleResetClick = () => {
     setSelectedGroup('');
     setSelectedProfession('');
+    reset();
   };
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
@@ -152,6 +153,7 @@ export default function EmployeeForm() {
             sx={{ flexGrow: 1 }}
           />
         </Box>
+
         <DatePicker
           label="Дата рождения"
           minDate={minDate}
@@ -163,12 +165,21 @@ export default function EmployeeForm() {
             }
           }}
         />
-        <Button type="submit" variant="outlined" sx={{ width: '200px' }}>
-          Добавить сотрудника
-        </Button>
-        <Button type="button" variant="outlined" sx={{ width: '200px' }} onClick={handleResetClick}>
-          Очистить
-        </Button>
+
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2, marginTop: '20px' }}>
+          <Button type="submit" variant="outlined" sx={{ flexGrow: 2, padding: '10px' }} size="large">
+            Добавить сотрудника
+          </Button>
+          <Button
+            type="button"
+            variant="outlined"
+            sx={{ flexGrow: 1, border: 1, borderColor: 'divider' }}
+            color="warning"
+            onClick={handleResetClick}
+          >
+            Очистить
+          </Button>
+        </Box>
         {errorMessage && <p>{errorMessage}</p>}
         {alertMessage && <Alert severity="success">{alertMessage}</Alert>}
       </Box>
