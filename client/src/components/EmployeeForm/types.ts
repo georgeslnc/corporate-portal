@@ -1,4 +1,5 @@
-// import { DeepMap, FieldError, UseFormRegister } from 'react-hook-form';
+import { UseFormRegister, DeepMap, FieldError } from 'react-hook-form';
+import { SelectChangeEvent } from '@mui/material/Select';
 
 export type FormInputs = {
   firstName?: string;
@@ -10,4 +11,13 @@ export type FormInputs = {
   phoneNumber?: string;
   birthday?: string;
   // photo: FileList;
+};
+
+export type ProfFormTypes = {
+  register: UseFormRegister<FormInputs>;
+  errors: DeepMap<FormInputs, FieldError>;
+  selectedGroup: string;
+  handleGroupChange: (event: SelectChangeEvent<string>) => void;
+  selectedProfession: string;
+  handleProfessionChange: (event: SelectChangeEvent<string>) => void;
 };
