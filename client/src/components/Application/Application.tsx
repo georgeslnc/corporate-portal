@@ -28,7 +28,7 @@ export default function Application() {
 
   const eventDepartment = (e: SelectChangeEvent) => {
     const selectedOption = e.target.value;
-    const depId = department.find((el: any) => el.title === selectedOption)?.id;
+    const depId = department.find((el) => el.title === selectedOption)?.id;
     setTitleDep(selectedOption || '');
     settitleGroup('');
     setSelectedDepartment(`${depId}` || null);
@@ -36,7 +36,7 @@ export default function Application() {
 
   const selectGroup = (e: SelectChangeEvent) => {
     const selectedOption = e.target.value;
-    const groupId = group.find((el: any) => el.title === selectedOption)?.id;
+    const groupId = group.find((el) => el.title === selectedOption)?.id;
     settitleGroup(selectedOption || '');
     setSelectedValue(`${groupId}`);
   };
@@ -67,7 +67,7 @@ export default function Application() {
             label="Выбор департамента"
             onChange={eventDepartment}
           >
-            {department.map((element: any) => (
+            {department.map((element) => (
               <MenuItem key={element.id} value={element.title}>
                 {element.title}
               </MenuItem>
@@ -83,7 +83,7 @@ export default function Application() {
             label="Выбор отдела"
             onChange={selectGroup}
           >
-            {group.map((element: any) =>
+            {group.map((element) =>
               element.departamentId === Number(selectedDepartment) ? (
                 <MenuItem key={element.id} value={element.title}>
                   {element.title}
@@ -127,7 +127,6 @@ export default function Application() {
           </Box>
         </>
       )}
-      <Bid />
     </>
   );
 }

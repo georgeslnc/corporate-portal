@@ -40,11 +40,12 @@ export default function Bid() {
     <List
       sx={{
         width: '80%',
+        height: '10%',
         bgcolor: 'background.paper',
         position: 'relative',
         overflow: 'hidden',
         overflowY: 'scroll',
-        maxHeight: 400,
+        maxHeight: 360,
         marginTop: '30px',
         padding: '0px',
         '& ul': { padding: 0 },
@@ -65,7 +66,7 @@ export default function Bid() {
           <li key={`${el.id}offers`} className={style.containerElement}>
             <div className={style.containerValueButton}>
               <Typography>{el.title}</Typography>
-              <Button sx={{ background: 'rgb(203, 210, 218)' }} onClick={() => changeStatusButton(el.id)}>
+              <Button sx={{ background: 'rgb(203, 210, 218)' }} onClick={() => dispatch(changeStatusOffer(el.id))}>
                 сделано
               </Button>
             </div>
