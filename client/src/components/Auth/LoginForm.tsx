@@ -3,6 +3,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
 
 import { Box, Button, TextField, Alert, AlertTitle } from '@mui/material';
+import { Troubleshoot } from '@mui/icons-material';
 
 type Inputs = {
   email: string;
@@ -44,10 +45,11 @@ export default function LoginForm() {
         localStorage.setItem('userData', JSON.stringify(responseData));
         reset();
         setErrorMessage({ title: 'Успешный вход!', message: 'Добро пожаловать в корпоративный портал' });
+        setIsErrorVisible(true);
         setTimeout(() => {
           navigate('/');
           setIsErrorVisible(false);
-        }, 3000);
+        }, 1200);
       } else {
         console.error(`Error: ${response.status}`);
         const errorData = await response.json();
@@ -55,6 +57,9 @@ export default function LoginForm() {
         localStorage.removeItem('userData');
         reset();
         setIsErrorVisible(true);
+        setTimeout(() => {
+          setIsErrorVisible(false);
+        }, 2000);
       }
     } catch (error) {
       console.error('===> error', error);
