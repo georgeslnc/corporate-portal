@@ -20,7 +20,7 @@ router.post('/login', async (req, res) => {
     // Проверка существования AuthInfo для пользователя
     const checkUser = await AuthInfo.findOne({ where: { userId: user.id } }, { raw: true });
     if (checkUser) {
-      return res.status(200).send({ userId: user.id, groupId: user.groupId });
+      return res.status(200).send({ userId: user.id, groupId: user.groupId, professionId: user.professionId });
     }
 
     // Хеширование пароля и создание AuthInfo
