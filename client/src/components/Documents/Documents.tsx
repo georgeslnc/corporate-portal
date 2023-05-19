@@ -28,31 +28,43 @@ export default function Documents() {
     const formData = new FormData(e.currentTarget);
     dispatch(setFiles(formData));
   };
+  const userDataString = localStorage.getItem('userData');
+  const userData = JSON.parse(userDataString);
+  const professionId = userData.professionId;
 
   return (
     <div>
-      <Typography variant="h6">Добавление документов</Typography>
-      <form onSubmit={uploadFileHandler}>
-        <div>
-          <FormControl>
-            <Input id="file" type="file" name="file" disableUnderline />
-            {/* <label htmlFor="file"></label> */}
-          </FormControl>
-        </div>
-        <div>
-          <FormControl>
-            <Select labelId="category-label" name="documentType" defaultValue="Документы по работе с персоналом">
-              <MenuItem value="Документы по работе с персоналом">Документы по работе с персоналом</MenuItem>
-              <MenuItem value="Документу бухгалтерии">Документу бухгалтерии</MenuItem>
-            </Select>
-          </FormControl>
-        </div>
-        <Button type="submit" variant="contained" size="small" endIcon={<SendIcon />}>
-          Загрузить документ
-        </Button>
-      </form>
-      <DocumentsHR filesHr={filesHr} />
-      <DocumentsAudit filesAudit={filesAudit} />
+      {professionId === 5 ? (
+        <>
+          <Typography variant="h6">Добавление документов</Typography>
+          <form onSubmit={uploadFileHandler}>
+            <div>
+              <FormControl>
+                <Input id="file" type="file" name="file" disableUnderline />
+                {/* <label htmlFor="file"></label> */}
+              </FormControl>
+            </div>
+            <div>
+              <FormControl>
+                <Select labelId="category-label" name="documentType" defaultValue="Документы по работе с персоналом">
+                  <MenuItem value="Документы по работе с персоналом">Документы по работе с персоналом</MenuItem>
+                  <MenuItem value="Документу бухгалтерии">Документу бухгалтерии</MenuItem>
+                </Select>
+              </FormControl>
+            </div>
+            <Button type="submit" variant="contained" size="small" endIcon={<SendIcon />}>
+              Загрузить документ
+            </Button>
+          </form>
+          <DocumentsHR filesHr={filesHr} />
+          <DocumentsAudit filesAudit={filesAudit} />
+        </>
+      ) : (
+        <>
+          <DocumentsHR filesHr={filesHr} />
+          <DocumentsAudit filesAudit={filesAudit} />
+        </>
+      )}
     </div>
   );
 }

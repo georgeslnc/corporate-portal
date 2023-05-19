@@ -1,26 +1,30 @@
 import React from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Departament, Employee, Group, Profession, RootState, useAppSelector } from '../../redux/type';
+import { Departament, Employee, Group, Profession, RootState, useAppDispatch, useAppSelector } from '../../redux/type';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import { styled } from '@mui/material/styles';
 import Avatar from '@mui/material/Avatar';
 import HomeIcon from '@mui/icons-material/Home';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
-import ReplyIcon from '@mui/icons-material/Reply';
+import DeleteIcon from '@mui/icons-material/Delete';
+import { delEmployees } from '../../redux/Thunk/deleteEmployees';
+import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+
 export default function FindEmployee() {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const { id } = useParams();
 
   const employees = useAppSelector((state: RootState) => state.employeesSlice.employees);
   const groups = useAppSelector((state: RootState) => state.employeesSlice.group);
   const professions = useAppSelector((state: RootState) => state.employeesSlice.profession);
   const departaments = useAppSelector((state: RootState) => state.employeesSlice.department);
+
+  const deleteHandler = (id: number) => dispatch(delEmployees(id));
 
   const selectedEmployee = employees.find((employee: Employee) => employee.id === Number(id));
   const selectedGroup = groups.find((group: Group) => group.id === selectedEmployee?.groupId);
@@ -35,13 +39,16 @@ export default function FindEmployee() {
     borderRadius: '50%',
   });
 
+  const userDataString = localStorage.getItem('userData');
+  const userData = userDataString ? JSON.parse(userDataString) : null;
+  const professionId = userData?.professionId;
+
   return (
     <Card
       sx={{
         display: 'flex',
         maxWidth: 500,
         maxHeight: 250,
-        marginTop: '100px',
       }}
     >
       <StyledAvatar alt="Employee Photo" src={selectedEmployee?.photoUrl} />
@@ -83,10 +90,21 @@ export default function FindEmployee() {
         </Typography>
       </CardContent>
       <CardActions>
-        <ReplyIcon fontSize="large" onClick={() => navigate(-1)}>
+        <HighlightOffIcon fontSize="large" onClick={() => navigate(-1)}>
           Назад
-        </ReplyIcon>
+        </HighlightOffIcon>
       </CardActions>
+      {professionId === 5 ? (
+        <DeleteIcon
+          onClick={() => {
+            if (selectedEmployee?.id) {
+              deleteHandler(selectedEmployee.id);
+            }
+          }}
+        >
+          Удалить сотрудника
+        </DeleteIcon>
+      ) : null}
     </Card>
   );
 }

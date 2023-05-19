@@ -3,6 +3,7 @@ import { InititalStateEmployee, Offer } from '../type';
 import { getEmployees } from '../Thunk/employees';
 import { postOffer } from '../Thunk/offer';
 import { changeStatusOffer } from '../Thunk/changeStatusOffer';
+import { delEmployees } from '../Thunk/deleteEmployees';
 
 const initialState: InititalStateEmployee = {
   employees: [],
@@ -37,6 +38,12 @@ const employeesSlice = createSlice({
           }
           return el;
         });
+      },
+    );
+    builder.addMatcher(
+      (action) => action.type === delEmployees.fulfilled.type,
+      (state, action: PayloadAction<number>) => {
+        state.employees = state.employees.filter((employee) => employee.id !== action.payload);
       },
     );
   },
