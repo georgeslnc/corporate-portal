@@ -11,7 +11,11 @@ const initialState: InitialFilesState = {
 const userFilesSlicer = createSlice({
   name: 'file',
   initialState,
-  reducers: {},
+  reducers: {
+    delFileFromRedux(state, action) {
+      state.files = state.files.filter((file) => file.id !== action.payload);
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(getFiles.pending, (state) => {
@@ -31,3 +35,4 @@ const userFilesSlicer = createSlice({
 });
 
 export default userFilesSlicer.reducer;
+export const { delFileFromRedux } = userFilesSlicer.actions;
