@@ -71,6 +71,7 @@ export interface InititalStateOffer {
 }
 
 export interface NewsItem {
+  image: string | undefined;
   id: number;
   title: string;
   content: string;

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
-import MailIcon from '@mui/icons-material/Mail';
+import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import Divider from '@mui/material/Divider';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
@@ -22,7 +22,7 @@ const StyledDrawer = styled(Drawer)({
   width: drawerWidth,
   '& .MuiDrawer-paper': {
     width: drawerWidth,
-    borderRadius: 16,
+    borderRadius: 10,
     height: '690px',
     marginTop: '73px',
     marginLeft: '10px',
@@ -30,7 +30,6 @@ const StyledDrawer = styled(Drawer)({
     // backgroundColor: 'white',
     backgroundSize: 'cover',
     backgroundPosition: 'center center',
-    boxShadow: '1px 2px 5px 3px rgba(0,0,0,0.3)',
   },
   '& .MuiTypography-root': {
     color: 'black',
@@ -70,11 +69,10 @@ const Navbar = () => {
     { path: '/handbook', name: 'Справочник', icon: <MenuBook /> },
     { path: '/tree', name: 'Структура компании', icon: <PeopleAlt /> },
     { path: '/applications', name: 'Заявки', icon: <Inbox /> },
-    { path: '/newslist', name: 'Новости компании', icon: <MailIcon /> },
     { path: '/', name: 'Главная', icon: <Home /> },
     { path: '/chat', name: 'Чат', icon: <Chat /> },
     { path: '/documents', name: 'Документы', icon: <Description /> },
-    { path: '/admin/employee', name: 'Добавить сотрудника', icon: <Description /> },
+    { path: '/admin/employee', name: 'Добавить сотрудника', icon: <AddCircleOutlineIcon /> },
   ];
 
   return (
