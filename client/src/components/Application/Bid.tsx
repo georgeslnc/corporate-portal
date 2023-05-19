@@ -44,7 +44,7 @@ export default function Bid() {
         position: 'relative',
         overflow: 'hidden',
         overflowY: 'scroll',
-        maxHeight: 300,
+        maxHeight: 400,
         marginTop: '30px',
         padding: '0px',
         '& ul': { padding: 0 },
@@ -53,6 +53,7 @@ export default function Bid() {
         borderRadius: '5px',
         backgroundColor: 'rgb(236, 239, 243)',
       }}
+      className={style.delScroll}
     >
       <ul>
         <ListSubheader sx={{ color: 'black', backgroundColor: ' rgb(221, 223, 226)', margin: '0px', width: '100%' }}>
