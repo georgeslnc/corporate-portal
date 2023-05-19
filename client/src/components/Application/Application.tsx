@@ -36,7 +36,7 @@ export default function Application() {
 
   const selectGroup = (e: SelectChangeEvent) => {
     const selectedOption = e.target.value;
-    const groupId = group.find((el : any) => el.title === selectedOption)?.id;
+    const groupId = group.find((el: any) => el.title === selectedOption)?.id;
     settitleGroup(selectedOption || '');
     setSelectedValue(`${groupId}`);
   };
@@ -48,7 +48,6 @@ export default function Application() {
       groupId: selectedValue,
       deadline: time,
     };
-    console.log('fsd');
     reset();
     dispatch(postOffer(offerData));
   };
