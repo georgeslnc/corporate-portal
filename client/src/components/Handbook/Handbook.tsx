@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { Employee, RootState, useAppSelector } from '../../redux/type';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
-import ImageIcon from '@mui/icons-material/Image';
 
 export default function BasicTextFields() {
   const employees = useAppSelector((state: RootState) => state.employeesSlice.employees);
