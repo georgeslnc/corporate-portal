@@ -12,14 +12,14 @@ module.exports = {
           updatedAt: new Date(),
         },
         {
-          title: 'Отдел марктинга',
+          title: 'Отдел маркетинга',
           departamentId: 1,
           groupHeadId: 7,
           createdAt: new Date(),
           updatedAt: new Date(),
         },
         {
-          title: 'Бухглатерия',
+          title: 'Бухгалтерия',
           departamentId: 2,
           groupHeadId: 8,
           createdAt: new Date(),
