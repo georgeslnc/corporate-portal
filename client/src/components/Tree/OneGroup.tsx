@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Employee, Group, RootState, useAppSelector } from '../../redux/type';
 import Button from '@mui/material/Button';
@@ -16,9 +16,15 @@ export default function OneGroup() {
     .filter((el: Employee) => el.professionId !== 3);
   const selectedGroupAll = employees.filter((employee: Employee) => employee.groupId === Number(id));
   const groupHead = selectedGroupAll.find((employee: Employee) => employee.professionId === 3);
-  console.log(selectedGroupAll);
 
   const handleClick = (id: number | undefined) => navigate(`/employee/${id}`);
+
+  useEffect(() => {
+    document.title = `Сотрудники отдела`;
+    return () => {
+      document.title = 'SoftMaster';
+    };
+  }, []);
 
   return (
     <>

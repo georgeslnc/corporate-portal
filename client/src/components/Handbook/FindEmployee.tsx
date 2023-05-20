@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Departament, Employee, Group, Profession, RootState, useAppDispatch, useAppSelector } from '../../redux/type';
 import Card from '@mui/material/Card';
@@ -42,6 +42,13 @@ export default function FindEmployee() {
   const userDataString = localStorage.getItem('userData');
   const userData = userDataString ? JSON.parse(userDataString) : null;
   const professionId = userData?.professionId;
+
+  useEffect(() => {
+    document.title = `${selectedEmployee?.firstName} ${selectedEmployee?.lastName}`;
+    return () => {
+      document.title = 'SoftMaster';
+    };
+  }, []);
 
   return (
     <Card

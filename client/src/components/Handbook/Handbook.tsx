@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Employee, RootState, useAppSelector } from '../../redux/type';
 import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
@@ -12,6 +12,13 @@ export default function BasicTextFields() {
   const employees = useAppSelector((state: RootState) => state.employeesSlice.employees);
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    document.title = 'Справочник';
+    return () => {
+      document.title = 'SoftMaster';
+    };
+  }, []);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const query = event.target.value;
@@ -49,7 +56,7 @@ export default function BasicTextFields() {
         variant="outlined"
         value={searchQuery}
         onChange={handleInputChange}
-        sx={{ width: '500px' }}
+        sx={{ width: '80%' }}
       />
       {searchQuery &&
         filteredEmployees.map((employee: Employee) => (
