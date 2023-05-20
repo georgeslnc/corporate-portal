@@ -21,6 +21,7 @@ const NewsSlider = () => {
   const [nav2, setNav2] = useState<typeof Slider | null>(null);
   const slider1Ref = useRef<typeof Slider>(null);
   const slider2Ref = useRef<typeof Slider>(null);
+  const [activeSlide, setActiveSlide] = useState(0);
 
   useEffect(() => {
     setNav1(slider1Ref.current);
@@ -38,7 +39,6 @@ const NewsSlider = () => {
       nav1.slickNext();
     }
   };
-  const [activeSlide, setActiveSlide] = useState(0);
 
   // if (news.loading) {
   //   return <div>Loading...</div>;
