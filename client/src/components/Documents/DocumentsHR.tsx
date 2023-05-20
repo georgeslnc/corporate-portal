@@ -30,7 +30,7 @@ export default function DocumentsHR({ filesHr }: DocumentsHRProps) {
       <List>
         {filesHr.map((file: File) => (
           <ListItem key={file.id}>
-            {file.title}
+            {file.adminTitle}
             <FileDownloadIcon onClick={() => downloadHandler(file.id, file.title)}></FileDownloadIcon>
             {professionId === 5 ? <DeleteIcon onClick={() => deleteHandler(file.id)}></DeleteIcon> : null}
           </ListItem>

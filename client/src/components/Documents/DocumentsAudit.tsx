@@ -30,7 +30,7 @@ export default function DocumentsAudit({ filesAudit }: DocumentsAuditProps) {
       <List>
         {filesAudit.map((file: File) => (
           <ListItem key={file.id}>
-            {file.title}
+            {file.adminTitle}
             <FileDownloadIcon onClick={() => downloadHandler(file.id, file.title)}></FileDownloadIcon>
             {professionId === 5 ? <DeleteIcon onClick={() => deleteHandler(file.id)}></DeleteIcon> : null}
           </ListItem>

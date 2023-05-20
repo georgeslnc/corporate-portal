@@ -41,7 +41,9 @@ export default function Documents() {
             <div>
               <FormControl>
                 <Input id="file" type="file" name="file" disableUnderline />
-                {/* <label htmlFor="file"></label> */}
+              </FormControl>
+              <FormControl>
+                <Input id="file" type="text" name="adminTitle" placeholder="Название файла для отображения" disableUnderline />
               </FormControl>
             </div>
             <div>
