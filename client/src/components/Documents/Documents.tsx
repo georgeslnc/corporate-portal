@@ -29,8 +29,8 @@ export default function Documents() {
     dispatch(setFiles(formData));
   };
   const userDataString = localStorage.getItem('userData');
-  const userData = JSON.parse(userDataString);
-  const professionId = userData.professionId;
+  const userData = userDataString ? JSON.parse(userDataString) : null;
+  const professionId = userData?.professionId;
 
   return (
     <div>
