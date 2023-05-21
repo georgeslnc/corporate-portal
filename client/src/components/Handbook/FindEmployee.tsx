@@ -39,6 +39,17 @@ export default function FindEmployee() {
     height: 140,
     marginTop: 40,
     borderRadius: '50%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
+  });
+
+  const StyledAvatar2 = styled(Avatar)({
+    width: 140,
+    height: 140,
+    marginTop: 18.5,
+    borderRadius: '50%',
+    marginLeft: 'auto',
+    marginRight: 'auto',
   });
 
   const userDataString = localStorage.getItem('userData');
@@ -60,7 +71,12 @@ export default function FindEmployee() {
         maxHeight: 250,
       }}
     >
-      <StyledAvatar alt="Employee Photo" src={selectedEmployee?.photoUrl} />
+      {selectedEmployee?.professionId === 4 ? (
+        <StyledAvatar2 alt="Employee Photo" src={selectedEmployee?.photoUrl} />
+      ) : (
+        <StyledAvatar alt="Employee Photo" src={selectedEmployee?.photoUrl} />
+      )}
+
       <CardContent sx={{ flex: 1 }}>
         <Typography gutterBottom variant="h5" component="div">
           {selectedEmployee?.firstName} {selectedEmployee?.lastName}

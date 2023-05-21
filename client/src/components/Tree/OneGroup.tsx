@@ -13,7 +13,7 @@ export default function OneGroup() {
   const employees = useAppSelector((state: RootState) => state.employeesSlice.employees);
   const selectedGroup = employees
     .filter((employee: Employee) => employee.groupId === Number(id))
-    .filter((el: Employee) => el.professionId !== 3);
+    .filter((el: Employee) => el.professionId !== 3 && el.professionId !== 4);
   const selectedGroupAll = employees.filter((employee: Employee) => employee.groupId === Number(id));
   const groupHead = selectedGroupAll.find((employee: Employee) => employee.professionId === 3);
 
