@@ -37,7 +37,7 @@ export default function FindEmployee() {
   const StyledAvatar = styled(Avatar)({
     width: 140,
     height: 140,
-    marginTop: 54.5,
+    marginTop: 64.5,
     borderRadius: '50%',
     marginLeft: 'auto',
     marginRight: 'auto',
@@ -46,7 +46,7 @@ export default function FindEmployee() {
   const StyledAvatar2 = styled(Avatar)({
     width: 140,
     height: 140,
-    marginTop: 34.75,
+    marginTop: 44.5,
     borderRadius: '50%',
     marginLeft: 'auto',
     marginRight: 'auto',
@@ -68,7 +68,7 @@ export default function FindEmployee() {
       sx={{
         display: 'flex',
         maxWidth: 500,
-        maxHeight: 250,
+        maxHeight: 300,
       }}
     >
       {selectedEmployee?.professionId === 4 ? (
