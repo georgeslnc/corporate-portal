@@ -31,6 +31,10 @@ export default function FindEmployee() {
   const groupHead = employees.find((employee: Employee) => employee.id === selectedGroup?.groupHeadId);
   const selectedProfession = professions.find((profession: Profession) => profession.id === selectedEmployee?.professionId);
   const selectedDepartament = departaments.find((department: Departament) => department.id === selectedGroup?.departamentId);
+  // console.log(selectedEmployee);
+  // console.log(selectedDepartament);
+  const departametHead = employees.find((employee: Employee) => employee.id === selectedDepartament?.departamentHeadId);
+  console.log(departametHead);
 
   const StyledAvatar = styled(Avatar)({
     width: 140,
@@ -89,12 +93,21 @@ export default function FindEmployee() {
             <EmailIcon fontSize="small" color="inherit" /> {selectedEmployee?.email}
           </Typography>
         </div>
-        <Typography variant="body2" color="text.secondary">
-          Руководитель:{' '}
-          <Link to={`/employee/${groupHead?.id}`}>
-            {groupHead?.firstName} {groupHead?.lastName}
-          </Link>
-        </Typography>
+        {selectedEmployee?.professionId === 3 ? (
+          <Typography variant="body2" color="text.secondary">
+            Руководитель:{' '}
+            <Link to={`/employee/${departametHead?.id}`}>
+              {departametHead?.firstName} {departametHead?.lastName}
+            </Link>
+          </Typography>
+        ) : (
+          <Typography variant="body2" color="text.secondary">
+            Руководитель:{' '}
+            <Link to={`/employee/${groupHead?.id}`}>
+              {groupHead?.firstName} {groupHead?.lastName}
+            </Link>
+          </Typography>
+        )}
       </CardContent>
       <CardActions>
         <HighlightOffIcon fontSize="large" onClick={() => navigate(-1)}>
