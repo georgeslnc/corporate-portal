@@ -6,6 +6,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
+import Typography from '@mui/material/Typography';
 
 export default function OneGroup() {
   const { id } = useParams();
@@ -14,13 +15,17 @@ export default function OneGroup() {
   const selectedGroup = employees
     .filter((employee: Employee) => employee.groupId === Number(id))
     .filter((el: Employee) => el.professionId !== 3 && el.professionId !== 4);
+  const groups = useAppSelector((state: RootState) => state.employeesSlice.group);
+  const groupTitle = groups.find((group: Group) => group.id === Number(id));
+  console.log(groupTitle);
+
   const selectedGroupAll = employees.filter((employee: Employee) => employee.groupId === Number(id));
   const groupHead = selectedGroupAll.find((employee: Employee) => employee.professionId === 3);
 
   const handleClick = (id: number | undefined) => navigate(`/employee/${id}`);
 
   useEffect(() => {
-    document.title = `Сотрудники отдела`;
+    document.title = `${groupTitle?.title}`;
     return () => {
       document.title = 'SoftMaster';
     };
@@ -28,6 +33,7 @@ export default function OneGroup() {
 
   return (
     <>
+      <Typography variant="h6">{groupTitle?.title}</Typography>
       {selectedGroup.map((employee: Employee) => (
         <ListItem
           key={employee.id}
