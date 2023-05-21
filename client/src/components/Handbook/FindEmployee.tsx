@@ -31,10 +31,7 @@ export default function FindEmployee() {
   const groupHead = employees.find((employee: Employee) => employee.id === selectedGroup?.groupHeadId);
   const selectedProfession = professions.find((profession: Profession) => profession.id === selectedEmployee?.professionId);
   const selectedDepartament = departaments.find((department: Departament) => department.id === selectedGroup?.departamentId);
-  // console.log(selectedEmployee);
-  // console.log(selectedDepartament);
   const departametHead = employees.find((employee: Employee) => employee.id === selectedDepartament?.departamentHeadId);
-  console.log(departametHead);
 
   const StyledAvatar = styled(Avatar)({
     width: 140,
@@ -70,9 +67,11 @@ export default function FindEmployee() {
         <Typography variant="body2" color="text.secondary">
           {selectedProfession?.position}
         </Typography>
-        <Typography variant="body2" color="text.secondary">
-          {selectedGroup?.title}
-        </Typography>
+        {selectedEmployee?.professionId === 4 ? null : (
+          <Typography variant="body2" color="text.secondary">
+            {selectedGroup?.title}
+          </Typography>
+        )}
         <Typography variant="body2" color="text.secondary">
           {selectedDepartament?.title}
         </Typography>
@@ -93,7 +92,7 @@ export default function FindEmployee() {
             <EmailIcon fontSize="small" color="inherit" /> {selectedEmployee?.email}
           </Typography>
         </div>
-        {selectedEmployee?.professionId === 3 ? (
+        {selectedEmployee?.professionId === 4 ? null : selectedEmployee?.professionId === 3 ? (
           <Typography variant="body2" color="text.secondary">
             Руководитель:{' '}
             <Link to={`/employee/${departametHead?.id}`}>
