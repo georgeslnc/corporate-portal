@@ -28,9 +28,10 @@ export default function FindEmployee() {
 
   const selectedEmployee = employees.find((employee: Employee) => employee.id === Number(id));
   const selectedGroup = groups.find((group: Group) => group.id === selectedEmployee?.groupId);
-  const groupHead = employees.find((employee: Employee) => employee.id === selectedGroup?.groupHeadId);
   const selectedProfession = professions.find((profession: Profession) => profession.id === selectedEmployee?.professionId);
   const selectedDepartament = departaments.find((department: Departament) => department.id === selectedGroup?.departamentId);
+
+  const groupHead = employees.find((employee: Employee) => employee.id === selectedGroup?.groupHeadId);
   const departametHead = employees.find((employee: Employee) => employee.id === selectedDepartament?.departamentHeadId);
 
   const StyledAvatar = styled(Avatar)({
