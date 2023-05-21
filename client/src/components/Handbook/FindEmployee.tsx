@@ -37,7 +37,7 @@ export default function FindEmployee() {
   const StyledAvatar = styled(Avatar)({
     width: 140,
     height: 140,
-    marginTop: 40,
+    marginTop: 54.5,
     borderRadius: '50%',
     marginLeft: 'auto',
     marginRight: 'auto',
@@ -46,7 +46,7 @@ export default function FindEmployee() {
   const StyledAvatar2 = styled(Avatar)({
     width: 140,
     height: 140,
-    marginTop: 18.5,
+    marginTop: 34.75,
     borderRadius: '50%',
     marginLeft: 'auto',
     marginRight: 'auto',
@@ -79,7 +79,7 @@ export default function FindEmployee() {
 
       <CardContent sx={{ flex: 1 }}>
         <Typography gutterBottom variant="h5" component="div">
-          {selectedEmployee?.firstName} {selectedEmployee?.lastName}
+          {selectedEmployee?.lastName} {selectedEmployee?.firstName} {selectedEmployee?.middleName}
         </Typography>
         <Typography variant="body2" color="text.secondary">
           {selectedProfession?.position}
