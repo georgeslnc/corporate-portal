@@ -9,7 +9,7 @@ const userData: string | null = localStorage.getItem('userData');
 const parsedUserData: { groupId: number } = userData ? JSON.parse(userData) : {};
 const groupId: number = parsedUserData.groupId || 0;
 const localData = localStorage.userData;
-const currUserId = JSON.parse(localData).userId;
+const currUserId = localData ? JSON.parse(localData).userId : null;
 
 export default function Bid() {
   const offer = useAppSelector((state: RootState) => state.employeesSlice.offer);
