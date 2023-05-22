@@ -12,7 +12,6 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { AccountCircle, Chat, Description, Home, Inbox, MenuBook, PeopleAlt } from '@mui/icons-material';
 import FormatListBulletedSharpIcon from '@mui/icons-material/FormatListBulletedSharp';
-import { Chat, Description, Home, Inbox, MenuBook, PeopleAlt } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 import { AppBar, Toolbar, Typography, ListItemButton, Badge } from '@mui/material';
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
@@ -102,7 +101,6 @@ const Navbar = () => {
     { path: '/documents', name: 'Документы', icon: <Description /> },
     { path: '/admin/employee', name: 'Добавить сотрудника', icon: <AddCircleOutlineIcon /> },
     { path: '/todo', name: 'Замэтки', icon: <FormatListBulletedSharpIcon /> },
-  ];
     showAddEmployeeLink && { path: '/admin/employee', name: 'Добавить сотрудника', icon: <AddCircleOutlineIcon /> },
   ].filter(Boolean);
 
