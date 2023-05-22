@@ -60,6 +60,8 @@ router
         firstName, middleName, lastName, groupId, professionId, email, phone, birthday, photoUrl
       });
 
+      console.log('|______|  user:', user);
+
       return res.json({ status: 200, message: 'Сотрудник успешно добавлен' });
     } catch (error) {
       console.error('===> error', error);
