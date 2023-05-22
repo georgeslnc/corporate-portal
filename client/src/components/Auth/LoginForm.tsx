@@ -1,14 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { ErrorMessage, Inputs } from './auth.types';
 
 import { Box, Button, TextField, Alert, AlertTitle } from '@mui/material';
-import { Troubleshoot } from '@mui/icons-material';
-
-type Inputs = {
-  email: string;
-  password: string;
-};
 
 export default function LoginForm() {
   const {
@@ -19,7 +14,7 @@ export default function LoginForm() {
     watch,
   } = useForm<Inputs>();
 
-  const [errorMessage, setErrorMessage] = useState<object | null>(null);
+  const [errorMessage, setErrorMessage] = useState<ErrorMessage | null>(null);
   const [isErrorVisible, setIsErrorVisible] = useState(false);
 
   const navigate = useNavigate();
@@ -41,11 +36,16 @@ export default function LoginForm() {
       });
 
       if (response.status === 200) {
-        const responseData = await response.json();
-        localStorage.setItem('userData', JSON.stringify(responseData));
-        reset();
-        setErrorMessage({ title: 'Успешный вход!', message: 'Добро пожаловать в корпоративный портал' });
+        const res = await response.json();
+
+        console.log('|______|  res:', res);
+        if (res.userData) {
+          localStorage.setItem('userData', JSON.stringify(res.userData));
+        }
+        setErrorMessage(res.message);
         setIsErrorVisible(true);
+        reset();
+
         setTimeout(() => {
           navigate('/');
           setIsErrorVisible(false);
@@ -53,10 +53,12 @@ export default function LoginForm() {
       } else {
         console.error(`Error: ${response.status}`);
         const errorData = await response.json();
-        setErrorMessage(errorData);
+
+        setErrorMessage(errorData.message);
         localStorage.removeItem('userData');
-        reset();
         setIsErrorVisible(true);
+        reset();
+
         setTimeout(() => {
           setIsErrorVisible(false);
         }, 2000);
@@ -132,8 +134,7 @@ export default function LoginForm() {
       <Button type="submit" variant="outlined" sx={{ width: '400px', padding: '10px' }}>
         Войти
       </Button>
-      {/* {errorMessage && <p>{errorMessage}</p>} */}
-      {/* {errorMessage && <Alert severity="error">{errorMessage}</Alert>} */}
+
       {isErrorVisible && (
         <Alert severity={errorMessage?.title === 'Успешный вход!' ? 'success' : 'error'}>
           <AlertTitle>{errorMessage?.title}</AlertTitle>

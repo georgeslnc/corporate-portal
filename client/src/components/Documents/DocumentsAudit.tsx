@@ -1,7 +1,7 @@
 import React from 'react';
 import { File, useAppDispatch } from '../../redux/type';
 import { downloadedFile } from '../../redux/Thunk/files/downloadedFile';
-import { Typography, List, ListItem, Button } from '@mui/material';
+import { Typography, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from '@mui/material';
 import FileDownloadIcon from '@mui/icons-material/FileDownload';
 import { delFileFromBack } from '../../redux/Thunk/files/deleteFile';
 import DeleteIcon from '@mui/icons-material/Delete';
@@ -24,18 +24,30 @@ export default function DocumentsAudit({ filesAudit }: DocumentsAuditProps) {
 
   return (
     <div>
-      <Typography variant="h5" component="h5">
+      <Typography variant="h5" component="h5" style={{ marginBottom: '15px' }}>
         Документы бухгалтерии
       </Typography>
-      <List>
-        {filesAudit.map((file: File) => (
-          <ListItem key={file.id}>
-            {file.title}
-            <FileDownloadIcon onClick={() => downloadHandler(file.id, file.title)}></FileDownloadIcon>
-            {professionId === 5 ? <DeleteIcon onClick={() => deleteHandler(file.id)}></DeleteIcon> : null}
-          </ListItem>
-        ))}
-      </List>
+      <TableContainer component={Paper} style={{ width: '80%' }}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell>Название файла</TableCell>
+              <TableCell></TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {filesAudit.map((file: File) => (
+              <TableRow key={file.id}>
+                <TableCell style={{ whiteSpace: 'nowrap' }}>{file.adminTitle}</TableCell>
+                <TableCell align="right">
+                  <FileDownloadIcon onClick={() => downloadHandler(file.id, file.title)} />
+                  {professionId === 5 && <DeleteIcon onClick={() => deleteHandler(file.id)} />}
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
     </div>
   );
 }
