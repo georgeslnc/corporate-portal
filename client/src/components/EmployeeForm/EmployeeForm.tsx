@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { FormInputs } from './types';
 
-import { Box, TextField, Button, Alert, SelectChangeEvent } from '@mui/material';
+import { Box, TextField, Button, Alert, SelectChangeEvent, Input } from '@mui/material';
 
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -30,6 +30,7 @@ export default function EmployeeForm() {
   const [alertMessage, setAlertMessage] = useState('');
   const [selectedGroup, setSelectedGroup] = useState('');
   const [selectedProfession, setSelectedProfession] = useState('');
+  const [fileAttached, setFileAttached] = useState(false);
 
   const {
     register,
@@ -39,6 +40,8 @@ export default function EmployeeForm() {
   } = useForm<FormInputs>({
     mode: 'onBlur',
   });
+
+  const fileInput = useRef();
 
   const handleGroupChange = (event: SelectChangeEvent<string>) => {
     setSelectedGroup(event.target.value);
@@ -52,37 +55,60 @@ export default function EmployeeForm() {
     setSelectedGroup('');
     setSelectedProfession('');
     reset();
+    if (fileInput.current) {
+      fileInput.current.value = '';
+      setFileAttached(false);
+    }
+  };
+
+  const handleFileUpload = (event) => {
+    const file = event.target.files[0];
+    if (file) {
+      setFileAttached(true);
+    } else {
+      setFileAttached(false);
+    }
   };
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
     data = { ...data, birthday: selectedDate ? dateFormatter(selectedDate) : '' };
 
+    const formData = new FormData();
+
+    const file = fileInput.current.files[0];
+    formData.append('photo', file);
+
+    Object.keys(data).forEach((key) => {
+      formData.append(key, data[key]);
+    });
+
     try {
       const res = await fetch(`http://localhost:3000/admin/employees`, {
         method: 'POST',
         credentials: 'include',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data),
+        body: formData,
       });
 
-      if (res.status === 200) {
-        const data = await res.json();
+      const data = await res.json();
+
+      if (data.status === 200) {
         setAlertMessage(data.message);
-        reset();
         setSelectedDate(maxDate);
-        setSelectedGroup('');
-        setSelectedProfession('');
+        handleResetClick();
 
         setTimeout(() => {
           setAlertMessage('');
-        }, 6 * 1000);
+        }, 5 * 1000);
       } else {
-        const errorData = await res.json();
-        setErrorMessage(errorData.message);
-        console.error(`Error: ${res.status}`);
+        setErrorMessage(data.message);
+        console.error(`Error: ${data.status}`);
+
+        setTimeout(() => {
+          setErrorMessage('');
+        }, 5 * 1000);
       }
     } catch (error) {
-      console.error(error);
+      console.error('===> error', error);
     }
   };
 
@@ -154,17 +180,33 @@ export default function EmployeeForm() {
           />
         </Box>
 
-        <DatePicker
-          label="Дата рождения"
-          minDate={minDate}
-          maxDate={maxDate}
-          value={selectedDate}
-          onChange={(newValue) => {
-            if (newValue !== null) {
-              setSelectedDate(newValue);
-            }
-          }}
-        />
+        <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>
+          <DatePicker
+            label="Дата рождения"
+            minDate={minDate}
+            maxDate={maxDate}
+            value={selectedDate}
+            sx={{ flexGrow: 1 }}
+            onChange={(newValue) => {
+              if (newValue !== null) {
+                setSelectedDate(newValue);
+              }
+            }}
+          />
+
+          <Button
+            variant={fileAttached ? 'contained' : 'outlined'}
+            component="label"
+            sx={{ flexGrow: 1 }}
+            style={fileAttached ? { backgroundColor: 'cornflowerblue', color: 'white' } : {}}
+          >
+            Фото
+            <input ref={fileInput} type="file" name="photo" hidden onChange={handleFileUpload} />
+          </Button>
+        </Box>
+
+        {/* <input ref={fileInput} type="file" id="photo" name="photo" /> */}
+        {/* disableUnderline */}
 
         <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2, marginTop: '20px' }}>
           <Button type="submit" variant="outlined" sx={{ flexGrow: 2, padding: '10px' }} size="large">
@@ -180,8 +222,8 @@ export default function EmployeeForm() {
             Очистить
           </Button>
         </Box>
-        {errorMessage && <p>{errorMessage}</p>}
         {alertMessage && <Alert severity="success">{alertMessage}</Alert>}
+        {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
       </Box>
     </LocalizationProvider>
   );
