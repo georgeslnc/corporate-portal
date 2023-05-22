@@ -15,18 +15,17 @@ type Message =
 function NewChat() {
 
     // get user from local storage
-    const localData = localStorage.userData;
-    const currUserId = JSON.parse(localData).userId;
+  const localData = localStorage.userData;
+  const currUserId = JSON.parse(localData).userId;
   
-    const employees = useAppSelector((state: RootState) => state.employeesSlice.employees);
-    const currUser = employees.find((employee: Employee) => employee.id === Number(currUserId));
-    const userName = `${currUser?.firstName} ${currUser?.lastName}`
-    console.log('userName', userName);
+  const employees = useAppSelector((state: RootState) => state.employeesSlice.employees);
+  const currUser = employees.find((employee: Employee) => employee.id === Number(currUserId));
+  let userName = `${currUser?.firstName} ${currUser?.lastName}`
 
   const [ws, setWS] = useState<WebSocket | null>(null);
   const [input, setInput] = useState('');
   const [name, setName] = useState(userName);
-  const [messages, setMessages] = useState<Message[]>([]);
+  const [messages, setMessages] = useState<Message[]>([]);  
 
   const handleConnectButtonClick = () => {
     if (ws) return;
@@ -80,32 +79,45 @@ function NewChat() {
 
   return (
     <div className={style.container}>
-      Name:{' '} <br />
-      <input value={name} onChange={({ target }) => setName(target.value)} />
-      <br />
+      Имя:{' '}
+      <input value={name} onChange={({ target }) => setName(target.value)} className={style.name}/>
+      <hr />
       {messages.map((message) => (
         <p>
           {'isOur' in message ? (
-            <>
-              {message.isOur ? <b>{message.name}</b> : message.name}:{' '}
-              {message.text}
-            </>
+            <div>
+              {message.isOur 
+              ? <div className={style.our}>
+                  <p>
+                    <b>{message.name}</b>
+                  </p>
+                  <p>{message.text}</p>
+                </div>
+              : <div className={style.enemy}>
+                  <p><span>{message.name}</span></p>
+                  <p>{message.text}</p>
+                </div>}
+            </div>
           ) : (
-            <i>{message.name} was connected</i>
+            <i>{message.name} вошел/вошла в чат</i>
           )}
         </p>
       ))}
-      <input value={input} onChange={({ target }) => setInput(target.value)} />
-      <button disabled={!ws} onClick={handleSendMessage}>
-        Send
-      </button>
-      <br />
-      <button disabled={Boolean(ws)} onClick={handleConnectButtonClick}>
-        Connect
-      </button>
-      <button disabled={!ws} onClick={handleCloseButtonClick}>
-        Disconnect
-      </button>
+      <div className={style.footerbar}>
+        <input value={input} onChange={({ target }) => setInput(target.value)} />
+        <button disabled={!ws} onClick={handleSendMessage}>
+          Отправить
+        </button>
+      </div>
+        <br />
+      <div className={style.btns}>
+        <button disabled={Boolean(ws)} onClick={handleConnectButtonClick} className={style.enter}>
+          Войти
+        </button>
+        <button disabled={!ws} onClick={handleCloseButtonClick} className={style.exit}>
+          Выйти
+        </button>
+      </div>
     </div>
   );
 }

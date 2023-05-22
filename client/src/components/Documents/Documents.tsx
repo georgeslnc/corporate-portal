@@ -12,9 +12,17 @@ import SendIcon from '@mui/icons-material/Send';
 
 export default function Documents() {
   const dispatch = useAppDispatch();
+  console.log('hi');
 
   useEffect(() => {
     dispatch(getFiles());
+  }, []);
+
+  useEffect(() => {
+    document.title = 'Документы';
+    return () => {
+      document.title = 'SoftMaster';
+    };
   }, []);
 
   const files = useAppSelector((state: RootState) => state.userFilesSlicer.files);

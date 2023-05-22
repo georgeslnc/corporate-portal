@@ -55,7 +55,6 @@ router.get('/download/:id', async (req, res) => {
   try {
     const file = await Document.findOne({ where: { id } });
     const filePath = `fileStorage/${file.title}`;
-
     res.download(filePath);
   } catch (error) {
     res.status(500).json({ msg: 'Something went wrong' });
@@ -66,7 +65,6 @@ router.delete('/delete/:id', async (req, res) => {
   const { id } = req.params;
   try {
     const file = await Document.findOne({ where: { id } });
-
     if (!file) {
       res.status(404).json({ msg: 'File not found' });
       return;

@@ -27,17 +27,18 @@ export default function BasicTextFields() {
 
   const handleClick = (id: number) => navigate(`/employee/${id}`);
 
-  const filteredEmployees = employees.filter((employee: Employee) => {
-    const fullName = `${employee.lastName} ${employee.firstName}`;
-    const fullNameReversed = `${employee.firstName} ${employee.lastName}`;
-    const query = searchQuery.toLowerCase();
-    return (
-      fullName.toLowerCase().includes(query) ||
-      fullNameReversed.toLowerCase().includes(query) ||
-      employee.lastName.toLowerCase().includes(query) ||
-      employee.firstName.toLowerCase().includes(query)
-    );
-  });
+  const filteredEmployees = employees
+    .filter((employee: Employee) => {
+      const fullName = `${employee.lastName} ${employee.firstName} ${employee.middleName}`;
+      const query = searchQuery.toLowerCase();
+      return (
+        fullName.toLowerCase().includes(query) ||
+        employee.lastName.toLowerCase().includes(query) ||
+        employee.firstName.toLowerCase().includes(query) ||
+        employee.middleName.toLowerCase().includes(query)
+      );
+    })
+    .sort((a: Employee, b: Employee) => a.lastName.localeCompare(b.lastName));
 
   return (
     <Box
@@ -58,26 +59,68 @@ export default function BasicTextFields() {
         onChange={handleInputChange}
         sx={{ width: '80%' }}
       />
-      {searchQuery &&
-        filteredEmployees.map((employee: Employee) => (
-          <ListItem
-            key={employee.id}
-            component="div"
-            onClick={() => handleClick(employee.id)}
-            sx={{
-              textDecoration: 'none',
-              cursor: 'pointer',
-              '&:hover': {
-                textDecoration: 'underline',
-              },
-            }}
-          >
-            <ListItemAvatar>
-              <Avatar src={employee.photoUrl} />
-            </ListItemAvatar>
-            <ListItemText primary={`${employee.firstName} ${employee.lastName}`} />
-          </ListItem>
-        ))}
+      <Box
+        sx={{
+          maxHeight: '620px',
+          width: '80%',
+          overflowY: 'auto',
+          '&::-webkit-scrollbar': {
+            width: '6px',
+            background: 'transparent',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            background: '#888',
+            borderRadius: '3px',
+          },
+          '&::-webkit-scrollbar-thumb:hover': {
+            background: '#555',
+          },
+        }}
+      >
+        {!searchQuery && // Проверка, является ли поле поиска пустым
+          employees
+            .slice() // Создание копии массива
+            .sort((a: Employee, b: Employee) => a.lastName.localeCompare(b.lastName))
+            .map((employee: Employee) => (
+              <ListItem
+                key={employee.id}
+                component="div"
+                onClick={() => handleClick(employee.id)}
+                sx={{
+                  textDecoration: 'none',
+                  cursor: 'pointer',
+                  '&:hover': {
+                    textDecoration: 'underline',
+                  },
+                }}
+              >
+                <ListItemAvatar>
+                  <Avatar src={employee.photoUrl} />
+                </ListItemAvatar>
+                <ListItemText primary={`${employee.lastName} ${employee.firstName} ${employee.middleName}`} />
+              </ListItem>
+            ))}
+        {searchQuery !== '' &&
+          filteredEmployees.map((employee: Employee) => (
+            <ListItem
+              key={employee.id}
+              component="div"
+              onClick={() => handleClick(employee.id)}
+              sx={{
+                textDecoration: 'none',
+                cursor: 'pointer',
+                '&:hover': {
+                  textDecoration: 'underline',
+                },
+              }}
+            >
+              <ListItemAvatar>
+                <Avatar src={employee.photoUrl} />
+              </ListItemAvatar>
+              <ListItemText primary={`${employee.lastName} ${employee.firstName} ${employee.middleName}`} />
+            </ListItem>
+          ))}
+      </Box>
     </Box>
   );
 }

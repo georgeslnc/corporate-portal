@@ -12,10 +12,11 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import { AccountCircle, Chat, Description, Home, Inbox, MenuBook, PeopleAlt } from '@mui/icons-material';
 import FormatListBulletedSharpIcon from '@mui/icons-material/FormatListBulletedSharp';
+import { Chat, Description, Home, Inbox, MenuBook, PeopleAlt } from '@mui/icons-material';
 import { styled } from '@mui/material/styles';
 import { AppBar, Toolbar, Typography, ListItemButton, Badge } from '@mui/material';
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
-import { RootState, useAppSelector } from '../../redux/type';
+import { Employee, RootState, useAppSelector } from '../../redux/type';
 
 const drawerWidth = 250;
 
@@ -25,10 +26,9 @@ const StyledDrawer = styled(Drawer)({
     width: drawerWidth,
     borderRadius: 10,
     height: '690px',
-    marginTop: '73px',
+    marginTop: '75px',
     marginLeft: '10px',
-    backgroundImage: `url('./img/фон.png')`,
-    // backgroundColor: 'white',
+    backgroundImage: `url('/img/фон.png')`,
     backgroundSize: 'cover',
     backgroundPosition: 'center center',
   },
@@ -36,6 +36,22 @@ const StyledDrawer = styled(Drawer)({
     color: 'black',
   },
 });
+
+const StyledLogo = styled('img')({
+  marginRight: '10px',
+  height: '45px',
+  borderRadius: '7px',
+});
+
+const StyledAppBar = styled(AppBar)(({ theme }) => ({
+  background: `linear-gradient(145deg, ${theme.palette.primary.main} 10%,`,
+  '& .MuiTypography-root': {
+    fontFamily: 'Arial, sans-serif',
+    letterSpacing: '2px',
+    color: theme.palette.common.white,
+    textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8)',
+  },
+}));
 
 const userData: string | null = localStorage.getItem('userData');
 const parsedUserData: { groupId: number } = userData ? JSON.parse(userData) : {};
@@ -46,6 +62,7 @@ const Navbar = () => {
   const [selectedLink, setSelectedLink] = useState(location.pathname);
   const offer = useAppSelector((state: RootState) => state.employeesSlice.offer);
   const navigate = useNavigate();
+
   const handleLinkClick = (path: any) => {
     setSelectedLink(path);
   };
@@ -60,32 +77,45 @@ const Navbar = () => {
     setAnchorEl(null);
   };
 
-  const user = {
-    name: 'Иван Иванов',
-    avatarUrl: './img/default-avatar.png',
+  const handleLogout = async () => {
+    localStorage.removeItem('userData');
+    navigate('/auth/login');
   };
 
+  const localData = localStorage.userData;
+  const parsedLocalData = localData ? JSON.parse(localData) : null;
+  const currUserId = parsedLocalData ? parsedLocalData.userId : null;
+  const userDataString = localStorage.getItem('userData');
+  const userData = userDataString ? JSON.parse(userDataString) : null;
+  const professionId = userData?.professionId;
+  const showAddEmployeeLink = professionId === 5;
+  const employees = useAppSelector((state: RootState) => state.employeesSlice.employees);
+  const currUser = employees.find((employee: Employee) => employee.id === Number(currUserId));
+  const userName = currUser ? `${currUser.firstName} ${currUser.lastName}` : '';
+
   const navLinks = [
-    { path: '/auth/login', name: 'Авторизация', icon: <AccountCircle /> },
+    { path: '/', name: 'Главная', icon: <Home /> },
     { path: '/handbook', name: 'Справочник', icon: <MenuBook /> },
     { path: '/tree', name: 'Структура компании', icon: <PeopleAlt /> },
     { path: '/applications', name: 'Заявки', icon: <Inbox /> },
-    { path: '/', name: 'Главная', icon: <Home /> },
     { path: '/chat', name: 'Чат', icon: <Chat /> },
     { path: '/documents', name: 'Документы', icon: <Description /> },
     { path: '/admin/employee', name: 'Добавить сотрудника', icon: <AddCircleOutlineIcon /> },
     { path: '/todo', name: 'Замэтки', icon: <FormatListBulletedSharpIcon /> },
   ];
+    showAddEmployeeLink && { path: '/admin/employee', name: 'Добавить сотрудника', icon: <AddCircleOutlineIcon /> },
+  ].filter(Boolean);
 
   return (
     <>
-      <AppBar position="fixed">
+      <StyledAppBar position="fixed">
         <Toolbar>
-          <Typography variant="h6" noWrap>
-            Корпоративный портал
-          </Typography>
+          <Link to="/" style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center' }}>
+            <StyledLogo src="/img/logo.png" />
+            <Typography variant="h6">SOFTMASTER</Typography>
+          </Link>
           <div style={{ flexGrow: 1 }} />
-          <div style={{ display: 'flex', alignItems: 'center' }}>
+          {currUser ? (
             <Badge
               badgeContent={
                 offer.filter((el) => {
@@ -93,24 +123,21 @@ const Navbar = () => {
                 }).length
               }
               color="error"
-              sx={{ marginRight: '20px' }}
+              sx={{ gap: '20px', display: 'flex', alignItems: 'center', width: '300px' }}
             >
               <CircleNotificationsIcon sx={{ cursor: 'pointer' }} fontSize="large" onClick={() => navigate('/room')} />
-            </Badge>
-            <Typography variant="subtitle1" style={{ marginRight: 8 }}>
-              {user.name}
-            </Typography>
-            <IconButton onClick={handleMenuOpen} color="inherit">
-              <Avatar alt={user.name} src={user.avatarUrl} />
-            </IconButton>
-            <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
-              <MenuItem onClick={handleMenuClose}>Профиль</MenuItem>
-              <MenuItem onClick={handleMenuClose}>Выйти</MenuItem>
-            </Menu>
-          </div>
-        </Toolbar>
-      </AppBar>
 
+              <Typography variant="subtitle1">{userName}</Typography>
+              <IconButton onClick={handleMenuOpen} color="inherit">
+                <Avatar alt="avatar" src={currUser.photoUrl} />
+              </IconButton>
+              <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
+                <MenuItem onClick={handleLogout}>Выйти</MenuItem>
+              </Menu>
+            </Badge>
+          ) : null}
+        </Toolbar>
+      </StyledAppBar>
       <StyledDrawer variant="permanent">
         <Divider />
         <List>
