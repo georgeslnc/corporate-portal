@@ -7,6 +7,7 @@ export const useAppDispatch = () => useDispatch<AppDispatch>();
 export const useAppSelector: TypedUseSelectorHook<RootState> = useSelector;
 
 export type Employee = {
+  employeesCloseId: number;
   id: number;
   firstName: string;
   middleName: string;
@@ -71,6 +72,7 @@ export interface InititalStateOffer {
 }
 
 export interface NewsItem {
+  image: string | undefined;
   id: number;
   title: string;
   content: string;
@@ -85,6 +87,7 @@ export interface NewsState {
 
 export type File = {
   id: number;
+  adminTitle: string;
   title: string;
   url: string;
   documentType: string;

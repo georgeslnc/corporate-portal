@@ -8,6 +8,8 @@ import style from './application.module.scss';
 const userData: string | null = localStorage.getItem('userData');
 const parsedUserData: { groupId: number } = userData ? JSON.parse(userData) : {};
 const groupId: number = parsedUserData.groupId || 0;
+const localData = localStorage.userData;
+const currUserId = JSON.parse(localData).userId;
 
 export default function Bid() {
   const offer = useAppSelector((state: RootState) => state.employeesSlice.offer);
@@ -31,7 +33,7 @@ export default function Bid() {
         <Typography
           sx={{ fontSize: '10px', marginRight: '20px' }}
         >{`Автор заявки: ${employee.firstName} ${employee.lastName}`}</Typography>
-        <Typography sx={{ fontSize: '10px' }}>{`Название отдела: ${authorGroup.title}`}</Typography>
+        <Typography sx={{ fontSize: '10px' }}>{`От: ${authorGroup.title}`}</Typography>
       </div>
     );
   };
@@ -40,11 +42,11 @@ export default function Bid() {
     <List
       sx={{
         width: '80%',
+        height: '583px',
         bgcolor: 'background.paper',
         position: 'relative',
         overflow: 'hidden',
         overflowY: 'scroll',
-        maxHeight: 400,
         marginTop: '30px',
         padding: '0px',
         '& ul': { padding: 0 },
@@ -55,7 +57,7 @@ export default function Bid() {
       }}
       className={style.delScroll}
     >
-      <ul>
+      <ul className={style.test}>
         <ListSubheader sx={{ color: 'black', backgroundColor: ' rgb(221, 223, 226)', margin: '0px', width: '100%' }}>
           <Typography variant="h5" component="h2">
             Необходимо сделать
@@ -65,7 +67,7 @@ export default function Bid() {
           <li key={`${el.id}offers`} className={style.containerElement}>
             <div className={style.containerValueButton}>
               <Typography>{el.title}</Typography>
-              <Button sx={{ background: 'rgb(203, 210, 218)' }} onClick={() => changeStatusButton(el.id)}>
+              <Button sx={{ background: 'rgb(203, 210, 218)' }} onClick={() => dispatch(changeStatusOffer([el.id, currUserId]))}>
                 сделано
               </Button>
             </div>
@@ -81,7 +83,20 @@ export default function Bid() {
         </ListSubheader>
         {completedOffers.map((el: any) => (
           <li key={`${el.id}status`} className={style.containerElement}>
-            <Typography>{el.title}</Typography>
+            <Typography sx={{ display: 'flex' }}>
+              {el.title}
+              {employees.map((elem) => {
+                if (elem.id === el.employeesCloseId) {
+                  return (
+                    <Typography
+                      component={'span'}
+                      key={Date.now()}
+                      sx={{ marginLeft: '20px', fontSize: '10px' }}
+                    >{`${elem.firstName} ${elem.lastName}`}</Typography>
+                  );
+                }
+              })}
+            </Typography>
             {renderAuthorInfo(el.employeesId)}
           </li>
         ))}

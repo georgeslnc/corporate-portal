@@ -23,10 +23,10 @@ router.post('/', async (req, res) => {
 router.post('/status', async (req, res) => {
   try {
     const {
-      id
+      id, user
     } = req.body;
     const result = await Offer.findByPk(id);
-    await result.update({ status: true });
+    await result.update({ status: true, employeesCloseId: user});
     res.sendStatus(200);
   } catch (err) {
     console.error(err);
