@@ -48,32 +48,32 @@ const app = express();
 //   });
 // });
 
-const http = require('http')
-const { Server } = require('socket.io')
+const http = require('http');
+const { Server } = require('socket.io');
 
-const server = http.createServer(app)
+const server = http.createServer(app);
 
 const io = new Server(server, {
   cors: {
-        credentials: true,
-        origin: '*',
-        method: ['GET', 'POST']
-      },  
-  });
-const dbCheck = require('./utils/dbCheck');
+    credentials: true,
+    origin: '*',
+    method: ['GET', 'POST']
+  },
+});
 // end new
 
 // mazaev
 const WebSocket = require('ws');
-const WebSocketServer = require('ws').WebSocketServer;
+const { WebSocketServer } = require('ws');
+const dbCheck = require('./utils/dbCheck');
 
 const wss = new WebSocketServer({ port: 4000 });
 
-wss.on('connection', function connection(ws) {
+wss.on('connection', (ws) => {
   ws.on('error', console.error);
 
-  ws.on('message', function message(data, isBinary) {
-    wss.clients.forEach(function each(client) {
+  ws.on('message', (data, isBinary) => {
+    wss.clients.forEach((client) => {
       if (client !== ws && client.readyState === WebSocket.OPEN) {
         client.send(data, { binary: isBinary });
       }
