@@ -32,6 +32,7 @@ export default function BasicTextFields() {
     const fullNameReversed = `${employee.firstName} ${employee.lastName}`;
     const query = searchQuery.toLowerCase();
     return (
+      !searchQuery ||
       fullName.toLowerCase().includes(query) ||
       fullNameReversed.toLowerCase().includes(query) ||
       employee.lastName.toLowerCase().includes(query) ||
@@ -58,8 +59,28 @@ export default function BasicTextFields() {
         onChange={handleInputChange}
         sx={{ width: '80%' }}
       />
-      {searchQuery &&
+      {searchQuery !== '' &&
         filteredEmployees.map((employee: Employee) => (
+          <ListItem
+            key={employee.id}
+            component="div"
+            onClick={() => handleClick(employee.id)}
+            sx={{
+              textDecoration: 'none',
+              cursor: 'pointer',
+              '&:hover': {
+                textDecoration: 'underline',
+              },
+            }}
+          >
+            <ListItemAvatar>
+              <Avatar src={employee.photoUrl} />
+            </ListItemAvatar>
+            <ListItemText primary={`${employee.firstName} ${employee.lastName}`} />
+          </ListItem>
+        ))}
+      {searchQuery === '' &&
+        employees.map((employee: Employee) => (
           <ListItem
             key={employee.id}
             component="div"

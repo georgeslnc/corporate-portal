@@ -17,7 +17,6 @@ export default function OneGroup() {
     .filter((el: Employee) => el.professionId !== 3 && el.professionId !== 4);
   const groups = useAppSelector((state: RootState) => state.employeesSlice.group);
   const groupTitle = groups.find((group: Group) => group.id === Number(id));
-  console.log(groupTitle);
 
   const selectedGroupAll = employees.filter((employee: Employee) => employee.groupId === Number(id));
   const groupHead = selectedGroupAll.find((employee: Employee) => employee.professionId === 3);
