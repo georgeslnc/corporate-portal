@@ -1,28 +1,16 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-export default function ChatBody({ messages, lastMessageRef, typingStatus }: any) {
+export default function ChatBody({ messages, lastMessageRef, typingStatus, currUser }: any) {
   const navigate = useNavigate();
-
-  const handleLeaveChat = () => {
-    localStorage.removeItem('userName');
-    navigate('/');
-    window.location.reload();
-  };
 
   return (
     <>
-      <header className="chat__mainHeader">
-        <button className="leaveChat__btn" onClick={handleLeaveChat}>
-          LEAVE CHAT
-        </button>
-      </header>
-
-      <div className="message__container">
+    <div className="message__container">
         {messages.map((message: any) =>
           message.name === localStorage.getItem('userName') ? (
             <div className="message__chats" key={message.id}>
-              <p className="sender__name">You</p>
+              <p className="sender__name">{currUser.firstName}{' '}{currUser.lastName}</p>
               <div className="message__sender">
                 <p>{message.text}</p>
               </div>
@@ -45,3 +33,21 @@ export default function ChatBody({ messages, lastMessageRef, typingStatus }: any
     </>
   );
 }
+
+
+
+
+// const handleLeaveChat = () => {
+//   localStorage.removeItem('userName');
+//   navigate('/');
+//   window.location.reload();
+// };
+
+
+      {/* <header className="chat__mainHeader">
+        <button className="leaveChat__btn" onClick={handleLeaveChat}>
+          LEAVE CHAT
+        </button>
+      </header> */}
+
+  

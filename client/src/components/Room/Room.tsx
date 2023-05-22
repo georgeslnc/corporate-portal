@@ -7,12 +7,27 @@ import Bid from '../Application/Bid';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
 
+const FIELDS = {
+  NAME: 'username',
+}
+
 export default function Room() {
   const [youApp, setYouApp] = useState(true);
   const offer = useAppSelector((state: RootState) => state.employeesSlice.offer);
   const group = useAppSelector((state: RootState) => state.employeesSlice.group);
   const localData = localStorage.userData;
-  const currUserId = JSON.parse(localData).userId;
+  const currUserId = JSON.parse(localData)?.userId;
+
+  // const handSendToTheChat = () => {
+  //   navigate('/chat');
+  // };
+
+
+  // new chat
+
+  const NAME = FIELDS 
+  const [values, setValues] = useState({[NAME]: ''})
+  // end chat
 
   const employees = useAppSelector((state: RootState) => state.employeesSlice.employees);
   const currUser = employees.find((employee: Employee) => employee.id === Number(currUserId));
@@ -25,6 +40,7 @@ export default function Room() {
   };
 
   return (
+
     <>
       <div className={style.containerUser}>
         <img src={`${currUser?.photoUrl}`} alt="photo" />
