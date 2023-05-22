@@ -7,6 +7,7 @@ import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
 import Typography from '@mui/material/Typography';
+import Box from '@mui/material/Box';
 
 export default function OneGroup() {
   const { id } = useParams();
@@ -33,11 +34,49 @@ export default function OneGroup() {
   return (
     <>
       <Typography variant="h6">{groupTitle?.title}</Typography>
-      {selectedGroup.map((employee: Employee) => (
+      <Box
+        sx={{
+          maxHeight: '620px',
+          width: '560px',
+          overflowY: 'auto',
+          '&::-webkit-scrollbar': {
+            width: '6px',
+            background: 'transparent',
+          },
+          '&::-webkit-scrollbar-thumb': {
+            background: '#888',
+            borderRadius: '3px',
+          },
+          '&::-webkit-scrollbar-thumb:hover': {
+            background: '#555',
+          },
+          overflowX: 'hidden',
+        }}
+      >
+        {selectedGroup.map((employee: Employee) => (
+          <ListItem
+            key={employee.id}
+            component="div"
+            onClick={() => handleClick(employee.id)}
+            sx={{
+              marginLeft: '15px',
+              textDecoration: 'none',
+              cursor: 'pointer',
+              '&:hover': {
+                textDecoration: 'underline',
+              },
+            }}
+          >
+            <ListItemAvatar>
+              <Avatar src={employee.photoUrl} />
+            </ListItemAvatar>
+            <ListItemText primary={`${employee.lastName} ${employee.firstName} ${employee.middleName}`} />
+          </ListItem>
+        ))}
         <ListItem
-          key={employee.id}
+          key={groupHead?.id}
           component="div"
-          onClick={() => handleClick(employee.id)}
+          onClick={() => handleClick(groupHead?.id)}
           sx={{
             marginLeft: '15px',
             textDecoration: 'none',
@@ -48,29 +87,13 @@ export default function OneGroup() {
           }}
         >
           <ListItemAvatar>
-            <Avatar src={employee.photoUrl} />
+            <Avatar src={groupHead?.photoUrl} />
           </ListItemAvatar>
-          <ListItemText primary={`${employee.firstName} ${employee.lastName}`} />
+          <ListItemText
+            primary={`${groupHead?.lastName} ${groupHead?.firstName} ${groupHead?.middleName} - руководитель отдела`}
+          />
         </ListItem>
-      ))}
-      <ListItem
-        key={groupHead?.id}
-        component="div"
-        onClick={() => handleClick(groupHead?.id)}
-        sx={{
-          marginLeft: '15px',
-          textDecoration: 'none',
-          cursor: 'pointer',
-          '&:hover': {
-            textDecoration: 'underline',
-          },
-        }}
-      >
-        <ListItemAvatar>
-          <Avatar src={groupHead?.photoUrl} />
-        </ListItemAvatar>
-        <ListItemText primary={`${groupHead?.firstName} ${groupHead?.lastName} - руководитель отдела`} />
-      </ListItem>
+      </Box>
       <Button style={{ marginLeft: '25px' }} color="inherit" onClick={() => navigate(-1)}>
         Назад
       </Button>

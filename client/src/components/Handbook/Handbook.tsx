@@ -62,7 +62,7 @@ export default function BasicTextFields() {
       <Box
         sx={{
           maxHeight: '620px',
-          width: '560px',
+          width: '80%',
           overflowY: 'auto',
           '&::-webkit-scrollbar': {
             width: '6px',
