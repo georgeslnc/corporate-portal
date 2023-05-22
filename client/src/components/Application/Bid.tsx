@@ -42,7 +42,7 @@ export default function Bid() {
     <List
       sx={{
         width: '80%',
-        height: '583px',
+        height: '527px',
         bgcolor: 'background.paper',
         position: 'relative',
         overflow: 'hidden',

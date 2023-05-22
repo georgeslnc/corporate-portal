@@ -14,6 +14,7 @@ import FastNavigate from './components/_FastNavigate/FastNavigate';
 import OneGroup from './components/Tree/OneGroup';
 import Documents from './components/Documents/Documents';
 import Room from './components/Room/Room';
+import Todo from './components/Todo/Todo';
 
 import EmployeeForm from './components/EmployeeForm/EmployeeForm';
 import NewChat from './components/Chat/NewChat';
@@ -36,6 +37,7 @@ function App() {
         <Route path="/tree/:id" element={<OneGroup />} />
         <Route path="/applications" element={<Application />} />
         <Route path="/newslist" element={<News />} />
+        <Route path="/todo" element={<Todo />} />
         {/* <Route path="/info"  element={<info />}/> */}
         {/* Chat */}
         <Route path="/" element={<Home />} />

@@ -1,0 +1,12 @@
+.boxCheckbox {
+  width: 15px;
+  height: 15px;
+  border: 1px solid #e4dddd;
+  border-radius: 5px;
+}
+.color {
+  background-color: aqua;
+}
+.delScroll::-webkit-scrollbar {
+  display: none;
+}

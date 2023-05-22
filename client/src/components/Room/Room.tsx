@@ -9,7 +9,7 @@ import EmailIcon from '@mui/icons-material/Email';
 
 const FIELDS = {
   NAME: 'username',
-}
+};
 
 export default function Room() {
   const [youApp, setYouApp] = useState(true);
@@ -22,11 +22,10 @@ export default function Room() {
   //   navigate('/chat');
   // };
 
-
   // new chat
 
-  const NAME = FIELDS 
-  const [values, setValues] = useState({[NAME]: ''})
+  const NAME = FIELDS;
+  const [values, setValues] = useState({ [NAME]: '' });
   // end chat
 
   const employees = useAppSelector((state: RootState) => state.employeesSlice.employees);
@@ -40,7 +39,6 @@ export default function Room() {
   };
 
   return (
-
     <>
       <div className={style.containerUser}>
         <img src={`${currUser?.photoUrl}`} alt="photo" />
@@ -56,11 +54,17 @@ export default function Room() {
           </Typography>
         </div>
       </div>
-      <Button sx={{ backgroundColor: 'red' }} onClick={showYouApp}>
+      <Button
+        sx={{ backgroundColor: 'rgb(194, 200, 207)', color: 'black', marginTop: '20px', marginRight: '20px' }}
+        onClick={showYouApp}
+      >
         Заявки в отдел
       </Button>
 
-      <Button sx={{ backgroundColor: 'blue' }} onClick={showMyApp}>
+      <Button
+        sx={{ backgroundColor: 'rgb(194, 200, 207)', color: 'black', marginTop: '20px', marginRight: '20px' }}
+        onClick={showMyApp}
+      >
         Мои заявки
       </Button>
       {youApp ? (
@@ -69,7 +73,7 @@ export default function Room() {
         <List
           sx={{
             width: '80%',
-            height: '583px',
+            height: '527px',
             bgcolor: 'background.paper',
             position: 'relative',
             overflow: 'hidden',
