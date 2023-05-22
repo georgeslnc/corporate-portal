@@ -106,6 +106,7 @@ export default function LoginForm() {
         type="email"
         error={Boolean(errors.email)}
         helperText={errors.email?.message}
+        autoComplete="current-email"
         sx={{
           width: '400px',
           height: '70px',
@@ -125,6 +126,7 @@ export default function LoginForm() {
         type="password"
         error={Boolean(errors.password)}
         helperText={errors.password?.message}
+        autoComplete="current-password"
         sx={{
           width: '400px',
           height: '70px',
