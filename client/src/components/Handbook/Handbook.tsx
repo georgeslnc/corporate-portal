@@ -94,7 +94,7 @@ export default function BasicTextFields() {
               <ListItemAvatar>
                 <Avatar src={employee.photoUrl} />
               </ListItemAvatar>
-              <ListItemText primary={`${employee.firstName} ${employee.lastName}`} />
+              <ListItemText primary={`${employee.lastName} ${employee.firstName} ${employee.middleName} `} />
             </ListItem>
           ))}
         {searchQuery === '' &&
@@ -114,7 +114,7 @@ export default function BasicTextFields() {
               <ListItemAvatar>
                 <Avatar src={employee.photoUrl} />
               </ListItemAvatar>
-              <ListItemText primary={`${employee.firstName} ${employee.lastName}`} />
+              <ListItemText primary={`${employee.lastName} ${employee.firstName} ${employee.middleName} `} />
             </ListItem>
           ))}
       </Box>
