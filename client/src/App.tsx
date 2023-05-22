@@ -18,6 +18,7 @@ import Documents from './components/Documents/Documents';
 import Room from './components/Room/Room';
 
 import EmployeeForm from './components/EmployeeForm/EmployeeForm';
+import NewChat from './components/Chat/NewChat';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -39,8 +40,8 @@ function App() {
         <Route path="/newslist" element={<News />} />
         {/* <Route path="/info"  element={<info />}/> */}
         {/* Chat */}
-        <Route path="/" element={<Home socket={socket} />} />
-        <Route path="/chat" element={<Chat socket={socket} />} />
+        {/* <Route path="/" element={<Home socket={socket} />} /> */}
+        <Route path="/chat" element={<NewChat />} />
         <Route path="/room" element={<Room />} />
         <Route path="/documents" element={<Documents />} />
         <Route path="/admin/employee" element={<EmployeeForm />} />

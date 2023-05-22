@@ -7,10 +7,24 @@ import { Departament, Employee, Group, Profession, RootState, useAppSelector } f
 import * as io from 'socket.io-client';
 const socket = io.connect('http://localhost:3000');
 
+//new
+import { useLocation } from 'react-router-dom';
+// end of new
+
 export default function Chat({ socket }: any) {
   const [messages, setMessages] = useState([]);
+
   const [typingStatus, setTypingStatus] = useState('');
   const lastMessageRef = useRef(null);
+
+    // new
+  const location = useLocation()
+  console.log(location);
+    
+  useEffect(() => {
+    // socket.emit('join')
+  }, [])
+  // end of new
 
   // get user from local storage
   const localData = localStorage.userData;
@@ -18,7 +32,7 @@ export default function Chat({ socket }: any) {
 
   const employees = useAppSelector((state: RootState) => state.employeesSlice.employees);
   const currUser = employees.find((employee: Employee) => employee.id === Number(currUserId));
-  console.log('currUser', currUser);
+  // console.log('currUser', currUser);
   // end of get user
 
   const userName: string = `${currUser?.firstName} ${currUser?.lastName}`
@@ -28,6 +42,12 @@ export default function Chat({ socket }: any) {
   useEffect(() => {
     socket.on('messageResponse', (data: any) => setMessages([...messages, data]));
   }, [socket, messages]);
+  // console.log('messages', messages);
+  
+  useEffect(() => {
+    socket.on('vadim', (data: any) => setMessages([...name, data]));
+  }, [socket, name]);
+  console.log('name', name);
 
   useEffect(() => {
     lastMessageRef.current?.scrollIntoView({ behavior: 'smooth' });

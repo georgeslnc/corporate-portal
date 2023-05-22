@@ -2,6 +2,10 @@ import React, { useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Departament, Employee, Group, Profession, RootState, useAppSelector } from '../../redux/type';
 
+const FIELDS = {
+  NAME: 'username',
+}
+
 export default function Room() {
   const { id } = useParams();
 
@@ -11,9 +15,15 @@ export default function Room() {
   const localData = localStorage.userData;
   const currUserId = JSON.parse(localData)?.userId;
 
-  const handSendToTheChat = () => {
-    navigate('/chat');
-  };
+  // const handSendToTheChat = () => {
+  //   navigate('/chat');
+  // };
+
+  // new chat
+
+  const NAME = FIELDS 
+  const [values, setValues] = useState({[NAME]: ''})
+  // end chat
 
   const employees = useAppSelector((state: RootState) => state.employeesSlice.employees);
   const groups = useAppSelector((state: RootState) => state.employeesSlice.group);
@@ -66,8 +76,11 @@ export default function Room() {
           {groupHead?.firstName} {groupHead?.lastName}
         </Link>
       </p>
-      <p>
+      {/* <p>
         <button onClick={() => handSendToTheChat()}>Чат</button>
+      </p> */}
+      <p>
+        <Link to={`/chat?name=${values[NAME]}`}>Чат</Link>
       </p>
     </div>
   );

@@ -42,6 +42,7 @@
 //   );
 // }
 
+import { useLocale } from 'antd/es/locale';
 import React, { useEffect, useState } from 'react';
 
 export default function ChatBar({ socket, currUser }: any) {

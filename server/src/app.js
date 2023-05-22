@@ -12,46 +12,77 @@ const app = express();
 
 // new vadim
 
-const http = require('http').Server(app);
-// eslint-disable-next-line import/no-extraneous-dependencies
-const socketIO = require('socket.io')(http, {
+// const http = require('http').Server(app);
+// // eslint-disable-next-line import/no-extraneous-dependencies
+// const socketIO = require('socket.io')(http, {
+//   cors: {
+//     credentials: true,
+//     // origin: 'http://localhost:5173',
+//     origin: '*',
+//     method: ['GET', 'POST']
+//   },
+// });
+// const dbCheck = require('./utils/dbCheck');
+
+// let users = [];
+
+// socketIO.on('connection', (socket) => {
+//   console.log(`⚡: ${socket.id} user just connected!`);
+
+//   socket.on('message', (data) => {
+//     socketIO.emit('messageResponse', data);
+//   });
+
+//   socket.on('typing', (data) => socket.broadcast.emit('typingResponse', data));
+
+//   socket.on('newUser', (data) => {
+//     users.push(data);
+//     socketIO.emit('newUserResponse', users);
+//   });
+
+//   socket.on('disconnect', () => {
+//     console.log('🔥: A user disconnected');
+//     users = users.filter((user) => user.socketID !== socket.id);
+//     socketIO.emit('newUserResponse', users);
+//     socket.disconnect();
+//   });
+// });
+
+const http = require('http')
+const { Server } = require('socket.io')
+
+const server = http.createServer(app)
+
+const io = new Server(server, {
   cors: {
-    credentials: true,
-    // origin: 'http://localhost:5173',
-    origin: '*',
-    method: ['GET', 'POST']
-  },
-});
+        credentials: true,
+        origin: '*',
+        method: ['GET', 'POST']
+      },  
+  });
 const dbCheck = require('./utils/dbCheck');
-
-let users = [];
-
-socketIO.on('connection', (socket) => {
-  console.log(`⚡: ${socket.id} user just connected!`);
-
-  socket.on('message', (data) => {
-    socketIO.emit('messageResponse', data);
-  });
-
-  socket.on('typing', (data) => socket.broadcast.emit('typingResponse', data));
-
-  socket.on('newUser', (data) => {
-    users.push(data);
-    socketIO.emit('newUserResponse', users);
-  });
-  // console.log('serv data----------------------------',data);
-
-  socket.on('disconnect', () => {
-    console.log('🔥: A user disconnected');
-    users = users.filter((user) => user.socketID !== socket.id);
-    socketIO.emit('newUserResponse', users);
-    socket.disconnect();
-  });
-});
 // end new
 
-// рекварим МИДЛВЕЙРЫ
+// mazaev
+const WebSocket = require('ws');
+const WebSocketServer = require('ws').WebSocketServer;
 
+const wss = new WebSocketServer({ port: 4000 });
+
+wss.on('connection', function connection(ws) {
+  ws.on('error', console.error);
+
+  ws.on('message', function message(data, isBinary) {
+    wss.clients.forEach(function each(client) {
+      if (client !== ws && client.readyState === WebSocket.OPEN) {
+        client.send(data, { binary: isBinary });
+      }
+    });
+  });
+});
+// end mazaev
+
+// рекварим МИДЛВЕЙРЫ
 const isAuth = require('./middlewares/isAuth');
 
 const getEmployeesRoute = require('./routes/getEmployees.route');
@@ -101,7 +132,7 @@ app.use('/auth', authRouter);
 app.use('/documents', addFileRouter);
 app.use('/admin', employeesRouter);
 
-http.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server started on ${PORT}`);
   dbCheck();
 });
