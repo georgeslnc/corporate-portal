@@ -1,18 +1,24 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Employee, RootState, useAppSelector } from '../../redux/type';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
-import ImageIcon from '@mui/icons-material/Image';
 
 export default function BasicTextFields() {
   const employees = useAppSelector((state: RootState) => state.employeesSlice.employees);
   const [searchQuery, setSearchQuery] = useState('');
   const navigate = useNavigate();
+
+  useEffect(() => {
+    document.title = 'Справочник';
+    return () => {
+      document.title = 'SoftMaster';
+    };
+  }, []);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const query = event.target.value;
@@ -40,7 +46,6 @@ export default function BasicTextFields() {
         display: 'flex',
         flexDirection: 'column',
         alignItems: 'flex-start',
-        marginLeft: '50px',
       }}
       noValidate
       autoComplete="off"
@@ -51,7 +56,7 @@ export default function BasicTextFields() {
         variant="outlined"
         value={searchQuery}
         onChange={handleInputChange}
-        sx={{ width: '500px', marginTop: '100px', marginLeft: '25px' }}
+        sx={{ width: '80%' }}
       />
       {searchQuery &&
         filteredEmployees.map((employee: Employee) => (
@@ -60,7 +65,6 @@ export default function BasicTextFields() {
             component="div"
             onClick={() => handleClick(employee.id)}
             sx={{
-              marginLeft: '15px',
               textDecoration: 'none',
               cursor: 'pointer',
               '&:hover': {
