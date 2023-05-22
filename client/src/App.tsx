@@ -27,6 +27,7 @@ function App() {
   return (
     <div style={{ paddingLeft: '266px', paddingTop: '67px' }}>
       <FastNavigate />
+      {/* <NewChat /> */}
       <Routes>
         <Route path="/auth/login" element={<LoginForm />} />
         <Route path="/handbook" element={<ProtectedRoute element={Handbook} />} />
