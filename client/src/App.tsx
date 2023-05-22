@@ -12,6 +12,7 @@ import FastNavigate from './components/_FastNavigate/FastNavigate';
 import OneGroup from './components/Tree/OneGroup';
 import Documents from './components/Documents/Documents';
 import Room from './components/Room/Room';
+import Todo from './components/Todo/Todo';
 import EmployeeForm from './components/EmployeeForm/EmployeeForm';
 import NewChat from './components/Chat/NewChat';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
@@ -35,6 +36,7 @@ function App() {
         <Route path="/tree" element={<ProtectedRoute element={Tree} />} />
         <Route path="/tree/:id" element={<ProtectedRoute element={OneGroup} />} />
         <Route path="/applications" element={<ProtectedRoute element={Application} />} />
+        <Route path="/todo" element={<ProtectedRoute element={Todo} />} />
         {/* <Route path="/info"  element={<info />}/> */}
         <Route path="/" element={<ProtectedRoute element={Home} />} />
         <Route path="/chat" element={<ProtectedRoute element={NewChat} />} />

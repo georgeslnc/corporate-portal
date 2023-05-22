@@ -86,6 +86,7 @@ wss.on('connection', (ws) => {
 const isAuth = require('./middlewares/isAuth');
 
 const getEmployeesRoute = require('./routes/getEmployees.route');
+const getTodosRoute = require('./routes/getTodos.route');
 const getNewsRoute = require('./routes/getNews.route');
 const application = require('./routes/application.route');
 const authRouter = require('./routes/auth.router');
@@ -128,6 +129,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use('/employees', getEmployeesRoute);
+app.use('/todos', getTodosRoute);
 app.use('/news', getNewsRoute);
 app.use('/application', application);
 app.use('/auth', authRouter);
