@@ -29,6 +29,15 @@ module.exports = {
           key: 'id',
         },
       },
+      employeesCloseId: {
+        type: Sequelize.INTEGER,
+        references: {
+          model: {
+            tableName: 'Employees',
+          },
+          key: 'id',
+        },
+      },
       deadline: {
         type: Sequelize.STRING,
       },
