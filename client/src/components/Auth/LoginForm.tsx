@@ -1,14 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { useNavigate } from 'react-router-dom';
+import { ErrorMessage, Inputs } from './auth.types';
 
 import { Box, Button, TextField, Alert, AlertTitle } from '@mui/material';
-import { Troubleshoot } from '@mui/icons-material';
-
-type Inputs = {
-  email: string;
-  password: string;
-};
 
 export default function LoginForm() {
   const {
@@ -19,7 +14,7 @@ export default function LoginForm() {
     watch,
   } = useForm<Inputs>();
 
-  const [errorMessage, setErrorMessage] = useState<object | null>(null);
+  const [errorMessage, setErrorMessage] = useState<ErrorMessage | null>(null);
   const [isErrorVisible, setIsErrorVisible] = useState(false);
 
   const navigate = useNavigate();
@@ -139,8 +134,7 @@ export default function LoginForm() {
       <Button type="submit" variant="outlined" sx={{ width: '400px', padding: '10px' }}>
         Войти
       </Button>
-      {/* {errorMessage && <p>{errorMessage}</p>} */}
-      {/* {errorMessage && <Alert severity="error">{errorMessage}</Alert>} */}
+
       {isErrorVisible && (
         <Alert severity={errorMessage?.title === 'Успешный вход!' ? 'success' : 'error'}>
           <AlertTitle>{errorMessage?.title}</AlertTitle>
