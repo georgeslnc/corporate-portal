@@ -14,6 +14,7 @@ module.exports = (sequelize, DataTypes) => {
   Document.init(
     {
       title: DataTypes.STRING,
+      adminTitle: DataTypes.STRING,
       url: DataTypes.TEXT,
       documentType: DataTypes.TEXT,
     },

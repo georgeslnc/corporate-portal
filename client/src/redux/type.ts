@@ -86,6 +86,7 @@ export interface NewsState {
 
 export type File = {
   id: number;
+  adminTitle: string;
   title: string;
   url: string;
   documentType: string;
