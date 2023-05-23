@@ -9,7 +9,7 @@
     height: 690px;
     font-family: sans-serif;
     border-radius: 10px;
-    background-image: url('./img/фон.png');
+    background-image: url('/img/фон.png');
     background-size: cover;
     background-position: center;
 }

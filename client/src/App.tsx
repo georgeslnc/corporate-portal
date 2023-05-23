@@ -33,7 +33,7 @@ function App() {
     setCurrUserId(userId);
   }, [dispatch]);
 
-   useEffect(() => {
+  useEffect(() => {
     dispatch(getEmployees());
     setTimeout(() => {
       setUpdate((prev) => !prev);
