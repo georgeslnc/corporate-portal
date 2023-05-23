@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAppDispatch } from './redux/type';
 import { getEmployees } from './redux/Thunk/employees';
 import { Route, Routes } from 'react-router-dom';
@@ -18,6 +18,9 @@ import NewChat from './components/Chat/NewChat';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import NotFound from './components/NotFound/NotFound';
 
+const localData = localStorage.userData;
+const currUserId = localData ? JSON.parse(localData).userId : null;
+
 function App() {
   const dispatch = useAppDispatch();
 
@@ -28,7 +31,6 @@ function App() {
   return (
     <div style={{ paddingLeft: '266px', paddingTop: '67px' }}>
       <FastNavigate />
-      {/* <NewChat /> */}
       <Routes>
         <Route path="/auth/login" element={<LoginForm />} />
         <Route path="/handbook" element={<ProtectedRoute element={Handbook} />} />
@@ -39,7 +41,7 @@ function App() {
         <Route path="/todo" element={<ProtectedRoute element={Todo} />} />
         {/* <Route path="/info"  element={<info />}/> */}
         <Route path="/" element={<ProtectedRoute element={Home} />} />
-        <Route path="/chat" element={<ProtectedRoute element={NewChat} />} />
+        {/* <Route path="/chat" element={<ProtectedRoute element={NewChat} />} /> */}
         <Route path="/room" element={<ProtectedRoute element={Room} />} />
         <Route path="/documents" element={<ProtectedRoute element={Documents} />} />
         <Route path="/admin/employee" element={<ProtectedRoute element={EmployeeForm} />} />

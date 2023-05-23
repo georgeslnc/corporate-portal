@@ -7,6 +7,7 @@ import ListItem from '@mui/material/ListItem';
 import ListItemText from '@mui/material/ListItemText';
 import ListItemAvatar from '@mui/material/ListItemAvatar';
 import Avatar from '@mui/material/Avatar';
+import NewChat from '../Chat/NewChat';
 
 export default function BasicTextFields() {
   const employees = useAppSelector((state: RootState) => state.employeesSlice.employees);
