@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useAppDispatch } from './redux/type';
 import { getEmployees } from './redux/Thunk/employees';
 import { Route, Routes } from 'react-router-dom';
@@ -21,9 +21,14 @@ import NotFound from './components/NotFound/NotFound';
 function App() {
   const dispatch = useAppDispatch();
 
+  const [update, setUpdate] = useState(false);
+
   useEffect(() => {
     dispatch(getEmployees());
-  }, [dispatch]);
+    setTimeout(() => {
+      setUpdate((prev) => !prev);
+    }, 2000);
+  }, [update]);
 
   return (
     <div style={{ paddingLeft: '266px', paddingTop: '67px' }}>
