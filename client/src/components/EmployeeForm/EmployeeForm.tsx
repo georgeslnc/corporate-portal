@@ -1,8 +1,9 @@
 import { useRef, useState } from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { FormInputs } from './types';
+import { getEmployees } from '../../redux/Thunk/employees';
 
-import { Box, TextField, Button, Alert, SelectChangeEvent, Input } from '@mui/material';
+import { Box, TextField, Button, Alert, SelectChangeEvent } from '@mui/material';
 
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -20,6 +21,7 @@ import {
   phoneValidation,
 } from '../../utils/formValidation';
 import ProfFormControl from './ProfFormControl';
+import { useAppDispatch } from '../../redux/type';
 
 const minDate = new Date(1930, 0, 1);
 const maxDate = addYears(new Date(), -18);
@@ -31,6 +33,7 @@ export default function EmployeeForm() {
   const [selectedGroup, setSelectedGroup] = useState('');
   const [selectedProfession, setSelectedProfession] = useState('');
   const [fileAttached, setFileAttached] = useState(false);
+  const dispatch = useAppDispatch();
 
   const {
     register,
@@ -41,7 +44,7 @@ export default function EmployeeForm() {
     mode: 'onBlur',
   });
 
-  const fileInput = useRef();
+  const fileInput = useRef<HTMLInputElement>(null);
 
   const handleGroupChange = (event: SelectChangeEvent<string>) => {
     setSelectedGroup(event.target.value);
@@ -61,13 +64,8 @@ export default function EmployeeForm() {
     }
   };
 
-  const handleFileUpload = (event) => {
-    const file = event.target.files[0];
-    if (file) {
-      setFileAttached(true);
-    } else {
-      setFileAttached(false);
-    }
+  const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    return event.target?.files?.[0] ? setFileAttached(true) : setFileAttached(false);
   };
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
@@ -75,11 +73,14 @@ export default function EmployeeForm() {
 
     const formData = new FormData();
 
-    const file = fileInput.current.files[0];
-    formData.append('photo', file);
+    const file = fileInput.current?.files?.[0];
+    if (file) {
+      formData.append('photo', file);
+    }
 
-    Object.keys(data).forEach((key) => {
-      formData.append(key, data[key]);
+    const formDataCompatibleData: Record<string, any> = data;
+    Object.keys(formDataCompatibleData).forEach((key) => {
+      formData.append(key, formDataCompatibleData[key]);
     });
 
     try {
@@ -89,19 +90,21 @@ export default function EmployeeForm() {
         body: formData,
       });
 
-      const data = await res.json();
+      const responseData = await res.json();
 
-      if (data.status === 200) {
-        setAlertMessage(data.message);
+      if (responseData.status === 200) {
+        setAlertMessage(responseData.message);
         setSelectedDate(maxDate);
         handleResetClick();
+
+        dispatch(getEmployees());
 
         setTimeout(() => {
           setAlertMessage('');
         }, 5 * 1000);
       } else {
-        setErrorMessage(data.message);
-        console.error(`Error: ${data.status}`);
+        setErrorMessage(responseData.message);
+        console.error(`Error: ${responseData.status}`);
 
         setTimeout(() => {
           setErrorMessage('');
