@@ -38,7 +38,7 @@ function App() {
   }, [isLoggedIn]);
 
   return (
-    <div style={{ paddingLeft: '266px', paddingTop: '67px', paddingRight: '375px' }}>
+    <div style={{ paddingLeft: '266px', paddingTop: '67px', paddingRight: '383px' }}>
       <FastNavigate />
       {isLoggedIn && location.pathname !== '/auth/login' && <NewChat />}
       <Routes>
