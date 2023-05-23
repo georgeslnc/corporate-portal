@@ -3,7 +3,7 @@ import { useForm, SubmitHandler } from 'react-hook-form';
 import { FormInputs } from './types';
 import { getEmployees } from '../../redux/Thunk/employees';
 
-import { Box, TextField, Button, Alert, SelectChangeEvent } from '@mui/material';
+import { Box, TextField, Button, Alert, SelectChangeEvent, Popover } from '@mui/material';
 
 import { LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
@@ -33,6 +33,10 @@ export default function EmployeeForm() {
   const [selectedGroup, setSelectedGroup] = useState('');
   const [selectedProfession, setSelectedProfession] = useState('');
   const [fileAttached, setFileAttached] = useState(false);
+  const [imagePreviewUrl, setImagePreviewUrl] = useState<string | undefined>('');
+  const [popoverOpen, setPopoverOpen] = useState(false);
+  const [anchorEl, setAnchorEl] = useState<HTMLButtonElement | null>(null);
+
   const dispatch = useAppDispatch();
 
   const {
@@ -45,6 +49,7 @@ export default function EmployeeForm() {
   });
 
   const fileInput = useRef<HTMLInputElement>(null);
+  const buttonRef = useRef<any>(null);
 
   const handleGroupChange = (event: SelectChangeEvent<string>) => {
     setSelectedGroup(event.target.value);
@@ -65,7 +70,26 @@ export default function EmployeeForm() {
   };
 
   const handleFileUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
-    return event.target?.files?.[0] ? setFileAttached(true) : setFileAttached(false);
+    const reader = new FileReader();
+    const file = event?.target?.files ? event.target.files[0] : undefined;
+
+    if (!file) {
+      // Обработка ошибки или возврат из функции, если файл не был выбран.
+      return;
+    }
+
+    reader.onloadend = () => {
+      setFileAttached(true);
+      setPopoverOpen(true);
+      if (reader.result && typeof reader.result === 'string') {
+        setImagePreviewUrl(reader.result);
+      } else {
+        // Обработка ошибки или предоставление значения по умолчанию, если reader.result - не строка.
+        setImagePreviewUrl('');
+      }
+    };
+
+    reader.readAsDataURL(file);
   };
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
@@ -183,7 +207,7 @@ export default function EmployeeForm() {
           />
         </Box>
 
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>
+        <Box aria-describedby={'popover'} sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>
           <DatePicker
             label="Дата рождения"
             minDate={minDate}
@@ -198,6 +222,7 @@ export default function EmployeeForm() {
           />
 
           <Button
+            ref={buttonRef}
             variant={fileAttached ? 'contained' : 'outlined'}
             component="label"
             sx={{ flexGrow: 1 }}
@@ -206,8 +231,27 @@ export default function EmployeeForm() {
             Фото
             <input ref={fileInput} type="file" name="photo" hidden onChange={handleFileUpload} />
           </Button>
+          {fileAttached && (
+            <Popover
+              id="popover"
+              className="popover"
+              anchorEl={buttonRef.current}
+              open={popoverOpen}
+              onClose={() => setPopoverOpen(false)}
+              sx={{ marginLeft: '70px' }}
+              anchorOrigin={{
+                vertical: 'center',
+                horizontal: 'right',
+              }}
+              transformOrigin={{
+                vertical: 'center',
+                horizontal: 'right',
+              }}
+            >
+              <img src={imagePreviewUrl} alt="Preview" style={{ height: '200px', width: 'auto', margin: 0 }} />
+            </Popover>
+          )}
         </Box>
-
         <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2, marginTop: '20px' }}>
           <Button type="submit" variant="outlined" sx={{ flexGrow: 2, padding: '10px' }} size="large">
             Добавить сотрудника
