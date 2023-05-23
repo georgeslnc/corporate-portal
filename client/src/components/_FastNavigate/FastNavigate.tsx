@@ -93,7 +93,7 @@ const Navbar = () => {
   const userDataString = localStorage.getItem('userData');
   const userData = userDataString ? JSON.parse(userDataString) : null;
   const professionId = userData?.professionId;
-  const showAddEmployeeLink = professionId === 4;
+  const showAddEmployeeLink = professionId === 5;
   const employees = useAppSelector((state: RootState) => state.employeesSlice.employees);
   const currUser = employees.find((employee: Employee) => employee.id === Number(currUserId));
   const userName = currUser ? `${currUser.firstName} ${currUser.lastName}` : '';
