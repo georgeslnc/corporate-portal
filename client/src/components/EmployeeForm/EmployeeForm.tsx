@@ -205,9 +205,6 @@ export default function EmployeeForm() {
           </Button>
         </Box>
 
-        {/* <input ref={fileInput} type="file" id="photo" name="photo" /> */}
-        {/* disableUnderline */}
-
         <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2, marginTop: '20px' }}>
           <Button type="submit" variant="outlined" sx={{ flexGrow: 2, padding: '10px' }} size="large">
             Добавить сотрудника
