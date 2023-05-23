@@ -24,12 +24,21 @@ function App() {
   const location = useLocation();
   const isLoggedIn = Boolean(localStorage.userData);
 
+  const [update, setUpdate] = useState(false);
+
   useEffect(() => {
     dispatch(getEmployees());
     const localData = localStorage.userData;
     const userId = localData ? JSON.parse(localData).userId : null;
     setCurrUserId(userId);
   }, [dispatch]);
+
+   useEffect(() => {
+    dispatch(getEmployees());
+    setTimeout(() => {
+      setUpdate((prev) => !prev);
+    }, 2000);
+  }, [update]);
 
   useEffect(() => {
     if (isLoggedIn) {
