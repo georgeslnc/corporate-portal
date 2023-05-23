@@ -40,8 +40,8 @@ export default function DocumentsAudit({ filesAudit }: DocumentsAuditProps) {
               <TableRow key={file.id}>
                 <TableCell style={{ whiteSpace: 'nowrap' }}>{file.adminTitle}</TableCell>
                 <TableCell align="right">
-                  <FileDownloadIcon onClick={() => downloadHandler(file.id, file.title)} />
-                  {professionId === 5 && <DeleteIcon onClick={() => deleteHandler(file.id)} />}
+                  <FileDownloadIcon onClick={() => downloadHandler(file.id, file.title)} style={{ cursor: 'pointer' }} />
+                  {professionId === 5 && <DeleteIcon onClick={() => deleteHandler(file.id)} style={{ cursor: 'pointer' }} />}
                 </TableCell>
               </TableRow>
             ))}
