@@ -118,7 +118,7 @@ const Navbar = () => {
           </Link>
           <div style={{ flexGrow: 1 }} />
           {currUser ? (
-            <Box sx={{ gap: '20px', display: 'flex', alignItems: 'center', width: '300px' }}>
+            <Box sx={{ gap: '20px', display: 'flex', alignItems: 'center', width: '360px' }}>
               <Badge
                 badgeContent={
                   offer.filter((el) => {

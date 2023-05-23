@@ -6,7 +6,6 @@
   right: 10px;
   background-color: #f0f0f0;
   height: 670px;
-  font-family: sans-serif;
   border-radius: 10px;
   border: 2px solid rgb(203, 203, 203);
   /* background-image: url('/img/фон.png'); */
@@ -28,39 +27,71 @@
 .our {
   box-sizing: border-box;
   width: 80%;
-  background-color: #fff;
-  border-radius: 5px 15px 0 5px;
-  padding-top: 2px;
-  padding-right: 5px;
+  background-color: #1976d2;
+  border-radius: 15px 15px 0 15px;
+  color: white;
+  padding-right: 25px;
   text-align: right;
   margin-left: 65px;
-  opacity: 0.5;
+  opacity: 0.8;
+  position: relative;
+}
+
+.p {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin: 0;
+}
+
+.our::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  right: 0;
+  width: 2px;
+  height: 0;
+  border-top: 10px solid #1976d2;
+  border-left: 10px solid transparent;
+  border-radius: 0 0 0 5px;
 }
 
 .our b {
   margin-right: 10px;
-  text-decoration: underline;
 }
 
 .enemy {
+  position: relative;
   width: 80%;
   background-color: #fff;
-  border-radius: 15px 5px 5px 0;
+  border-radius: 15px 15px 15px 0;
   padding-top: 2px;
   padding-left: 5px;
   text-align: left;
   margin-left: 10px;
-  opacity: 0.5;
+  opacity: 0.8;
+}
+
+.enemy::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  width: 2px;
+  border-top: 10px solid #fff;
+  border-right: 15px solid transparent;
+  border-radius: 0 0 5px 0;
 }
 
 .enemy span {
   margin-left: 10px;
-  text-decoration: underline;
+  font-weight: bold;
 }
 
 .footerbar {
+  display: flex;
   width: 100%;
-  height: 30px;
+  height: 25px;
+  gap: 5px;
 }
 
 .footerbar input {
@@ -71,7 +102,7 @@
 
 .footerbar button {
   height: 25px;
-  background-color: #3d87b9;
+  /* background-color: #3d87b9; */
   color: #fff;
   border-radius: 3px;
 }
@@ -81,18 +112,14 @@
   grid-template-columns: repeat(2, 1fr);
 }
 
-.enter {
-  height: 20px;
-  background-color: #3d87b9;
-  color: #fff;
-  font-size: 15px;
-  border-radius: 5px;
-}
+.inputMessage {
+    position: absolute;
+    bottom: 10px;
+    width: 95%;
+}   
 
-.exit {
-  height: 20px;
-  background-color: #c7280c;
-  color: #fff;
-  font-size: 15px;
-  border-radius: 5px;
+.message {
+  overflow-y: scroll;
+  max-height: 520px;
+  padding-right: 7px;
 }
