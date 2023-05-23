@@ -99,7 +99,6 @@ const Navbar = () => {
     { path: '/applications', name: 'Заявки', icon: <Inbox /> },
     { path: '/chat', name: 'Чат', icon: <Chat /> },
     { path: '/documents', name: 'Документы', icon: <Description /> },
-    { path: '/admin/employee', name: 'Добавить сотрудника', icon: <AddCircleOutlineIcon /> },
     { path: '/todo', name: 'Замэтки', icon: <FormatListBulletedSharpIcon /> },
     showAddEmployeeLink && { path: '/admin/employee', name: 'Добавить сотрудника', icon: <AddCircleOutlineIcon /> },
   ].filter(Boolean);
