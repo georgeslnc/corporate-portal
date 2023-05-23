@@ -2,6 +2,11 @@ import { useState } from 'react';
 import style from './newchat.module.css';
 import { Employee, RootState, useAppSelector } from '../../redux/type';
 import React from 'react';
+import SendIcon from '@mui/icons-material/Send';
+import Button from '@mui/material/Button';
+import { Typography } from '@mui/material';
+import LoginIcon from '@mui/icons-material/Login';
+import ExitToAppIcon from '@mui/icons-material/ExitToApp';
 
 type Message =
   | {
@@ -76,50 +81,99 @@ function NewChat() {
   };
 
   return (
-    <div className={style.container}>
+    <Typography className={style.container}>
       Имя: <input value={name} onChange={({ target }) => setName(target.value)} className={style.name} />
       <hr />
-      {messages.map((message) => (
-        <p>
-          {'isOur' in message ? (
-            <div>
-              {message.isOur ? (
-                <div className={style.our}>
-                  <p>
-                    <b>{message.name}</b>
-                  </p>
-                  <p>{message.text}</p>
-                </div>
-              ) : (
-                <div className={style.enemy}>
-                  <p>
-                    <span>{message.name}</span>
-                  </p>
-                  <p>{message.text}</p>
-                </div>
-              )}
-            </div>
-          ) : (
-            <i>{message.name} вошел/вошла в чат</i>
-          )}
-        </p>
-      ))}
-      <div className={style.footerbar}>
-        <input value={input} onChange={({ target }) => setInput(target.value)} />
-        <button disabled={!ws} onClick={handleSendMessage}>
-          Отправить
-        </button>
+      <div className={style.message}>
+        {messages.map((message) => (
+          <p>
+            {'isOur' in message ? (
+              <div>
+                {message.isOur ? (
+                  <div className={style.our}>
+                    <p className={style.p}>
+                      <b>{message.name}</b>
+                    </p>
+                    <p className={style.p}>{message.text}</p>
+                  </div>
+                ) : (
+                  <div className={style.enemy}>
+                    <p>
+                      <span>{message.name}</span>
+                    </p>
+                    <p>{message.text}</p>
+                  </div>
+                )}
+              </div>
+            ) : (
+              <p>{message.name} вошел/вошла в чат</p>
+            )}
+          </p>
+        ))}
       </div>
-      <br />
-      <div className={style.btns}>
-        <button disabled={!ws} onClick={handleCloseButtonClick} className={style.exit}>
-          Выйти
-        </button>
-        <button disabled={Boolean(ws)} onClick={handleConnectButtonClick} className={style.enter}>
-          Войти
-        </button>
+      <div className={style.inputMessage}>
+        <div className={style.footerbar}>
+          <input value={input} onChange={({ target }) => setInput(target.value)} />
+          <Button
+            variant="contained"
+            disabled={!ws}
+            onClick={handleSendMessage}
+            sx={{
+              color: 'black',
+              backgroundColor: 'rgb(203, 210, 218)',
+              marginLeft: '10px',
+              '&:hover': {
+                textDecoration: 'none',
+                backgroundColor: 'rgba(25, 118, 210, 0.4)',
+              },
+            }}
+          >
+            <Typography sx={{ color: '#1976d2', display: 'flex' }}>
+              <SendIcon />
+            </Typography>
+          </Button>
+        </div>
+        <br />
+        <div className={style.btns}>
+          <Button
+            variant="contained"
+            disabled={!ws}
+            onClick={handleCloseButtonClick}
+            sx={{
+              color: 'black',
+              backgroundColor: 'rgb(203, 210, 218)',
+              '&:hover': {
+                textDecoration: 'none',
+                backgroundColor: 'rgba(25, 118, 210, 0.4)',
+              },
+            }}
+          >
+            <Typography sx={{ color: '#1976d2', display: 'flex' }}>
+              ВЫЙТИ
+              <ExitToAppIcon />
+            </Typography>
+          </Button>
+          <Button
+            variant="contained"
+            disabled={Boolean(ws)}
+            onClick={handleConnectButtonClick}
+            sx={{
+              color: 'black',
+              backgroundColor: 'rgb(203, 210, 218)',
+              '&:hover': {
+                textDecoration: 'none',
+                backgroundColor: 'rgba(25, 118, 210, 0.4)',
+              },
+            }}
+          >
+            <Typography sx={{ color: '#1976d2', display: 'flex' }}>
+              ВОЙТИ
+              <LoginIcon />
+            </Typography>
+          </Button>
+        </div>
       </div>
-    </div>
+    </Typography>
   );
 }
 
