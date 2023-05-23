@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import style from './newchat.module.css';
 import { Employee, RootState, useAppSelector } from '../../redux/type';
 import React from 'react';
@@ -25,13 +25,17 @@ function NewChat() {
 
   const employees = useAppSelector((state: RootState) => state.employeesSlice.employees);
   const currUser = employees.find((employee: Employee) => employee.id === Number(currUserId));
-  let userName = `${currUser?.firstName} ${currUser?.lastName}`;
+  const userName = currUser ? `${currUser?.firstName} ${currUser?.lastName}` : 'загрузка...';
 
   const [ws, setWS] = useState<WebSocket | null>(null);
   const [input, setInput] = useState('');
   const [name, setName] = useState(userName);
   const [messages, setMessages] = useState<Message[]>([]);
   const [showBtn, setShowBtn] = useState(false);
+
+  useEffect(() => {
+    setName(userName);
+  }, [employees]);
 
   const handleConnectButtonClick = () => {
     setShowBtn((prev) => !prev);
@@ -85,7 +89,7 @@ function NewChat() {
 
   return (
     <Typography className={style.container}>
-      Имя: <input value={name} onChange={({ target }) => setName(target.value)} className={style.name} />
+      Имя: <input value={name ? name : 'загрузка...'} onChange={({ target }) => setName(target.value)} className={style.name} />
       <hr />
       <div className={style.message}>
         {messages.map((message) => (
