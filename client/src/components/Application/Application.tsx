@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/type';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { postOffer } from '../../redux/Thunk/offer';
@@ -51,6 +51,13 @@ export default function Application() {
     reset();
     dispatch(postOffer(offerData));
   };
+
+  useEffect(() => {
+    document.title = 'Заявки';
+    return () => {
+      document.title = 'SoftMaster';
+    };
+  }, []);
 
   return (
     <>

@@ -44,7 +44,19 @@ function App() {
   }, [isLoggedIn]);
 
   return (
-    <div style={{ paddingLeft: '298px', paddingTop: '73px', paddingRight: '400px' }}>
+    <div
+      className="mainDiv"
+      style={{
+        paddingLeft: '298px',
+        paddingTop: '73px',
+        paddingRight: '400px',
+        height: '91.1vh',
+        backgroundImage: 'url(backgroundLines1.svg)',
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'cover',
+        backgroundPositionY: '150px',
+      }}
+    >
       <FastNavigate />
       {isLoggedIn && location.pathname !== '/auth/login' && <NewChat />}
       <Routes>
