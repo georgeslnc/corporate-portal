@@ -88,34 +88,34 @@ function NewChat() {
   };
 
   return (
-    <Typography className={style.container}>
+    <Typography component="span" className={style.container}>
       Имя: <input value={name ? name : 'загрузка...'} onChange={({ target }) => setName(target.value)} className={style.name} />
       <hr />
       <div className={style.message}>
         {messages.map((message) => (
-          <p>
+          <div key={Date.now()}>
             {'isOur' in message ? (
-              <div>
+              <p>
                 {message.isOur ? (
-                  <div className={style.our}>
+                  <p className={style.our}>
                     <p className={style.p}>
                       <b>{message.name}</b>
                     </p>
                     <p className={style.p}>{message.text}</p>
-                  </div>
+                  </p>
                 ) : (
-                  <div className={style.enemy}>
+                  <p className={style.enemy}>
                     <p>
                       <span>{message.name}</span>
                     </p>
                     <p>{message.text}</p>
-                  </div>
+                  </p>
                 )}
-              </div>
+              </p>
             ) : (
               <p>{message.name} вошел/вошла в чат</p>
             )}
-          </p>
+          </div>
         ))}
       </div>
       <div className={style.inputMessage}>
