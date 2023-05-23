@@ -58,12 +58,12 @@ export default function BasicTextFields() {
         variant="outlined"
         value={searchQuery}
         onChange={handleInputChange}
-        sx={{ width: '80%' }}
+        sx={{ width: '100%' }}
       />
       <Box
         sx={{
           maxHeight: '620px',
-          width: '80%',
+          width: '100%',
           overflowY: 'auto',
           '&::-webkit-scrollbar': {
             width: '6px',

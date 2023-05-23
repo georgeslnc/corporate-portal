@@ -27,18 +27,18 @@ export default function DocumentsHR({ filesHr }: DocumentsHRProps) {
       <Typography variant="h5" component="h5" style={{ marginBottom: '15px' }}>
         Документы по работе с персоналом
       </Typography>
-      <TableContainer component={Paper} style={{ width: '80%', marginBottom: '15px' }}>
+      <TableContainer component={Paper} style={{ width: '100%', marginBottom: '15px' }}>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Название файла</TableCell>
+              <TableCell style={{ fontSize: '18px', fontWeight: '600' }}>Название документа</TableCell>
               <TableCell align="right"></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {filesHr.map((file: File) => (
               <TableRow key={file.id}>
-                <TableCell style={{ whiteSpace: 'nowrap' }}>{file.adminTitle}</TableCell>
+                <TableCell style={{ whiteSpace: 'nowrap', fontSize: '18px' }}>{file.adminTitle}</TableCell>
                 <TableCell align="right">
                   <FileDownloadIcon onClick={() => downloadHandler(file.id, file.title)} style={{ cursor: 'pointer' }} />
                   {professionId === 5 && <DeleteIcon onClick={() => deleteHandler(file.id)} style={{ cursor: 'pointer' }} />}

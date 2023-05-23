@@ -19,7 +19,7 @@ export default function OneDepartment({ departament }: OneDepartmentProps) {
   };
 
   return (
-    <Accordion style={{ width: '80%' }}>
+    <Accordion style={{ width: '100%' }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />} onClick={toggleGroup}>
         <Typography variant="h5">{departament.title}</Typography>
       </AccordionSummary>

@@ -31,9 +31,9 @@ export default function Bid() {
     return (
       <div className={style.authorInfo}>
         <Typography
-          sx={{ fontSize: '10px', marginRight: '20px' }}
+          sx={{ fontSize: '15px', marginRight: '20px' }}
         >{`Автор заявки: ${employee.firstName} ${employee.lastName}`}</Typography>
-        <Typography sx={{ fontSize: '10px' }}>{`От: ${authorGroup.title}`}</Typography>
+        <Typography sx={{ fontSize: '15px' }}>{`Заявка от: ${authorGroup.title}`}</Typography>
       </div>
     );
   };
@@ -41,7 +41,7 @@ export default function Bid() {
   return (
     <List
       sx={{
-        width: '80%',
+        width: '100%',
         height: '527px',
         bgcolor: 'background.paper',
         position: 'relative',
@@ -66,7 +66,7 @@ export default function Bid() {
         {filteredOffers.map((el: any) => (
           <li key={`${el.id}offers`} className={style.containerElement}>
             <div className={style.containerValueButton}>
-              <Typography>{el.title}</Typography>
+              <Typography sx={{ fontSize: '18px', fontWeight: '700' }}>{el.title}</Typography>
               <Button sx={{ background: 'rgb(203, 210, 218)' }} onClick={() => dispatch(changeStatusOffer([el.id, currUserId]))}>
                 сделано
               </Button>
@@ -83,7 +83,7 @@ export default function Bid() {
         </ListSubheader>
         {completedOffers.map((el: any) => (
           <li key={`${el.id}status`} className={style.containerElement}>
-            <Typography sx={{ display: 'flex' }}>
+            <Typography sx={{ display: 'flex', fontSize: '18px', fontWeight: '700' }}>
               {el.title}
               {employees.map((elem) => {
                 if (elem.id === el.employeesCloseId) {
@@ -91,8 +91,8 @@ export default function Bid() {
                     <Typography
                       component={'span'}
                       key={Date.now()}
-                      sx={{ marginLeft: '20px', fontSize: '10px' }}
-                    >{`${elem.firstName} ${elem.lastName}`}</Typography>
+                      sx={{ marginLeft: '20px', fontSize: '15px', display: 'flex', alignItems: 'center' }}
+                    >{` Выполнено: ${elem.firstName} ${elem.lastName}`}</Typography>
                   );
                 }
               })}
