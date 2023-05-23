@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch } from './redux/type';
-import { getEmployees } from './redux/Thunk/employees';
+import { getEmployees, getOffer } from './redux/Thunk/employees';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import Home from './components/Home/Home';
 import Application from './components/Application/Application';
@@ -28,13 +28,10 @@ function App() {
 
   useEffect(() => {
     dispatch(getEmployees());
-    const localData = localStorage.userData;
-    const userId = localData ? JSON.parse(localData).userId : null;
-    setCurrUserId(userId);
-  }, [dispatch]);
+  }, []);
 
   useEffect(() => {
-    dispatch(getEmployees());
+    dispatch(getOffer());
     setTimeout(() => {
       setUpdate((prev) => !prev);
     }, 2000);
