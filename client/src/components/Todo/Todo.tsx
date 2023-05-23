@@ -14,7 +14,7 @@ export default function Todo() {
     dispatch(getTodos());
   }, []);
   return (
-    <Box>
+    <Box sx={{ width: '100%' }}>
       <AddTodo />
       <List
         sx={{

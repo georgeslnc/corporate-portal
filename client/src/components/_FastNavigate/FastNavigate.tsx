@@ -13,7 +13,7 @@ import MenuItem from '@mui/material/MenuItem';
 import { AccountCircle, Chat, Description, Home, Inbox, MenuBook, PeopleAlt } from '@mui/icons-material';
 import FormatListBulletedSharpIcon from '@mui/icons-material/FormatListBulletedSharp';
 import { styled } from '@mui/material/styles';
-import { AppBar, Toolbar, Typography, ListItemButton, Badge } from '@mui/material';
+import { AppBar, Toolbar, Typography, ListItemButton, Badge, Box } from '@mui/material';
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
 import { Employee, RootState, useAppSelector } from '../../redux/type';
 
@@ -113,17 +113,17 @@ const Navbar = () => {
           </Link>
           <div style={{ flexGrow: 1 }} />
           {currUser ? (
-            <Badge
-              badgeContent={
-                offer.filter((el) => {
-                  return el.groupId === groupId && el.status === false;
-                }).length
-              }
-              color="error"
-              sx={{ gap: '20px', display: 'flex', alignItems: 'center', width: '300px' }}
-            >
-              <CircleNotificationsIcon sx={{ cursor: 'pointer' }} fontSize="large" onClick={() => navigate('/room')} />
-
+            <Box sx={{ gap: '20px', display: 'flex', alignItems: 'center', width: '300px' }}>
+              <Badge
+                badgeContent={
+                  offer.filter((el) => {
+                    return el.groupId === groupId && el.status === false;
+                  }).length
+                }
+                color="error"
+              >
+                <CircleNotificationsIcon sx={{ cursor: 'pointer' }} fontSize="large" onClick={() => navigate('/room')} />
+              </Badge>
               <Typography variant="subtitle1">{userName}</Typography>
               <IconButton onClick={handleMenuOpen} color="inherit">
                 <Avatar alt="avatar" src={currUser.photoUrl} />
@@ -131,7 +131,7 @@ const Navbar = () => {
               <Menu anchorEl={anchorEl} open={Boolean(anchorEl)} onClose={handleMenuClose}>
                 <MenuItem onClick={handleLogout}>Выйти</MenuItem>
               </Menu>
-            </Badge>
+            </Box>
           ) : null}
         </Toolbar>
       </StyledAppBar>
