@@ -138,7 +138,7 @@ function NewChat() {
                 }}
               >
                 <Typography sx={{ color: '#1976d2', display: 'flex' }}>
-                  <SendIcon />
+                  <SendIcon fontSize="small" />
                 </Typography>
               </Button>
             </>
