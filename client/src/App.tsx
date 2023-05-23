@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useAppDispatch } from './redux/type';
 import { getEmployees } from './redux/Thunk/employees';
-import { Route, Routes } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import Home from './components/Home/Home';
 import Application from './components/Application/Application';
 import Handbook from './components/Handbook/Handbook';
@@ -18,34 +18,41 @@ import NewChat from './components/Chat/NewChat';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import NotFound from './components/NotFound/NotFound';
 
-const localData = localStorage.userData;
-const currUserId = localData ? JSON.parse(localData).userId : null;
-
 function App() {
   const dispatch = useAppDispatch();
+  const [currUserId, setCurrUserId] = useState(null);
+  const location = useLocation();
+  const isLoggedIn = Boolean(localStorage.userData);
 
   useEffect(() => {
     dispatch(getEmployees());
+    const localData = localStorage.userData;
+    const userId = localData ? JSON.parse(localData).userId : null;
+    setCurrUserId(userId);
   }, [dispatch]);
 
+  useEffect(() => {
+    if (isLoggedIn) {
+      setCurrUserId(JSON.parse(localStorage.userData).userId);
+    }
+  }, [isLoggedIn]);
+
   return (
-    <div style={{ paddingLeft: '266px', paddingTop: '67px' }}>
+    <div style={{ paddingLeft: '266px', paddingTop: '67px', paddingRight: '375px' }}>
       <FastNavigate />
+      {isLoggedIn && location.pathname !== '/auth/login' && <NewChat />}
       <Routes>
         <Route path="/auth/login" element={<LoginForm />} />
-        <Route path="/handbook" element={<ProtectedRoute element={Handbook} />} />
-        <Route path="/employee/:id" element={<ProtectedRoute element={FindEmployee} />} />
-        <Route path="/tree" element={<ProtectedRoute element={Tree} />} />
-        <Route path="/tree/:id" element={<ProtectedRoute element={OneGroup} />} />
-        <Route path="/applications" element={<ProtectedRoute element={Application} />} />
-        <Route path="/todo" element={<ProtectedRoute element={Todo} />} />
-        {/* <Route path="/info"  element={<info />}/> */}
-        <Route path="/" element={<ProtectedRoute element={Home} />} />
-        {/* <Route path="/chat" element={<ProtectedRoute element={NewChat} />} /> */}
-        <Route path="/room" element={<ProtectedRoute element={Room} />} />
-        <Route path="/documents" element={<ProtectedRoute element={Documents} />} />
-        <Route path="/admin/employee" element={<ProtectedRoute element={EmployeeForm} />} />
-        {/* Добавленный маршрут для отображения страницы "Page Not Found" */}
+        <Route path="/handbook" element={<ProtectedRoute element={Handbook} currUserId={currUserId} />} />
+        <Route path="/employee/:id" element={<ProtectedRoute element={FindEmployee} currUserId={currUserId} />} />
+        <Route path="/tree" element={<ProtectedRoute element={Tree} currUserId={currUserId} />} />
+        <Route path="/tree/:id" element={<ProtectedRoute element={OneGroup} currUserId={currUserId} />} />
+        <Route path="/applications" element={<ProtectedRoute element={Application} currUserId={currUserId} />} />
+        <Route path="/todo" element={<ProtectedRoute element={Todo} currUserId={currUserId} />} />
+        <Route path="/" element={<ProtectedRoute element={Home} currUserId={currUserId} />} />
+        <Route path="/room" element={<ProtectedRoute element={Room} currUserId={currUserId} />} />
+        <Route path="/documents" element={<ProtectedRoute element={Documents} currUserId={currUserId} />} />
+        <Route path="/admin/employee" element={<ProtectedRoute element={EmployeeForm} currUserId={currUserId} />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>
