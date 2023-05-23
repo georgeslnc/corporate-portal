@@ -52,7 +52,7 @@ export const editTodo = createAsyncThunk(
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id, todo, time }),
       });
-      if (response.ok) {
+      if (response.ok) {  
         return { id, todo, time };
       }
     } catch (error) {
