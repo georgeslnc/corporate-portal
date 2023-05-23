@@ -24,18 +24,9 @@ function App() {
   const location = useLocation();
   const isLoggedIn = Boolean(localStorage.userData);
 
-  const [update, setUpdate] = useState(false);
-
   useEffect(() => {
     dispatch(getEmployees());
   }, []);
-
-  useEffect(() => {
-    dispatch(getOffer());
-    setTimeout(() => {
-      setUpdate((prev) => !prev);
-    }, 2000);
-  }, [update]);
 
   useEffect(() => {
     if (isLoggedIn) {

@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/type';
 import { changeStatusOffer } from '../../redux/Thunk/changeStatusOffer';
-import useEffect from 'react';
 import { Box, Button, List, ListSubheader, Typography } from '@mui/material';
 import style from './application.module.scss';
+import { getOffer } from '../../redux/Thunk/employees';
 
 const userData: string | null = localStorage.getItem('userData');
 const parsedUserData: { groupId: number } = userData ? JSON.parse(userData) : {};
@@ -16,6 +16,14 @@ export default function Bid() {
   const employees = useAppSelector((state: RootState) => state.employeesSlice.employees);
   const group = useAppSelector((state: RootState) => state.employeesSlice.group);
   const dispatch = useAppDispatch();
+
+  const [update, setUpdate] = useState(false);
+  useEffect(() => {
+    dispatch(getOffer());
+    setTimeout(() => {
+      setUpdate((prev) => !prev);
+    }, 2000);
+  }, [update]);
 
   const filteredOffers = offer.filter((el: any) => el.groupId === groupId && !el.status);
 

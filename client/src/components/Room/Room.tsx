@@ -1,11 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Departament, Employee, Group, Profession, RootState, useAppSelector } from '../../redux/type';
+import { Departament, Employee, Group, Profession, RootState, useAppSelector, useAppDispatch } from '../../redux/type';
 import { Button, List, ListSubheader, Typography } from '@mui/material';
 import style from './room.module.scss';
 import Bid from '../Application/Bid';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
+import { getOffer } from '../../redux/Thunk/employees';
 
 const FIELDS = {
   NAME: 'username',
@@ -13,20 +14,19 @@ const FIELDS = {
 
 export default function Room() {
   const [youApp, setYouApp] = useState(true);
+  const dispatch = useAppDispatch();
   const offer = useAppSelector((state: RootState) => state.employeesSlice.offer);
   const group = useAppSelector((state: RootState) => state.employeesSlice.group);
   const localData = localStorage.userData;
   const currUserId = JSON.parse(localData)?.userId;
 
-  // const handSendToTheChat = () => {
-  //   navigate('/chat');
-  // };
-
-  // new chat
-
-  const NAME = FIELDS;
-  const [values, setValues] = useState({ [NAME]: '' });
-  // end chat
+  const [update, setUpdate] = useState(false);
+  useEffect(() => {
+    dispatch(getOffer());
+    setTimeout(() => {
+      setUpdate((prev) => !prev);
+    }, 3000);
+  }, [update]);
 
   const employees = useAppSelector((state: RootState) => state.employeesSlice.employees);
   const currUser = employees.find((employee: Employee) => employee.id === Number(currUserId));
@@ -72,7 +72,7 @@ export default function Room() {
       ) : (
         <List
           sx={{
-            width: '80%',
+            width: '100%',
             height: '527px',
             bgcolor: 'background.paper',
             position: 'relative',

@@ -7,8 +7,9 @@ import { getFiles } from '../../redux/Thunk/files/getFiles';
 import { File } from '../../redux/type';
 import DocumentsAudit from './DocumentsAudit';
 import DocumentsHR from './DocumentsHR';
-import { Button, FormControl, InputLabel, MenuItem, Select, Typography, Input, Grid } from '@mui/material';
+import { Button, FormControl, MenuItem, Select, Typography, Input, Grid, List } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
+import style from '../Room/room.module.scss';
 
 export default function Documents() {
   const dispatch = useAppDispatch();
@@ -41,7 +42,21 @@ export default function Documents() {
   const professionId = userData?.professionId;
 
   return (
-    <div>
+    <List
+      sx={{
+        width: '100%',
+        height: '690px',
+        bgcolor: 'background.paper',
+        position: 'relative',
+        overflow: 'hidden',
+        overflowY: 'scroll',
+        padding: '0px',
+        '& ul': { padding: 0 },
+        borderColor: 'divider',
+        borderRadius: '5px',
+      }}
+      className={style.delScroll}
+    >
       {professionId === 5 ? (
         <>
           <form onSubmit={uploadFileHandler}>
@@ -89,6 +104,6 @@ export default function Documents() {
           <DocumentsAudit filesAudit={filesAudit} />
         </>
       )}
-    </div>
+    </List>
   );
 }
