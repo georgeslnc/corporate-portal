@@ -37,7 +37,7 @@ export default function AddTodo({ el, setEdit }: AddProps) {
   return (
     <Box sx={{ marginBottom: '10px', width: '100%' }}>
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Input sx={{ height: '43px', marginRight: '10px', width: '85%' }} type="text" {...register('todo')} required />
+        <Input sx={{ height: '43px', marginRight: '10px', width: '84.85%' }} type="text" {...register('todo')} required />
         <Input sx={{ height: '43px', marginRight: '10px' }} type="time" {...register('time')} required />
         <Button sx={{ backgroundColor: 'rgb(217, 213, 210)', color: 'black', fontSize: '12px' }} type="submit">
           Добавить
