@@ -18,6 +18,10 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
+/* .mainDiv {
+  background-image: url('https://uploads-ssl.webflow.com/619d5addd8ad3f4fd7f40ebe/62343a53eadc9f0205eb0872_wave-png-49470.png');
+} */
+
 @keyframes logo-spin {
   from {
     transform: rotate(0deg);
