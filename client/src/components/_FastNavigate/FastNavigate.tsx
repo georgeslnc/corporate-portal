@@ -17,10 +17,9 @@ import { AppBar, Toolbar, Typography, ListItemButton, Badge, Box } from '@mui/ma
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
 import { Employee, RootState, useAppSelector } from '../../redux/type';
 
-const drawerWidth = 250;
+const drawerWidth = 305;
 
 const StyledDrawer = styled(Drawer)({
-  width: drawerWidth,
   '& .MuiDrawer-paper': {
     width: drawerWidth,
     borderRadius: 10,

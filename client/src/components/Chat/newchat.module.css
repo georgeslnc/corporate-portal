@@ -1,17 +1,18 @@
 .container {
     padding: 10px;
     margin: 0;
-    box-sizing: border-box;
+    
     width: 355px;
     position: absolute;
     right: 10px;
     background-color: #ccc;
-    height: 690px;
+    height: 670px;
     font-family: sans-serif;
     border-radius: 10px;
     background-image: url('/img/фон.png');
     background-size: cover;
-    background-position: center;
+    background-position: center center;
+    color: inherit
 }
 
 .name {
