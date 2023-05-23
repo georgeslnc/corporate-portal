@@ -97,7 +97,6 @@ const Navbar = () => {
     { path: '/handbook', name: 'Справочник', icon: <MenuBook /> },
     { path: '/tree', name: 'Структура компании', icon: <PeopleAlt /> },
     { path: '/applications', name: 'Заявки', icon: <Inbox /> },
-    // { path: '/chat', name: 'Чат', icon: <Chat /> },
     { path: '/documents', name: 'Документы', icon: <Description /> },
     { path: '/todo', name: 'Замэтки', icon: <FormatListBulletedSharpIcon /> },
     showAddEmployeeLink && { path: '/admin/employee', name: 'Добавить сотрудника', icon: <AddCircleOutlineIcon /> },
