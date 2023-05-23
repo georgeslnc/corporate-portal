@@ -31,8 +31,10 @@ function NewChat() {
   const [input, setInput] = useState('');
   const [name, setName] = useState(userName);
   const [messages, setMessages] = useState<Message[]>([]);
+  const [showBtn, setShowBtn] = useState(false);
 
   const handleConnectButtonClick = () => {
+    setShowBtn((prev) => !prev);
     if (ws) return;
     const webSocket = new WebSocket('ws://localhost:4000');
     webSocket.onopen = () => {
@@ -69,6 +71,7 @@ function NewChat() {
   };
 
   const handleCloseButtonClick = () => {
+    setShowBtn((prev) => !prev);
     if (!ws) return;
     ws.close();
   };
@@ -113,64 +116,71 @@ function NewChat() {
       </div>
       <div className={style.inputMessage}>
         <div className={style.footerbar}>
-          <input value={input} onChange={({ target }) => setInput(target.value)} />
-          <Button
-            variant="contained"
-            disabled={!ws}
-            onClick={handleSendMessage}
-            sx={{
-              color: 'black',
-              backgroundColor: 'rgb(203, 210, 218)',
-              marginLeft: '10px',
-              '&:hover': {
-                textDecoration: 'none',
-                backgroundColor: 'rgba(25, 118, 210, 0.4)',
-              },
-            }}
-          >
-            <Typography sx={{ color: '#1976d2', display: 'flex' }}>
-              <SendIcon />
-            </Typography>
-          </Button>
+          {showBtn && (
+            <>
+              <input value={input} onChange={({ target }) => setInput(target.value)} />
+              <Button
+                variant="contained"
+                disabled={!ws}
+                onClick={handleSendMessage}
+                sx={{
+                  color: 'black',
+                  backgroundColor: 'rgb(203, 210, 218)',
+                  marginLeft: '10px',
+                  '&:hover': {
+                    textDecoration: 'none',
+                    backgroundColor: 'rgba(25, 118, 210, 0.4)',
+                  },
+                }}
+              >
+                <Typography sx={{ color: '#1976d2', display: 'flex' }}>
+                  <SendIcon />
+                </Typography>
+              </Button>
+            </>
+          )}
         </div>
         <br />
         <div className={style.btns}>
-          <Button
-            variant="contained"
-            disabled={!ws}
-            onClick={handleCloseButtonClick}
-            sx={{
-              color: 'black',
-              backgroundColor: 'rgb(203, 210, 218)',
-              '&:hover': {
-                textDecoration: 'none',
-                backgroundColor: 'rgba(25, 118, 210, 0.4)',
-              },
-            }}
-          >
-            <Typography sx={{ color: '#1976d2', display: 'flex' }}>
-              ВЫЙТИ
-              <ExitToAppIcon />
-            </Typography>
-          </Button>
-          <Button
-            variant="contained"
-            disabled={Boolean(ws)}
-            onClick={handleConnectButtonClick}
-            sx={{
-              color: 'black',
-              backgroundColor: 'rgb(203, 210, 218)',
-              '&:hover': {
-                textDecoration: 'none',
-                backgroundColor: 'rgba(25, 118, 210, 0.4)',
-              },
-            }}
-          >
-            <Typography sx={{ color: '#1976d2', display: 'flex' }}>
-              ВОЙТИ
-              <LoginIcon />
-            </Typography>
-          </Button>
+          {showBtn ? (
+            <Button
+              variant="contained"
+              disabled={!ws}
+              onClick={handleCloseButtonClick}
+              sx={{
+                color: 'black',
+                backgroundColor: 'rgb(203, 210, 218)',
+                '&:hover': {
+                  textDecoration: 'none',
+                  backgroundColor: 'rgba(25, 118, 210, 0.4)',
+                },
+              }}
+            >
+              <Typography sx={{ color: '#1976d2', display: 'flex' }}>
+                ВЫЙТИ
+                <ExitToAppIcon />
+              </Typography>
+            </Button>
+          ) : (
+            <Button
+              variant="contained"
+              disabled={Boolean(ws)}
+              onClick={handleConnectButtonClick}
+              sx={{
+                color: 'black',
+                backgroundColor: 'rgb(203, 210, 218)',
+                '&:hover': {
+                  textDecoration: 'none',
+                  backgroundColor: 'rgba(25, 118, 210, 0.4)',
+                },
+              }}
+            >
+              <Typography sx={{ color: '#1976d2', display: 'flex' }}>
+                ВОЙТИ
+                <LoginIcon />
+              </Typography>
+            </Button>
+          )}
         </div>
       </div>
     </Typography>
