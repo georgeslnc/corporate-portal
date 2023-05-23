@@ -17,18 +17,20 @@ import { AppBar, Toolbar, Typography, ListItemButton, Badge, Box } from '@mui/ma
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
 import { Employee, RootState, useAppSelector } from '../../redux/type';
 
-const drawerWidth = 305;
+const drawerWidth = 275;
 
 const StyledDrawer = styled(Drawer)({
   '& .MuiDrawer-paper': {
     width: drawerWidth,
     borderRadius: 10,
     height: '690px',
-    marginTop: '75px',
+    marginTop: '80px',
     marginLeft: '10px',
-    backgroundImage: `url('/img/фон.png')`,
+    // backgroundImage: `url('/img/фон.png')`,
     backgroundSize: 'cover',
     backgroundPosition: 'center center',
+    border: '2px solid rgb(203, 203, 203)',
+    backgroundColor: '#f0f0f0',
   },
   '& .MuiTypography-root': {
     color: 'black',
@@ -42,13 +44,18 @@ const StyledLogo = styled('img')({
 });
 
 const StyledAppBar = styled(AppBar)(({ theme }) => ({
-  background: `linear-gradient(145deg, ${theme.palette.primary.main} 10%,`,
+  background: 'linear-gradient(135deg, ${theme.palette.primary.main} 10%, #69b4ff 80%)',
   '& .MuiTypography-root': {
     fontFamily: 'Arial, sans-serif',
     letterSpacing: '2px',
     color: theme.palette.common.white,
-    textShadow: '2px 2px 4px rgba(0, 0, 0, 0.8)',
   },
+  boxShadow: 'none',
+  borderRadius: '10px',
+  marginLeft: '8px',
+  marginRight: '10px',
+  maxWidth: '98.9%',
+  marginTop: '7px',
 }));
 
 const userData: string | null = localStorage.getItem('userData');
@@ -86,7 +93,7 @@ const Navbar = () => {
   const userDataString = localStorage.getItem('userData');
   const userData = userDataString ? JSON.parse(userDataString) : null;
   const professionId = userData?.professionId;
-  const showAddEmployeeLink = professionId === 5;
+  const showAddEmployeeLink = professionId === 4;
   const employees = useAppSelector((state: RootState) => state.employeesSlice.employees);
   const currUser = employees.find((employee: Employee) => employee.id === Number(currUserId));
   const userName = currUser ? `${currUser.firstName} ${currUser.lastName}` : '';

@@ -1,6 +1,7 @@
 import { useState } from 'react';
-import style from './newchat.module.css'
+import style from './newchat.module.css';
 import { Employee, RootState, useAppSelector } from '../../redux/type';
+import React from 'react';
 
 type Message =
   | {
@@ -13,19 +14,18 @@ type Message =
     };
 
 function NewChat() {
-
-    // get user from local storage
+  // get user from local storage
   const localData = localStorage.userData;
   const currUserId = JSON.parse(localData).userId;
-  
+
   const employees = useAppSelector((state: RootState) => state.employeesSlice.employees);
   const currUser = employees.find((employee: Employee) => employee.id === Number(currUserId));
-  let userName = `${currUser?.firstName} ${currUser?.lastName}`
+  let userName = `${currUser?.firstName} ${currUser?.lastName}`;
 
   const [ws, setWS] = useState<WebSocket | null>(null);
   const [input, setInput] = useState('');
   const [name, setName] = useState(userName);
-  const [messages, setMessages] = useState<Message[]>([]);  
+  const [messages, setMessages] = useState<Message[]>([]);
 
   const handleConnectButtonClick = () => {
     if (ws) return;
@@ -70,33 +70,34 @@ function NewChat() {
 
   const handleSendMessage = () => {
     if (!ws) return;
-    ws.send(
-      JSON.stringify({ type: 'Message', payload: { name, message: input } })
-    );
+    ws.send(JSON.stringify({ type: 'Message', payload: { name, message: input } }));
     setMessages((prev) => [...prev, { name, text: input, isOur: true }]);
     setInput('');
   };
 
   return (
     <div className={style.container}>
-      Имя:{' '}
-      <input value={name} onChange={({ target }) => setName(target.value)} className={style.name}/>
+      Имя: <input value={name} onChange={({ target }) => setName(target.value)} className={style.name} />
       <hr />
       {messages.map((message) => (
         <p>
           {'isOur' in message ? (
             <div>
-              {message.isOur 
-              ? <div className={style.our}>
+              {message.isOur ? (
+                <div className={style.our}>
                   <p>
                     <b>{message.name}</b>
                   </p>
                   <p>{message.text}</p>
                 </div>
-              : <div className={style.enemy}>
-                  <p><span>{message.name}</span></p>
+              ) : (
+                <div className={style.enemy}>
+                  <p>
+                    <span>{message.name}</span>
+                  </p>
                   <p>{message.text}</p>
-                </div>}
+                </div>
+              )}
             </div>
           ) : (
             <i>{message.name} вошел/вошла в чат</i>
@@ -109,13 +110,13 @@ function NewChat() {
           Отправить
         </button>
       </div>
-        <br />
+      <br />
       <div className={style.btns}>
-        <button disabled={Boolean(ws)} onClick={handleConnectButtonClick} className={style.enter}>
-          Войти
-        </button>
         <button disabled={!ws} onClick={handleCloseButtonClick} className={style.exit}>
           Выйти
+        </button>
+        <button disabled={Boolean(ws)} onClick={handleConnectButtonClick} className={style.enter}>
+          Войти
         </button>
       </div>
     </div>
