@@ -10,7 +10,7 @@ import IconButton from '@mui/material/IconButton';
 import Avatar from '@mui/material/Avatar';
 import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
-import { AccountCircle, Chat, Description, Home, Inbox, MenuBook, PeopleAlt } from '@mui/icons-material';
+import { Description, Home, Inbox, MenuBook, PeopleAlt } from '@mui/icons-material';
 import FormatListBulletedSharpIcon from '@mui/icons-material/FormatListBulletedSharp';
 import { styled } from '@mui/material/styles';
 import { AppBar, Toolbar, Typography, ListItemButton, Badge, Box } from '@mui/material';
@@ -58,10 +58,6 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
   maxWidth: '98.9%',
   marginTop: '7px',
 }));
-
-const userData: string | null = localStorage.getItem('userData');
-const parsedUserData: { groupId: number } = userData ? JSON.parse(userData) : {};
-const groupId: number = parsedUserData.groupId || 0;
 
 const Navbar = () => {
   const location = useLocation();
@@ -118,6 +114,8 @@ const Navbar = () => {
     }, 3000);
   }, [update]);
 
+  const shouldShowDrawer = !!localStorage.getItem('userData');
+
   return (
     <>
       <StyledAppBar position="fixed">
@@ -150,28 +148,30 @@ const Navbar = () => {
           ) : null}
         </Toolbar>
       </StyledAppBar>
-      <StyledDrawer variant="permanent">
-        <Divider />
-        <List>
-          {navLinks.map(({ path, name, icon }) => (
-            <ListItemButton
-              component={Link}
-              to={path}
-              key={path}
-              selected={selectedLink === path}
-              onClick={() => handleLinkClick(path)}
-              sx={{
-                '&:hover': {
-                  backgroundColor: 'rgba(70,70,70,0.3)',
-                },
-              }}
-            >
-              <ListItemIcon>{icon}</ListItemIcon>
-              <ListItemText primary={name} />
-            </ListItemButton>
-          ))}
-        </List>
-      </StyledDrawer>
+      {shouldShowDrawer && (
+        <StyledDrawer variant="permanent">
+          <Divider />
+          <List>
+            {navLinks.map(({ path, name, icon }) => (
+              <ListItemButton
+                component={Link}
+                to={path}
+                key={path}
+                selected={selectedLink === path}
+                onClick={() => handleLinkClick(path)}
+                sx={{
+                  '&:hover': {
+                    backgroundColor: 'rgba(70,70,70,0.3)',
+                  },
+                }}
+              >
+                <ListItemIcon>{icon}</ListItemIcon>
+                <ListItemText primary={name} />
+              </ListItemButton>
+            ))}
+          </List>
+        </StyledDrawer>
+      )}
     </>
   );
 };

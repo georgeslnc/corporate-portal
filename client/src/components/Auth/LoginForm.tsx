@@ -79,74 +79,76 @@ export default function LoginForm() {
   };
 
   return (
-    <Box
-      component="form"
-      onSubmit={handleSubmit(onSubmit)}
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        border: 1,
-        borderColor: 'divider',
-        borderRadius: '10px',
-        p: 2,
-        width: '400px',
-        height: '350px',
-        gap: 2,
-        padding: '20px 30px',
-        marginTop: '100px',
-        marginLeft: '50px',
-        boxShadow: '0px 0px 4px rgba(0, 0, 0, 0.25)',
-      }}
-    >
-      <TextField
-        {...register('email', {
-          required: 'Поле обязательно для заполнения',
-          pattern: {
-            value: /^\S+@\S+$/i,
-            message: 'Пожалуйста, введите правильный адрес электронной почты',
-          },
-        })}
-        label="Почта"
-        type="email"
-        error={Boolean(errors.email)}
-        helperText={errors.email?.message}
-        autoComplete="current-email"
+    <div style={{ display: 'flex', justifyContent: 'center', marginTop: '110px' }}>
+      <Box
+        component="form"
+        onSubmit={handleSubmit(onSubmit)}
         sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          border: 1,
+          borderColor: 'divider',
+          borderRadius: '10px',
+          p: 2,
           width: '400px',
-          height: '70px',
-          marginTop: '40px',
+          height: '350px',
+          gap: 2,
+          padding: '20px 30px',
+          marginTop: '100px',
+          marginLeft: '50px',
+          boxShadow: '0px 0px 4px rgba(0, 0, 0, 0.25)',
         }}
-      />
+      >
+        <TextField
+          {...register('email', {
+            required: 'Поле обязательно для заполнения',
+            pattern: {
+              value: /^\S+@\S+$/i,
+              message: 'Пожалуйста, введите правильный адрес электронной почты',
+            },
+          })}
+          label="Почта"
+          type="email"
+          error={Boolean(errors.email)}
+          helperText={errors.email?.message}
+          autoComplete="current-email"
+          sx={{
+            width: '400px',
+            height: '70px',
+            marginTop: '40px',
+          }}
+        />
 
-      <TextField
-        {...register('password', {
-          required: 'Поле обязательно для заполнения',
-          minLength: {
-            value: 3,
-            message: 'Пароль должен содержать не менее 3 символов',
-          },
-        })}
-        label="Пароль"
-        type="password"
-        error={Boolean(errors.password)}
-        helperText={errors.password?.message}
-        autoComplete="current-password"
-        sx={{
-          width: '400px',
-          height: '70px',
-        }}
-      />
+        <TextField
+          {...register('password', {
+            required: 'Поле обязательно для заполнения',
+            minLength: {
+              value: 3,
+              message: 'Пароль должен содержать не менее 3 символов',
+            },
+          })}
+          label="Пароль"
+          type="password"
+          error={Boolean(errors.password)}
+          helperText={errors.password?.message}
+          autoComplete="current-password"
+          sx={{
+            width: '400px',
+            height: '70px',
+          }}
+        />
 
-      <Button type="submit" variant="outlined" sx={{ width: '400px', padding: '10px' }}>
-        Войти
-      </Button>
+        <Button type="submit" variant="outlined" sx={{ width: '400px', padding: '10px' }}>
+          Войти
+        </Button>
 
-      {isErrorVisible && (
-        <Alert severity={errorMessage?.title === 'Успешный вход!' ? 'success' : 'error'}>
-          <AlertTitle>{errorMessage?.title}</AlertTitle>
-          {errorMessage?.message}
-        </Alert>
-      )}
-    </Box>
+        {isErrorVisible && (
+          <Alert severity={errorMessage?.title === 'Успешный вход!' ? 'success' : 'error'}>
+            <AlertTitle>{errorMessage?.title}</AlertTitle>
+            {errorMessage?.message}
+          </Alert>
+        )}
+      </Box>
+    </div>
   );
 }
