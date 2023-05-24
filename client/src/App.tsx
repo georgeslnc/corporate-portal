@@ -43,7 +43,7 @@ function App() {
         paddingTop: '73px',
         paddingRight: '400px',
         height: '91.1vh',
-        backgroundImage: 'url(backgroundLines1.svg)',
+        backgroundImage: 'url(/backgroundLines1.svg)',
         backgroundRepeat: 'no-repeat',
         backgroundSize: 'cover',
         backgroundPositionY: '150px',
