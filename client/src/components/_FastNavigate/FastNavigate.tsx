@@ -59,6 +59,10 @@ const StyledAppBar = styled(AppBar)(({ theme }) => ({
   marginTop: '7px',
 }));
 
+const userData: string | null = localStorage.getItem('userData');
+const parsedUserData: { groupId: number } = userData ? JSON.parse(userData) : {};
+const groupId: number = parsedUserData.groupId || 0;
+
 const Navbar = () => {
   const location = useLocation();
   const [selectedLink, setSelectedLink] = useState(location.pathname);

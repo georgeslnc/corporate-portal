@@ -140,135 +140,137 @@ export default function EmployeeForm() {
   };
 
   return (
-    <LocalizationProvider
-      dateAdapter={AdapterDateFns}
-      adapterLocale={ru}
-      localeText={ruRU.components.MuiLocalizationProvider.defaultProps.localeText}
-    >
-      <Box
-        component="form"
-        onSubmit={handleSubmit(onSubmit)}
-        sx={{
-          display: 'flex',
-          flexDirection: 'column',
-          border: 1,
-          borderColor: 'divider',
-          p: 2,
-          width: '400px',
-          gap: 1,
-          marginTop: '100px',
-          marginLeft: '50px',
-        }}
+    <div style={{ display: 'flex', justifyContent: 'center', marginRight: '50px', marginTop: '-50px' }}>
+      <LocalizationProvider
+        dateAdapter={AdapterDateFns}
+        adapterLocale={ru}
+        localeText={ruRU.components.MuiLocalizationProvider.defaultProps.localeText}
       >
-        <TextField
-          {...register('firstName', firstNameValidation)}
-          label="Имя"
-          error={Boolean(errors.firstName)}
-          helperText={errors.firstName?.message}
-        />
-        <TextField
-          {...register('middleName', middleNameValidation)}
-          label="Отчество"
-          error={Boolean(errors.middleName)}
-          helperText={errors.middleName?.message}
-        />
-        <TextField
-          {...register('lastName', lastNameValidation)}
-          label="Фамилия"
-          error={Boolean(errors.lastName)}
-          helperText={errors.lastName?.message}
-        />
-
-        <ProfFormControl
-          register={register}
-          errors={errors}
-          selectedGroup={selectedGroup}
-          selectedProfession={selectedProfession}
-          handleGroupChange={handleGroupChange}
-          handleProfessionChange={handleProfessionChange}
-        />
-
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>
+        <Box
+          component="form"
+          onSubmit={handleSubmit(onSubmit)}
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            border: 1,
+            borderColor: 'divider',
+            p: 2,
+            width: '400px',
+            gap: 1,
+            marginTop: '100px',
+            marginLeft: '50px',
+          }}
+        >
           <TextField
-            {...register('email', emailValidation)}
-            label="Почта"
-            type="email"
-            error={Boolean(errors.email)}
-            helperText={errors.email?.message}
-            sx={{ flexGrow: 1 }}
+            {...register('firstName', firstNameValidation)}
+            label="Имя"
+            error={Boolean(errors.firstName)}
+            helperText={errors.firstName?.message}
           />
           <TextField
-            {...register('phoneNumber', phoneValidation)}
-            label="Телефон"
-            type="tel"
-            error={Boolean(errors.phoneNumber)}
-            helperText={errors.phoneNumber?.message}
-            sx={{ flexGrow: 1 }}
+            {...register('middleName', middleNameValidation)}
+            label="Отчество"
+            error={Boolean(errors.middleName)}
+            helperText={errors.middleName?.message}
           />
-        </Box>
-
-        <Box aria-describedby={'popover'} sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>
-          <DatePicker
-            label="Дата рождения"
-            minDate={minDate}
-            maxDate={maxDate}
-            value={selectedDate}
-            sx={{ flexGrow: 1 }}
-            onChange={(newValue) => {
-              if (newValue !== null) {
-                setSelectedDate(newValue);
-              }
-            }}
+          <TextField
+            {...register('lastName', lastNameValidation)}
+            label="Фамилия"
+            error={Boolean(errors.lastName)}
+            helperText={errors.lastName?.message}
           />
 
-          <Button
-            ref={buttonRef}
-            variant={fileAttached ? 'contained' : 'outlined'}
-            component="label"
-            sx={{ flexGrow: 1 }}
-            style={fileAttached ? { backgroundColor: 'cornflowerblue', color: 'white' } : {}}
-          >
-            Фото
-            <input ref={fileInput} type="file" name="photo" hidden onChange={handleFileUpload} />
-          </Button>
-          {fileAttached && (
-            <Popover
-              id="popover"
-              className="popover"
-              anchorEl={buttonRef.current}
-              open={popoverOpen}
-              onClose={() => setPopoverOpen(false)}
-              sx={{ marginLeft: '70px' }}
-              anchorOrigin={{
-                vertical: 'center',
-                horizontal: 'right',
+          <ProfFormControl
+            register={register}
+            errors={errors}
+            selectedGroup={selectedGroup}
+            selectedProfession={selectedProfession}
+            handleGroupChange={handleGroupChange}
+            handleProfessionChange={handleProfessionChange}
+          />
+
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>
+            <TextField
+              {...register('email', emailValidation)}
+              label="Почта"
+              type="email"
+              error={Boolean(errors.email)}
+              helperText={errors.email?.message}
+              sx={{ flexGrow: 1 }}
+            />
+            <TextField
+              {...register('phoneNumber', phoneValidation)}
+              label="Телефон"
+              type="tel"
+              error={Boolean(errors.phoneNumber)}
+              helperText={errors.phoneNumber?.message}
+              sx={{ flexGrow: 1 }}
+            />
+          </Box>
+
+          <Box aria-describedby={'popover'} sx={{ display: 'flex', justifyContent: 'space-between', gap: 2 }}>
+            <DatePicker
+              label="Дата рождения"
+              minDate={minDate}
+              maxDate={maxDate}
+              value={selectedDate}
+              sx={{ flexGrow: 1 }}
+              onChange={(newValue) => {
+                if (newValue !== null) {
+                  setSelectedDate(newValue);
+                }
               }}
-              transformOrigin={{
-                vertical: 'center',
-                horizontal: 'right',
-              }}
+            />
+
+            <Button
+              ref={buttonRef}
+              variant={fileAttached ? 'contained' : 'outlined'}
+              component="label"
+              sx={{ flexGrow: 1 }}
+              style={fileAttached ? { backgroundColor: 'cornflowerblue', color: 'white' } : {}}
             >
-              <img src={imagePreviewUrl} alt="Preview" style={{ height: '200px', width: 'auto', margin: 0 }} />
-            </Popover>
-          )}
+              Фото
+              <input ref={fileInput} type="file" name="photo" hidden onChange={handleFileUpload} />
+            </Button>
+            {fileAttached && (
+              <Popover
+                id="popover"
+                className="popover"
+                anchorEl={buttonRef.current}
+                open={popoverOpen}
+                onClose={() => setPopoverOpen(false)}
+                sx={{ marginLeft: '70px' }}
+                anchorOrigin={{
+                  vertical: 'center',
+                  horizontal: 'right',
+                }}
+                transformOrigin={{
+                  vertical: 'center',
+                  horizontal: 'right',
+                }}
+              >
+                <img src={imagePreviewUrl} alt="Preview" style={{ height: '200px', width: 'auto', margin: 0 }} />
+              </Popover>
+            )}
+          </Box>
+          <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2, marginTop: '20px' }}>
+            <Button type="submit" variant="outlined" sx={{ flexGrow: 2, padding: '10px' }} size="large">
+              Добавить сотрудника
+            </Button>
+            <Button
+              type="button"
+              variant="outlined"
+              sx={{ flexGrow: 1, border: 1, borderColor: 'divider' }}
+              color="warning"
+              onClick={handleResetClick}
+            >
+              Очистить
+            </Button>
+          </Box>
+          {alertMessage && <Alert severity="success">{alertMessage}</Alert>}
+          {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
         </Box>
-        <Box sx={{ display: 'flex', justifyContent: 'space-between', gap: 2, marginTop: '20px' }}>
-          <Button type="submit" variant="outlined" sx={{ flexGrow: 2, padding: '10px' }} size="large">
-            Добавить сотрудника
-          </Button>
-          <Button
-            type="button"
-            variant="outlined"
-            sx={{ flexGrow: 1, border: 1, borderColor: 'divider' }}
-            color="warning"
-            onClick={handleResetClick}
-          >
-            Очистить
-          </Button>
-        </Box>
-        {alertMessage && <Alert severity="success">{alertMessage}</Alert>}
-        {errorMessage && <Alert severity="error">{errorMessage}</Alert>}
-      </Box>
-    </LocalizationProvider>
+      </LocalizationProvider>
+    </div>
   );
 }
