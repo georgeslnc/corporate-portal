@@ -1,15 +1,17 @@
 import { RootState, useAppSelector } from '../../redux/type';
-import { UseFormRegister, DeepMap, FieldError } from 'react-hook-form';
-import { FormInputs } from './types';
+
+import { ProfFormTypes } from './types';
 
 import { FormControl, InputLabel, Select, MenuItem, FormHelperText } from '@mui/material';
-type Props = {
-  register: UseFormRegister<FormInputs>;
-  errors: DeepMap<FormInputs, FieldError>;
-  reset: ResetHandler<FormInputs>;
-};
 
-export default function ProfFormControl({ register, errors, reset }: Props) {
+export default function ProfFormControl({
+  register,
+  errors,
+  selectedGroup,
+  handleGroupChange,
+  selectedProfession,
+  handleProfessionChange,
+}: ProfFormTypes) {
   const groups = useAppSelector((state: RootState) => state.employeesSlice.group);
   const professions = useAppSelector((state: RootState) => state.employeesSlice.profession);
 
@@ -17,7 +19,7 @@ export default function ProfFormControl({ register, errors, reset }: Props) {
     <>
       <FormControl error={Boolean(errors.groupTitle)} sx={{ flexGrow: 1 }}>
         <InputLabel id="group-label">Отдел</InputLabel>
-        <Select {...register('groupTitle', { required: true })} label="Отдел" defaultValue="">
+        <Select {...register('groupTitle', { required: true })} label="Отдел" value={selectedGroup} onChange={handleGroupChange}>
           {groups.map((group) => (
             <MenuItem value={group.title} key={group.id}>
               {group.title}
@@ -28,7 +30,12 @@ export default function ProfFormControl({ register, errors, reset }: Props) {
       </FormControl>
       <FormControl error={Boolean(errors.profession)} sx={{ flexGrow: 1 }}>
         <InputLabel id="profession-label">Должность</InputLabel>
-        <Select {...register('profession', { required: true })} label="Должность" defaultValue="">
+        <Select
+          {...register('profession', { required: true })}
+          label="Должность"
+          value={selectedProfession}
+          onChange={handleProfessionChange}
+        >
           {professions.map((profession) => (
             <MenuItem value={profession.position} key={profession.id}>
               {profession.position}

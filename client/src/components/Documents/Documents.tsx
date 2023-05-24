@@ -7,14 +7,23 @@ import { getFiles } from '../../redux/Thunk/files/getFiles';
 import { File } from '../../redux/type';
 import DocumentsAudit from './DocumentsAudit';
 import DocumentsHR from './DocumentsHR';
-import { Button, FormControl, InputLabel, MenuItem, Select, Typography, Input } from '@mui/material';
+import { Button, FormControl, MenuItem, Select, Typography, Input, Grid, List } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
+import style from '../Room/room.module.scss';
 
 export default function Documents() {
   const dispatch = useAppDispatch();
+  console.log('hi');
 
   useEffect(() => {
     dispatch(getFiles());
+  }, []);
+
+  useEffect(() => {
+    document.title = 'Документы';
+    return () => {
+      document.title = 'SoftMaster';
+    };
   }, []);
 
   const files = useAppSelector((state: RootState) => state.userFilesSlicer.files);
@@ -28,31 +37,86 @@ export default function Documents() {
     const formData = new FormData(e.currentTarget);
     dispatch(setFiles(formData));
   };
+  const userDataString = localStorage.getItem('userData');
+  const userData = userDataString ? JSON.parse(userDataString) : null;
+  const professionId = userData?.professionId;
 
   return (
-    <div>
-      <Typography variant="h6">Добавление документов</Typography>
-      <form onSubmit={uploadFileHandler}>
-        <div>
-          <FormControl>
-            <Input id="file" type="file" name="file" disableUnderline />
-            {/* <label htmlFor="file"></label> */}
-          </FormControl>
-        </div>
-        <div>
-          <FormControl>
-            <Select labelId="category-label" name="documentType" defaultValue="Документы по работе с персоналом">
-              <MenuItem value="Документы по работе с персоналом">Документы по работе с персоналом</MenuItem>
-              <MenuItem value="Документу бухгалтерии">Документу бухгалтерии</MenuItem>
-            </Select>
-          </FormControl>
-        </div>
-        <Button type="submit" variant="contained" size="small" endIcon={<SendIcon />}>
-          Загрузить документ
-        </Button>
-      </form>
-      <DocumentsHR filesHr={filesHr} />
-      <DocumentsAudit filesAudit={filesAudit} />
-    </div>
+    <List
+      sx={{
+        width: '100%',
+        height: '690px',
+        bgcolor: 'background.paper',
+        position: 'relative',
+        overflow: 'hidden',
+        overflowY: 'scroll',
+        padding: '0px',
+        '& ul': { padding: 0 },
+        borderColor: 'divider',
+        borderRadius: '5px',
+      }}
+      className={style.delScroll}
+    >
+      {professionId === 5 ? (
+        <>
+          <form onSubmit={uploadFileHandler}>
+            <Grid container direction="column" spacing={2}>
+              <Grid item>
+                <Typography variant="h6">Добавление документов</Typography>
+              </Grid>
+              <Grid item>
+                <FormControl>
+                  <Input id="file" type="file" name="file" disableUnderline />
+                </FormControl>
+              </Grid>
+              <Grid item>
+                <FormControl>
+                  <Input
+                    id="adminTitle"
+                    type="text"
+                    name="adminTitle"
+                    placeholder="Название файла для отображения"
+                    disableUnderline
+                    style={{
+                      border: '1px solid #ccc',
+                      borderRadius: 4,
+                      padding: '10px 12px',
+                      width: '322px',
+                    }}
+                  />
+                </FormControl>
+              </Grid>
+              <Grid item>
+                <FormControl>
+                  <Select labelId="category-label" name="documentType" defaultValue="Документы по работе с персоналом">
+                    <MenuItem value="Документы по работе с персоналом">Документы по работе с персоналом</MenuItem>
+                    <MenuItem value="Документу бухгалтерии">Документу бухгалтерии</MenuItem>
+                  </Select>
+                </FormControl>
+              </Grid>
+              <Grid item>
+                <Button
+                  type="submit"
+                  color="inherit"
+                  variant="contained"
+                  size="small"
+                  endIcon={<SendIcon />}
+                  sx={{ marginBottom: '15px' }}
+                >
+                  Загрузить
+                </Button>
+              </Grid>
+            </Grid>
+          </form>
+          <DocumentsHR filesHr={filesHr} />
+          <DocumentsAudit filesAudit={filesAudit} />
+        </>
+      ) : (
+        <>
+          <DocumentsHR filesHr={filesHr} />
+          <DocumentsAudit filesAudit={filesAudit} />
+        </>
+      )}
+    </List>
   );
 }

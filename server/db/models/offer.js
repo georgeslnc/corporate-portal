@@ -9,6 +9,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       this.belongsTo(models.Employee, { foreignKey: 'employeesId' });
+      this.belongsTo(models.Employee, { foreignKey: 'employeesCloseId' });
       this.belongsTo(models.Group, { foreignKey: 'groupId' });
     }
   }
@@ -17,6 +18,7 @@ module.exports = (sequelize, DataTypes) => {
       title: DataTypes.STRING,
       groupId: DataTypes.INTEGER,
       employeesId: DataTypes.INTEGER,
+      employeesCloseId: DataTypes.INTEGER,
       deadline: DataTypes.STRING,
       status: DataTypes.STRING,
     },

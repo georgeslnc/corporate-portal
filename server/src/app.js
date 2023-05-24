@@ -10,52 +10,51 @@ const logger = require('morgan');
 
 const app = express();
 
-// new vadim
+const http = require('http');
+const { Server } = require('socket.io');
 
-const http = require('http').Server(app);
-// eslint-disable-next-line import/no-extraneous-dependencies
-const socketIO = require('socket.io')(http, {
+const server = http.createServer(app);
+
+const io = new Server(server, {
   cors: {
     credentials: true,
-    origin: 'http://localhost:5173',
+    origin: '*',
+    method: ['GET', 'POST']
   },
-});
-const dbCheck = require('./utils/dbCheck');
-
-let users = [];
-socketIO.on('connection', (socket) => {
-  console.log(`⚡: ${socket.id} user just connected!`);
-
-  socket.on('message', (data) => {
-    socketIO.emit('messageResponse', data);
-  });
-
-  socket.on('typing', (data) => socket.broadcast.emit('typingResponse', data));
-
-  socket.on('newUser', (data) => {
-    users.push(data);
-    socketIO.emit('newUserResponse', users);
-  });
-
-  socket.on('disconnect', () => {
-    console.log('🔥: A user disconnected');
-    users = users.filter((user) => user.socketID !== socket.id);
-    socketIO.emit('newUserResponse', users);
-    socket.disconnect();
-  });
 });
 // end new
 
-// рекварим МИДЛВЕЙРЫ
+// mazaev
+const WebSocket = require('ws');
+const { WebSocketServer } = require('ws');
+const dbCheck = require('./utils/dbCheck');
 
+const wss = new WebSocketServer({ port: 4000 });
+
+wss.on('connection', (ws) => {
+  ws.on('error', console.error);
+
+  ws.on('message', (data, isBinary) => {
+    wss.clients.forEach((client) => {
+      if (client !== ws && client.readyState === WebSocket.OPEN) {
+        client.send(data, { binary: isBinary });
+      }
+    });
+  });
+});
+// end mazaev
+
+// рекварим МИДЛВЕЙРЫ
 const isAuth = require('./middlewares/isAuth');
 
 const getEmployeesRoute = require('./routes/getEmployees.route');
+const getTodosRoute = require('./routes/getTodos.route');
 const getNewsRoute = require('./routes/getNews.route');
 const application = require('./routes/application.route');
 const authRouter = require('./routes/auth.router');
 const addFileRouter = require('./routes/files/addFile.route');
 const employeesRouter = require('./routes/admin/addEmployees.route');
+const deleteEmployeesRouter = require('./routes/deleteEmployees.route');
 
 const PORT = process.env.PORT || 3000;
 
@@ -79,6 +78,7 @@ app.use('/login', (req, res, next) => {
 });
 
 app.use(express.static(path.join(__dirname, '../public')));
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 // app.use(dbCheck);
@@ -91,13 +91,15 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use('/employees', getEmployeesRoute);
+app.use('/todos', getTodosRoute);
 app.use('/news', getNewsRoute);
 app.use('/application', application);
 app.use('/auth', authRouter);
 app.use('/documents', addFileRouter);
 app.use('/admin', employeesRouter);
+app.use('/deleteemployees', deleteEmployeesRouter);
 
-http.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`Server started on ${PORT}`);
   dbCheck();
 });

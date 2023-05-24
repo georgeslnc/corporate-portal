@@ -16,7 +16,8 @@ module.exports = (sequelize, DataTypes) => {
   New.init({
     title: DataTypes.STRING,
     content: DataTypes.TEXT,
-    publishedAt: DataTypes.DATE
+    publishedAt: DataTypes.DATE,
+    image: DataTypes.TEXT,
   }, {
     sequelize,
     modelName: 'New',

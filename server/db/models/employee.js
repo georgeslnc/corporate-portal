@@ -11,6 +11,8 @@ module.exports = (sequelize, DataTypes) => {
       this.belongsTo(models.Group, { foreignKey: 'groupId' });
       this.belongsTo(models.Profession, { foreignKey: 'professionId' });
       this.hasMany(models.Offer, { foreignKey: 'employeesId' });
+      this.hasMany(models.Offer, { foreignKey: 'employeesCloseId' });
+      this.hasMany(models.Todo, { foreignKey: 'employeeId' });
     }
   }
   Employee.init(

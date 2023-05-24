@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/type';
 import { changeStatusOffer } from '../../redux/Thunk/changeStatusOffer';
-import useEffect from 'react';
 import { Box, Button, List, ListSubheader, Typography } from '@mui/material';
 import style from './application.module.scss';
+import { getOffer } from '../../redux/Thunk/employees';
 
 const userData: string | null = localStorage.getItem('userData');
 const parsedUserData: { groupId: number } = userData ? JSON.parse(userData) : {};
 const groupId: number = parsedUserData.groupId || 0;
+const localData = localStorage.userData;
+const currUserId = localData ? JSON.parse(localData).userId : null;
 
 export default function Bid() {
   const offer = useAppSelector((state: RootState) => state.employeesSlice.offer);
@@ -29,9 +31,9 @@ export default function Bid() {
     return (
       <div className={style.authorInfo}>
         <Typography
-          sx={{ fontSize: '10px', marginRight: '20px' }}
+          sx={{ fontSize: '15px', marginRight: '20px' }}
         >{`Автор заявки: ${employee.firstName} ${employee.lastName}`}</Typography>
-        <Typography sx={{ fontSize: '10px' }}>{`Название отдела: ${authorGroup.title}`}</Typography>
+        <Typography sx={{ fontSize: '15px' }}>{`Заявка от: ${authorGroup.title}`}</Typography>
       </div>
     );
   };
@@ -39,12 +41,12 @@ export default function Bid() {
   return (
     <List
       sx={{
-        width: '80%',
+        width: '100%',
+        height: '527px',
         bgcolor: 'background.paper',
         position: 'relative',
         overflow: 'hidden',
         overflowY: 'scroll',
-        maxHeight: 400,
         marginTop: '30px',
         padding: '0px',
         '& ul': { padding: 0 },
@@ -55,7 +57,7 @@ export default function Bid() {
       }}
       className={style.delScroll}
     >
-      <ul>
+      <ul className={style.test}>
         <ListSubheader sx={{ color: 'black', backgroundColor: ' rgb(221, 223, 226)', margin: '0px', width: '100%' }}>
           <Typography variant="h5" component="h2">
             Необходимо сделать
@@ -64,8 +66,8 @@ export default function Bid() {
         {filteredOffers.map((el: any) => (
           <li key={`${el.id}offers`} className={style.containerElement}>
             <div className={style.containerValueButton}>
-              <Typography>{el.title}</Typography>
-              <Button sx={{ background: 'rgb(203, 210, 218)' }} onClick={() => changeStatusButton(el.id)}>
+              <Typography sx={{ fontSize: '18px', fontWeight: '700' }}>{el.title}</Typography>
+              <Button sx={{ background: 'rgb(203, 210, 218)' }} onClick={() => dispatch(changeStatusOffer([el.id, currUserId]))}>
                 сделано
               </Button>
             </div>
@@ -81,7 +83,20 @@ export default function Bid() {
         </ListSubheader>
         {completedOffers.map((el: any) => (
           <li key={`${el.id}status`} className={style.containerElement}>
-            <Typography>{el.title}</Typography>
+            <Typography sx={{ display: 'flex', fontSize: '18px', fontWeight: '700' }}>
+              {el.title}
+              {employees.map((elem) => {
+                if (elem.id === el.employeesCloseId) {
+                  return (
+                    <Typography
+                      component={'span'}
+                      key={Date.now()}
+                      sx={{ marginLeft: '20px', fontSize: '15px', display: 'flex', alignItems: 'center' }}
+                    >{` Выполнено: ${elem.firstName} ${elem.lastName}`}</Typography>
+                  );
+                }
+              })}
+            </Typography>
             {renderAuthorInfo(el.employeesId)}
           </li>
         ))}

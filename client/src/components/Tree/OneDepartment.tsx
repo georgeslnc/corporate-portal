@@ -19,9 +19,9 @@ export default function OneDepartment({ departament }: OneDepartmentProps) {
   };
 
   return (
-    <Accordion>
+    <Accordion style={{ width: '100%' }}>
       <AccordionSummary expandIcon={<ExpandMoreIcon />} onClick={toggleGroup}>
-        <Typography variant="h6">{departament.title}</Typography>
+        <Typography variant="h5">{departament.title}</Typography>
       </AccordionSummary>
       <AccordionDetails>{showGroup && <AllGroup departamentId={departament.id} />}</AccordionDetails>
     </Accordion>

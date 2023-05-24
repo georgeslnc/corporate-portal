@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/type';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { postOffer } from '../../redux/Thunk/offer';
@@ -28,7 +28,7 @@ export default function Application() {
 
   const eventDepartment = (e: SelectChangeEvent) => {
     const selectedOption = e.target.value;
-    const depId = department.find((el: any) => el.title === selectedOption)?.id;
+    const depId = department.find((el) => el.title === selectedOption)?.id;
     setTitleDep(selectedOption || '');
     settitleGroup('');
     setSelectedDepartment(`${depId}` || null);
@@ -36,7 +36,7 @@ export default function Application() {
 
   const selectGroup = (e: SelectChangeEvent) => {
     const selectedOption = e.target.value;
-    const groupId = group.find((el: any) => el.title === selectedOption)?.id;
+    const groupId = group.find((el) => el.title === selectedOption)?.id;
     settitleGroup(selectedOption || '');
     setSelectedValue(`${groupId}`);
   };
@@ -52,12 +52,19 @@ export default function Application() {
     dispatch(postOffer(offerData));
   };
 
+  useEffect(() => {
+    document.title = 'Заявки';
+    return () => {
+      document.title = 'SoftMaster';
+    };
+  }, []);
+
   return (
     <>
       <Typography variant="h5" component="h2">
         Выберите департамент и отдел для заполения заявки на отдел
       </Typography>
-      <Box sx={{ width: '400px', marginTop: '30px' }}>
+      <Box sx={{ width: '100%', marginTop: '30px' }}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Выбор департамента</InputLabel>
           <Select
@@ -67,7 +74,7 @@ export default function Application() {
             label="Выбор департамента"
             onChange={eventDepartment}
           >
-            {department.map((element: any) => (
+            {department.map((element) => (
               <MenuItem key={element.id} value={element.title}>
                 {element.title}
               </MenuItem>
@@ -83,7 +90,7 @@ export default function Application() {
             label="Выбор отдела"
             onChange={selectGroup}
           >
-            {group.map((element: any) =>
+            {group.map((element) =>
               element.departamentId === Number(selectedDepartment) ? (
                 <MenuItem key={element.id} value={element.title}>
                   {element.title}
@@ -103,7 +110,7 @@ export default function Application() {
           </Typography>
           <Box
             sx={{
-              width: 400,
+              width: '100%',
               display: 'flex',
               flexDirection: 'column',
               borderColor: 'divider',
@@ -127,7 +134,6 @@ export default function Application() {
           </Box>
         </>
       )}
-      <Bid />
     </>
   );
 }

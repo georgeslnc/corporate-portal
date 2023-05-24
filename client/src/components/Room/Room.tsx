@@ -1,74 +1,112 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { Departament, Employee, Group, Profession, RootState, useAppSelector } from '../../redux/type';
+import { Departament, Employee, Group, Profession, RootState, useAppSelector, useAppDispatch } from '../../redux/type';
+import { Button, List, ListSubheader, Typography } from '@mui/material';
+import style from './room.module.scss';
+import Bid from '../Application/Bid';
+import PhoneIcon from '@mui/icons-material/Phone';
+import EmailIcon from '@mui/icons-material/Email';
+import { getOffer } from '../../redux/Thunk/employees';
+import { useSelector } from 'react-redux';
+
+const FIELDS = {
+  NAME: 'username',
+};
 
 export default function Room() {
-  const { id } = useParams();
+  const [youApp, setYouApp] = useState(true);
 
-  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
 
-  // get user from local storage
+  const offer = useAppSelector((state: RootState) => state.employeesSlice.offer);
+  const group = useAppSelector((state: RootState) => state.employeesSlice.group);
+
   const localData = localStorage.userData;
-  const currUserId = JSON.parse(localData).userId;
-
-  const handSendToTheChat = () => {
-    navigate('/chat');
-  };
+  const currUserId = JSON.parse(localData)?.userId;
 
   const employees = useAppSelector((state: RootState) => state.employeesSlice.employees);
-  const groups = useAppSelector((state: RootState) => state.employeesSlice.group);
-  const professions = useAppSelector((state: RootState) => state.employeesSlice.profession);
-  const departaments = useAppSelector((state: RootState) => state.employeesSlice.department);
-
   const currUser = employees.find((employee: Employee) => employee.id === Number(currUserId));
 
-  const userGroupId = currUser?.groupId;
-  const userGroup = groups[userGroupId - 1];
-
-  const professionsId = currUser?.professionId;
-  const userProfession = professions[professionsId - 1];
-
-  const departamentsId = currUser?.groupId;
-  const currDepartamnt = departaments[departamentsId - 1];
-
-  const bossDepId = currUser?.groupId;
-  const currDepartamntBoss = departaments[departamentsId - 1];
-  const myBoss = currDepartamntBoss?.departamentHeadId;
-
-  const selectedEmployee = employees.find((employee: Employee) => employee.id === Number(id));
-  const selectedGroup = groups.find((group: Group) => group.id === selectedEmployee?.groupId);
-  const groupHead = employees.find((employee: Employee) => employee.id === selectedGroup?.groupHeadId);
-  const selectedProfession = professions.find((profession: Profession) => profession.id === selectedEmployee?.professionId);
-  const selectedDepartament = departaments.find((department: Departament) => department.id === selectedGroup?.departamentId);
-
-  console.log('groups------------', groups);
-  console.log('currUser------------', currUser);
-  console.log('departaments------------', departaments);
-  console.log('professions------------', professions);
+  const showMyApp = () => {
+    setYouApp(false);
+  };
+  const showYouApp = () => {
+    setYouApp(true);
+  };
 
   return (
-    <div>
-      <img src={`${currUser?.photoUrl}`} alt="photo" />
-      {/* <p>Фамилия:{selectedEmployee?.lastName}</p> */}
-      {/* <p>Фамилия local:{fullName3?.firstName}</p> */}
-      <p>Имя: {currUser?.firstName}</p>
-      <p>Отчество: {currUser?.middleName}</p>
-      <p>Отчество: {currUser?.lastName}</p>
-      <p>Телефон: {currUser?.phone}</p>
-      <p>Почта: {currUser?.email}</p>
-      <p>Должность: {userProfession?.position}</p>
-      <p>Отдел: {userGroup?.title}</p>
-      <p>{currDepartamnt?.title}</p>
-      <p>Расположение: {currDepartamnt?.location}</p>
-      <p>
-        Руководитель{' '}
-        <Link to={`/employee/${groupHead?.id}`}>
-          {groupHead?.firstName} {groupHead?.lastName}
-        </Link>
-      </p>
-      <p>
-        <button onClick={() => handSendToTheChat()}>Чат</button>
-      </p>
-    </div>
+    <>
+      <div className={style.containerUser}>
+        <img src={`${currUser?.photoUrl}`} alt="photo" />
+        <div>
+          <Typography sx={{ fontSize: '17px' }}>
+            {currUser?.lastName} {currUser?.firstName} {currUser?.middleName}
+          </Typography>
+          <Typography sx={{ display: 'flex', alignItems: 'center' }}>
+            <PhoneIcon fontSize="small" color="inherit" /> {currUser?.phone}
+          </Typography>
+          <Typography sx={{ display: 'flex', alignItems: 'center' }}>
+            <EmailIcon fontSize="small" color="inherit" /> {currUser?.email}
+          </Typography>
+        </div>
+      </div>
+      <Button
+        sx={{ backgroundColor: 'rgb(194, 200, 207)', color: 'black', marginTop: '20px', marginRight: '20px' }}
+        onClick={showYouApp}
+      >
+        Заявки в отдел
+      </Button>
+
+      <Button
+        sx={{ backgroundColor: 'rgb(194, 200, 207)', color: 'black', marginTop: '20px', marginRight: '20px' }}
+        onClick={showMyApp}
+      >
+        Мои заявки
+      </Button>
+      {youApp ? (
+        <Bid />
+      ) : (
+        <List
+          sx={{
+            width: '100%',
+            height: '527px',
+            bgcolor: 'background.paper',
+            position: 'relative',
+            overflow: 'hidden',
+            overflowY: 'scroll',
+            marginTop: '30px',
+            padding: '0px',
+            '& ul': { padding: 0 },
+            border: 1,
+            borderColor: 'divider',
+            borderRadius: '5px',
+            backgroundColor: 'rgb(236, 239, 243)',
+          }}
+          className={style.delScroll}
+        >
+          <ul>
+            <ListSubheader sx={{ color: 'black', backgroundColor: ' rgb(221, 223, 226)', margin: '0px', width: '100%' }}>
+              <Typography variant="h5" component="h2">
+                Мои заявки
+              </Typography>
+            </ListSubheader>
+            {offer.map((el: any) => {
+              if (currUserId === el.employeesId && !el.status) {
+                return (
+                  <li key={`${el.id}myOffer`} className={style.containerElement}>
+                    <Typography sx={{ marginRight: '20px' }}>{el.title}</Typography>
+                    {group.map((elem) => {
+                      if (elem.id === el.groupId) {
+                        return <Typography key={Date.now()}>{`Отправлено в:${elem.title}`}</Typography>;
+                      }
+                    })}
+                  </li>
+                );
+              }
+            })}
+          </ul>
+        </List>
+      )}
+    </>
   );
 }
