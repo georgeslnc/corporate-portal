@@ -95,13 +95,15 @@
   display: inline-block;
   position: relative;
 }
-
+.error-image {
+  height: 580px;
+}
 .overlay {
   position: absolute;
   top: 209px;
-  left: 423px;
+  left: 409px;
   width: 43%;
-  height: 28%;
+  height: 26.7%;
   border-radius: 20px;
   background-color: white;
 }
