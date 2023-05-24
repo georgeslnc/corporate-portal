@@ -7,6 +7,7 @@ import Bid from '../Application/Bid';
 import PhoneIcon from '@mui/icons-material/Phone';
 import EmailIcon from '@mui/icons-material/Email';
 import { getOffer } from '../../redux/Thunk/employees';
+import { useSelector } from 'react-redux';
 
 const FIELDS = {
   NAME: 'username',
@@ -14,19 +15,14 @@ const FIELDS = {
 
 export default function Room() {
   const [youApp, setYouApp] = useState(true);
+
   const dispatch = useAppDispatch();
+
   const offer = useAppSelector((state: RootState) => state.employeesSlice.offer);
   const group = useAppSelector((state: RootState) => state.employeesSlice.group);
+
   const localData = localStorage.userData;
   const currUserId = JSON.parse(localData)?.userId;
-
-  const [update, setUpdate] = useState(false);
-  useEffect(() => {
-    dispatch(getOffer());
-    setTimeout(() => {
-      setUpdate((prev) => !prev);
-    }, 3000);
-  }, [update]);
 
   const employees = useAppSelector((state: RootState) => state.employeesSlice.employees);
   const currUser = employees.find((employee: Employee) => employee.id === Number(currUserId));

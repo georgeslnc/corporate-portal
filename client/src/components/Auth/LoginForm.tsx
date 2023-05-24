@@ -4,8 +4,11 @@ import { useNavigate } from 'react-router-dom';
 import { ErrorMessage, Inputs } from './auth.types';
 
 import { Box, Button, TextField, Alert, AlertTitle } from '@mui/material';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../../redux/slicers/auth.slice';
 
 export default function LoginForm() {
+  const dispatch = useDispatch();
   const {
     register,
     handleSubmit,
@@ -38,8 +41,8 @@ export default function LoginForm() {
       if (response.status === 200) {
         const res = await response.json();
 
-        console.log('|______|  res:', res);
         if (res.userData) {
+          dispatch(setUser(res.userData.userId));
           localStorage.setItem('userData', JSON.stringify(res.userData));
         }
         setErrorMessage(res.message);
@@ -48,6 +51,7 @@ export default function LoginForm() {
 
         setTimeout(() => {
           navigate('/');
+          window.location.reload();
           setIsErrorVisible(false);
         }, 1200);
       } else {

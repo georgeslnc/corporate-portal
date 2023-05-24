@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Drawer from '@mui/material/Drawer';
 import List from '@mui/material/List';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
@@ -15,7 +15,8 @@ import FormatListBulletedSharpIcon from '@mui/icons-material/FormatListBulletedS
 import { styled } from '@mui/material/styles';
 import { AppBar, Toolbar, Typography, ListItemButton, Badge, Box } from '@mui/material';
 import CircleNotificationsIcon from '@mui/icons-material/CircleNotifications';
-import { Employee, RootState, useAppSelector } from '../../redux/type';
+import { Employee, RootState, useAppDispatch, useAppSelector } from '../../redux/type';
+import { getOffer } from '../../redux/Thunk/employees';
 
 const drawerWidth = 275;
 
@@ -107,6 +108,15 @@ const Navbar = () => {
     { path: '/todo', name: 'Заметки', icon: <FormatListBulletedSharpIcon /> },
     showAddEmployeeLink && { path: '/admin/employee', name: 'Добавить сотрудника', icon: <AddCircleOutlineIcon /> },
   ].filter(Boolean);
+
+  const dispatch = useAppDispatch();
+  const [update, setUpdate] = useState(false);
+  useEffect(() => {
+    dispatch(getOffer());
+    setTimeout(() => {
+      setUpdate((prev) => !prev);
+    }, 3000);
+  }, [update]);
 
   return (
     <>

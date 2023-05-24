@@ -32,6 +32,8 @@ function NewChat() {
   const [name, setName] = useState(userName);
   const [messages, setMessages] = useState<Message[]>([]);
   const [showBtn, setShowBtn] = useState(false);
+  console.log(messages);
+  console.log(input);
 
   useEffect(() => {
     setName(userName);
@@ -92,8 +94,8 @@ function NewChat() {
       Имя: <input value={name ? name : 'загрузка...'} onChange={({ target }) => setName(target.value)} className={style.name} />
       <hr />
       <div className={style.message}>
-        {messages.map((message) => (
-          <div key={Date.now()}>
+        {messages.map((message, index) => (
+          <div key={`message-${index}`}>
             {'isOur' in message ? (
               <p>
                 {message.isOur ? (
