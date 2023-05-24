@@ -35,7 +35,9 @@ export default function DocumentsAudit({ filesAudit }: DocumentsAuditProps) {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell style={{ fontSize: '18px', fontWeight: '600', backgroundColor: ' rgb(221, 223, 226)' }}>
+              <TableCell
+                style={{ fontSize: '18px', fontWeight: '600', backgroundColor: ' rgb(221, 223, 226)', borderRadius: '0' }}
+              >
                 Название документа
               </TableCell>
               <TableCell style={{ backgroundColor: ' rgb(221, 223, 226)' }}></TableCell>

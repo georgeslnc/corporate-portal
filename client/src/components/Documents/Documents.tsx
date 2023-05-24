@@ -77,6 +77,12 @@ export default function Documents() {
                     name="adminTitle"
                     placeholder="Название файла для отображения"
                     disableUnderline
+                    style={{
+                      border: '1px solid #ccc',
+                      borderRadius: 4,
+                      padding: '10px 12px',
+                      width: '322px',
+                    }}
                   />
                 </FormControl>
               </Grid>
@@ -89,8 +95,15 @@ export default function Documents() {
                 </FormControl>
               </Grid>
               <Grid item>
-                <Button type="submit" variant="contained" size="small" endIcon={<SendIcon />}>
-                  Загрузить документ
+                <Button
+                  type="submit"
+                  color="inherit"
+                  variant="contained"
+                  size="small"
+                  endIcon={<SendIcon />}
+                  sx={{ marginBottom: '15px' }}
+                >
+                  Загрузить
                 </Button>
               </Grid>
             </Grid>
