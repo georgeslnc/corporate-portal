@@ -105,7 +105,7 @@ const NewsSlider = () => {
             <div className="second-slider-item__image-container">
               <img src={item.image} alt={item.title} className="second-slider-item__image" />
             </div>
-            <h4>{item.title}</h4>
+            <Typography sx={{ fontSize: '15px', paddingTop: '10px' }}>{item.title}</Typography>
           </div>
         ))}
       </Slider>

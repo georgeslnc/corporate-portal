@@ -105,3 +105,7 @@
   border-radius: 20px;
   background-color: white;
 }
+
+.slick-arrow {
+  display: none !important;
+}

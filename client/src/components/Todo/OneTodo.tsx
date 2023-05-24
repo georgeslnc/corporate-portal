@@ -34,7 +34,7 @@ function OneTodo({ el }: any) {
             marginBottom: '10px',
           }}
         >
-          <Typography sx={{ marginRight: '20px', width: '65%' }}>{el.todo}</Typography>
+          <Typography sx={{ marginRight: '20px', width: '84%', paddingLeft: '10px' }}>{el.todo}</Typography>
           <Typography sx={{ marginRight: '20px' }}>{el.time}</Typography>
           <Box
             sx={{ marginRight: '10px' }}

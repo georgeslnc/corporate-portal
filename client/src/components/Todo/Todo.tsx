@@ -13,12 +13,18 @@ export default function Todo() {
   useEffect(() => {
     dispatch(getTodos());
   }, []);
+  useEffect(() => {
+    document.title = 'Заметки';
+    return () => {
+      document.title = 'SoftMaster';
+    };
+  }, []);
   return (
-    <Box>
+    <Box sx={{ width: '100%' }}>
       <AddTodo />
       <List
         sx={{
-          width: '80%',
+          width: '100%',
           height: '615px',
           bgcolor: 'background.paper',
           position: 'relative',

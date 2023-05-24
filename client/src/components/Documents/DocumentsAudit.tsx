@@ -24,24 +24,32 @@ export default function DocumentsAudit({ filesAudit }: DocumentsAuditProps) {
 
   return (
     <div>
-      <Typography variant="h5" component="h5" style={{ marginBottom: '15px' }}>
+      <Typography
+        variant="h5"
+        component="h5"
+        style={{ marginBottom: '0px', padding: '15px 15px', backgroundColor: ' rgb(201, 203, 206)', marginTop: '17px' }}
+      >
         Документы бухгалтерии
       </Typography>
-      <TableContainer component={Paper} style={{ width: '80%' }}>
+      <TableContainer component={Paper} style={{ width: '100%', boxShadow: 'none' }}>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell>Название файла</TableCell>
-              <TableCell></TableCell>
+              <TableCell style={{ fontSize: '18px', fontWeight: '600', backgroundColor: ' rgb(221, 223, 226)' }}>
+                Название документа
+              </TableCell>
+              <TableCell style={{ backgroundColor: ' rgb(221, 223, 226)' }}></TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
             {filesAudit.map((file: File) => (
               <TableRow key={file.id}>
-                <TableCell style={{ whiteSpace: 'nowrap' }}>{file.adminTitle}</TableCell>
-                <TableCell align="right">
-                  <FileDownloadIcon onClick={() => downloadHandler(file.id, file.title)} />
-                  {professionId === 5 && <DeleteIcon onClick={() => deleteHandler(file.id)} />}
+                <TableCell style={{ whiteSpace: 'nowrap', fontSize: '18px', backgroundColor: 'rgb(236, 239, 243)' }}>
+                  {file.adminTitle}
+                </TableCell>
+                <TableCell align="right" style={{ backgroundColor: 'rgb(236, 239, 243)' }}>
+                  <FileDownloadIcon onClick={() => downloadHandler(file.id, file.title)} style={{ cursor: 'pointer' }} />
+                  {professionId === 5 && <DeleteIcon onClick={() => deleteHandler(file.id)} style={{ cursor: 'pointer' }} />}
                 </TableCell>
               </TableRow>
             ))}

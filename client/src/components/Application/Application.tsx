@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { RootState, useAppDispatch, useAppSelector } from '../../redux/type';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { postOffer } from '../../redux/Thunk/offer';
@@ -52,12 +52,19 @@ export default function Application() {
     dispatch(postOffer(offerData));
   };
 
+  useEffect(() => {
+    document.title = 'Заявки';
+    return () => {
+      document.title = 'SoftMaster';
+    };
+  }, []);
+
   return (
     <>
       <Typography variant="h5" component="h2">
         Выберите департамент и отдел для заполения заявки на отдел
       </Typography>
-      <Box sx={{ width: '400px', marginTop: '30px' }}>
+      <Box sx={{ width: '100%', marginTop: '30px' }}>
         <FormControl fullWidth>
           <InputLabel id="demo-simple-select-label">Выбор департамента</InputLabel>
           <Select
@@ -103,7 +110,7 @@ export default function Application() {
           </Typography>
           <Box
             sx={{
-              width: 400,
+              width: '100%',
               display: 'flex',
               flexDirection: 'column',
               borderColor: 'divider',
