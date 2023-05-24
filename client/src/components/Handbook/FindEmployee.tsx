@@ -44,18 +44,18 @@ export default function FindEmployee() {
   const StyledAvatar = styled(Avatar)({
     width: 140,
     height: 140,
-    marginTop: 64.5,
+    marginTop: 54.5,
     borderRadius: '50%',
-    marginLeft: 'auto',
+    marginLeft: 5,
     marginRight: 'auto',
   });
 
   const StyledAvatar2 = styled(Avatar)({
     width: 140,
     height: 140,
-    marginTop: 44.5,
+    marginTop: 34.5,
     borderRadius: '50%',
-    marginLeft: 'auto',
+    marginLeft: 5,
     marginRight: 'auto',
   });
 
@@ -73,7 +73,7 @@ export default function FindEmployee() {
   if (!selectedEmployee) {
     return (
       <Stack sx={{ width: '100%', marginTop: '16px' }} spacing={2}>
-        <Alert severity="success">Успешно удалено!</Alert>
+        <Alert severity="success">Пользователь успешно удален!</Alert>
       </Stack>
     );
   }
