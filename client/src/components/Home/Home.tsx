@@ -66,7 +66,8 @@ const NewsSlider = () => {
               sx={{
                 backgroundColor: '#f0f0f0',
                 height: '250px',
-                marginLeft: '-9px',
+                marginLeft: '-12px',
+                minWidth: '100%',
                 borderRadius: '10px',
                 display: 'flex !important',
                 flexDirection: 'column',
@@ -96,7 +97,7 @@ const NewsSlider = () => {
         asNavFor={nav1}
         ref={slider2Ref}
         className="second-slider"
-        slidesToShow={5}
+        slidesToShow={4}
         swipeToSlide={true}
         focusOnSelect={true}
       >

@@ -40,17 +40,36 @@ function App() {
       className="mainDiv"
       style={{
         paddingLeft: '298px',
-        paddingTop: '73px',
+        paddingTop: '77px',
         paddingRight: '400px',
         height: '91.1vh',
-        backgroundImage: 'url(/backgroundLines1.svg)',
-        backgroundRepeat: 'no-repeat',
-        backgroundSize: 'cover',
-        backgroundPositionY: '150px',
+        position: 'relative',
       }}
     >
       <FastNavigate />
-      {isLoggedIn && location.pathname !== '/auth/login' && <NewChat />}
+      <div
+        style={{
+          position: 'fixed',
+          top: '80px',
+          right: '0px',
+        }}
+      >
+        {isLoggedIn && location.pathname !== '/auth/login' && <NewChat />}
+      </div>
+      <div
+        className="background"
+        style={{
+          position: 'fixed',
+          top: '150px',
+          left: '0',
+          right: '0',
+          bottom: '0',
+          zIndex: '-1',
+          backgroundImage: 'url(/backgroundLines1.svg)',
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: 'cover',
+        }}
+      />
       <Routes>
         <Route path="/auth/login" element={<LoginForm />} />
         <Route path="/flow" element={<OrganizationChart />} />
