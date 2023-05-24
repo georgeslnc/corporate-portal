@@ -17,6 +17,7 @@ import EmployeeForm from './components/EmployeeForm/EmployeeForm';
 import NewChat from './components/Chat/NewChat';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import NotFound from './components/NotFound/NotFound';
+import OrganizationChart from './example/OrganizationChart';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -31,6 +32,7 @@ function App() {
       {/* <NewChat /> */}
       <Routes>
         <Route path="/auth/login" element={<LoginForm />} />
+        <Route path="/flow" element={<OrganizationChart />} />
         <Route path="/handbook" element={<ProtectedRoute element={Handbook} />} />
         <Route path="/employee/:id" element={<ProtectedRoute element={FindEmployee} />} />
         <Route path="/tree" element={<ProtectedRoute element={Tree} />} />
