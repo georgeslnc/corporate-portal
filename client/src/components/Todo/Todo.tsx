@@ -45,13 +45,7 @@ export default function Todo() {
             Список дел
           </Typography>
         </ListSubheader>
-        {array.length ? (
-          array.map((el) => <OneTodo key={el.id} el={el} />)
-        ) : (
-          <>
-            <h1>No todos</h1>
-          </>
-        )}
+        {array.length ? array.map((el) => <OneTodo key={el.id} el={el} />) : null}
       </List>
     </Box>
   );
