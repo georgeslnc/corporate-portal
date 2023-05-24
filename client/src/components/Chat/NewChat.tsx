@@ -111,10 +111,10 @@ function NewChat() {
                   </p>
                 ) : (
                   <p className={style.enemy}>
-                    <p>
+                    <p className={style.p}>
                       <span>{message.name}</span>
                     </p>
-                    <p>{message.text}</p>
+                    <p className={style.p}>{message.text}</p>
                   </p>
                 )}
               </p>
