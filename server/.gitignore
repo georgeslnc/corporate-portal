@@ -132,3 +132,4 @@ dist
 sessions
 .DS_Store
 _trash
+public/**
