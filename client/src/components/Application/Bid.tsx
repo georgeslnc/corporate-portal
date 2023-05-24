@@ -17,14 +17,6 @@ export default function Bid() {
   const group = useAppSelector((state: RootState) => state.employeesSlice.group);
   const dispatch = useAppDispatch();
 
-  const [update, setUpdate] = useState(false);
-  useEffect(() => {
-    dispatch(getOffer());
-    setTimeout(() => {
-      setUpdate((prev) => !prev);
-    }, 2000);
-  }, [update]);
-
   const filteredOffers = offer.filter((el: any) => el.groupId === groupId && !el.status);
 
   const completedOffers = offer.filter((el: any) => el.groupId === groupId && el.status);
