@@ -17,6 +17,7 @@ import EmployeeForm from './components/EmployeeForm/EmployeeForm';
 import NewChat from './components/Chat/NewChat';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import NotFound from './components/NotFound/NotFound';
+import OrganizationChart from './example/OrganizationChart';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -52,6 +53,7 @@ function App() {
       {isLoggedIn && location.pathname !== '/auth/login' && <NewChat />}
       <Routes>
         <Route path="/auth/login" element={<LoginForm />} />
+        <Route path="/flow" element={<OrganizationChart />} />
         <Route path="/handbook" element={<ProtectedRoute element={Handbook} currUserId={currUserId} />} />
         <Route path="/employee/:id" element={<ProtectedRoute element={FindEmployee} currUserId={currUserId} />} />
         <Route path="/tree" element={<ProtectedRoute element={Tree} currUserId={currUserId} />} />
@@ -59,6 +61,7 @@ function App() {
         <Route path="/applications" element={<ProtectedRoute element={Application} currUserId={currUserId} />} />
         <Route path="/todo" element={<ProtectedRoute element={Todo} currUserId={currUserId} />} />
         <Route path="/" element={<ProtectedRoute element={Home} currUserId={currUserId} />} />
+        <Route path="/chat" element={<ProtectedRoute element={NewChat} />} />
         <Route path="/room" element={<ProtectedRoute element={Room} currUserId={currUserId} />} />
         <Route path="/documents" element={<ProtectedRoute element={Documents} currUserId={currUserId} />} />
         <Route path="/admin/employee" element={<ProtectedRoute element={EmployeeForm} currUserId={currUserId} />} />
