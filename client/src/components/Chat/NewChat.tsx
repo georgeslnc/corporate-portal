@@ -32,8 +32,6 @@ function NewChat() {
   const [name, setName] = useState(userName);
   const [messages, setMessages] = useState<Message[]>([]);
   const [showBtn, setShowBtn] = useState(false);
-  console.log(messages);
-  console.log(input);
 
   useEffect(() => {
     setName(userName);
@@ -52,10 +50,16 @@ function NewChat() {
     webSocket.onclose = () => {
       console.log('ws close');
       setWS(null);
+      setTimeout(() => {
+        handleCloseButtonClick();
+        handleConnectButtonClick();
+      }, 0);
     };
 
     webSocket.onmessage = (event) => {
       const evData = JSON.parse(event.data);
+      console.log('log from chat');
+
       switch (evData.type) {
         case 'Connect':
           setMessages((prev) => [...prev, { name: evData.payload.name }]);

@@ -10,44 +10,6 @@ const logger = require('morgan');
 
 const app = express();
 
-// new vadim
-
-// const http = require('http').Server(app);
-// // eslint-disable-next-line import/no-extraneous-dependencies
-// const socketIO = require('socket.io')(http, {
-//   cors: {
-//     credentials: true,
-//     // origin: 'http://localhost:5173',
-//     origin: '*',
-//     method: ['GET', 'POST']
-//   },
-// });
-// const dbCheck = require('./utils/dbCheck');
-
-// let users = [];
-
-// socketIO.on('connection', (socket) => {
-//   console.log(`⚡: ${socket.id} user just connected!`);
-
-//   socket.on('message', (data) => {
-//     socketIO.emit('messageResponse', data);
-//   });
-
-//   socket.on('typing', (data) => socket.broadcast.emit('typingResponse', data));
-
-//   socket.on('newUser', (data) => {
-//     users.push(data);
-//     socketIO.emit('newUserResponse', users);
-//   });
-
-//   socket.on('disconnect', () => {
-//     console.log('🔥: A user disconnected');
-//     users = users.filter((user) => user.socketID !== socket.id);
-//     socketIO.emit('newUserResponse', users);
-//     socket.disconnect();
-//   });
-// });
-
 const http = require('http');
 const { Server } = require('socket.io');
 

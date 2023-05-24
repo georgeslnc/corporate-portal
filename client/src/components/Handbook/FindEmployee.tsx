@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useNavigate, useParams } from 'react-router-dom';
 import { Departament, Employee, Group, Profession, RootState, useAppDispatch, useAppSelector } from '../../redux/type';
 import Card from '@mui/material/Card';
@@ -13,6 +13,8 @@ import EmailIcon from '@mui/icons-material/Email';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { delEmployees } from '../../redux/Thunk/deleteEmployees';
 import HighlightOffIcon from '@mui/icons-material/HighlightOff';
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 
 export default function FindEmployee() {
   const navigate = useNavigate();
@@ -24,7 +26,12 @@ export default function FindEmployee() {
   const professions = useAppSelector((state: RootState) => state.employeesSlice.profession);
   const departaments = useAppSelector((state: RootState) => state.employeesSlice.department);
 
-  const deleteHandler = (id: number) => dispatch(delEmployees(id));
+  const [showSuccessAlert, setShowSuccessAlert] = useState(false);
+
+  const deleteHandler = (id: number) => {
+    dispatch(delEmployees(id));
+    setShowSuccessAlert(true); // Установка состояния, чтобы показать Alert
+  };
 
   const selectedEmployee = employees.find((employee: Employee) => employee.id === Number(id));
   const selectedGroup = groups.find((group: Group) => group.id === selectedEmployee?.groupId);
@@ -37,18 +44,18 @@ export default function FindEmployee() {
   const StyledAvatar = styled(Avatar)({
     width: 140,
     height: 140,
-    marginTop: 64.5,
+    marginTop: 54.5,
     borderRadius: '50%',
-    marginLeft: 'auto',
+    marginLeft: 5,
     marginRight: 'auto',
   });
 
   const StyledAvatar2 = styled(Avatar)({
     width: 140,
     height: 140,
-    marginTop: 44.5,
+    marginTop: 34.5,
     borderRadius: '50%',
-    marginLeft: 'auto',
+    marginLeft: 5,
     marginRight: 'auto',
   });
 
@@ -62,6 +69,14 @@ export default function FindEmployee() {
       document.title = 'SoftMaster';
     };
   }, []);
+
+  if (!selectedEmployee) {
+    return (
+      <Stack sx={{ width: '100%', marginTop: '16px' }} spacing={2}>
+        <Alert severity="success">Пользователь успешно удален!</Alert>
+      </Stack>
+    );
+  }
 
   return (
     <Card
@@ -141,6 +156,12 @@ export default function FindEmployee() {
           Удалить сотрудника
         </DeleteIcon>
       ) : null}
+
+      {showSuccessAlert && (
+        <Stack sx={{ width: '100%', marginTop: '16px' }} spacing={2}>
+          <Alert severity="success">Успешно удалено!</Alert>
+        </Stack>
+      )}
     </Card>
   );
 }
