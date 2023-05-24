@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import style from './newchat.module.css';
 import { Employee, RootState, useAppSelector } from '../../redux/type';
 import React from 'react';
@@ -93,11 +93,19 @@ function NewChat() {
     setInput('');
   };
 
+  const messageRef = useRef(null);
+
+  useEffect(() => {
+    if (messageRef.current) {
+      messageRef.current.scrollTop = messageRef.current.scrollHeight;
+    }
+  }, [messages]);
+
   return (
     <Typography component="span" className={style.container}>
       Имя: <input value={name ? name : 'загрузка...'} onChange={({ target }) => setName(target.value)} className={style.name} />
       <hr />
-      <div className={style.message}>
+      <div className={style.message} ref={messageRef}>
         {messages.map((message, index) => (
           <div key={`message-${index}`}>
             {'isOur' in message ? (
@@ -118,9 +126,7 @@ function NewChat() {
                   </p>
                 )}
               </p>
-            ) : (
-              <p>{message.name} вошел/вошла в чат</p>
-            )}
+            ) : null}
           </div>
         ))}
       </div>
