@@ -61,6 +61,7 @@ export type Offer = {
   title: string;
   groupId: number;
   employeesId: string;
+  employeesCloseId: number;
   deadline: string;
   status: boolean;
   createdAt: Date;
