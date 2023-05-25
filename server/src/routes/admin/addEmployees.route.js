@@ -2,6 +2,10 @@ const router = require('express').Router();
 const multer = require('multer');
 const path = require('path');
 const { Employee, Group, Profession } = require('../../../db/models');
+const mailer = require('../../utils/nodemailer');
+
+const phoneFormatter = require('../../utils/phoneFormatter');
+const validateModel = require('../../utils/validateModel');
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
@@ -23,9 +27,6 @@ const fileFilter = (req, file, cb) => {
 
 const upload = multer({ storage, fileFilter });
 
-const phoneFormatter = require('../../utils/phoneFormatter');
-const validateModel = require('../../utils/validateModel');
-
 router
   .post('/employees', upload.single('photo'), async (req, res) => {
     try {
@@ -35,9 +36,6 @@ router
 
       const phone = phoneFormatter(phoneNumber);
       const photoUrl = req.file && process.env.BASE_URL + req.file.path.replace('public/', '');
-
-      console.log('|______|  photoUrl:', photoUrl);
-
       const groupId = await validateModel(Group, { title: groupTitle });
       const professionId = await validateModel(Profession, { position: profession });
 
@@ -60,7 +58,23 @@ router
         firstName, middleName, lastName, groupId, professionId, email, phone, birthday, photoUrl
       });
 
-      console.log('|______|  user:', user);
+      const message = {
+        from: 'softmaster@internet.ru',
+        to: 'msolonsky@icloud.com',
+        subject: 'Корпоративный портал SoftMaster',
+        html: `
+            <h4 style="padding: 10px;background-color: #50526e;color: #fff;">Тема: Доступ в SoftMaster</h4>
+            <h1 style="color: #3f4259">${firstName} ${lastName},</h1>
+            <p style="padding:10px;background-color: #f8f9fa;color: #50526e;font-size:18px">Вам открыт доступ в Корпоративный портал.\n
+            При первом входе по электронному адресу ${email} ваш пароль будет сохранен. \n
+            Дальнейшая авторизация в портал будет осуществлена по нему.
+            </p>
+            <h3 style="color: #3f4259">С наилучшими пожеланиями, команда SoftMaster.</h3>
+            <div style="color: var(--bs-gray); font-size: 14px; margin-top: 20px">email для обратной связи: softmaster@internet.ru</div>
+      `,
+      };
+
+      mailer(message);
 
       return res.json({ status: 200, message: 'Сотрудник успешно добавлен' });
     } catch (error) {

@@ -1,4 +1,4 @@
-const router = require("express").Router();
+const router = require('express').Router();
 
 const {
   Employee,
@@ -6,9 +6,9 @@ const {
   Group,
   Profession,
   Offer,
-} = require("../../db/models");
+} = require('../../db/models');
 
-router.get("/", async (req, res) => {
+router.get('/', async (req, res) => {
   try {
     const allEmployees = await Employee.findAll({ raw: true });
     const allGroup = await Group.findAll({ raw: true });
@@ -29,7 +29,7 @@ router.get("/", async (req, res) => {
 
 module.exports = router;
 
-router.get("/offer", async (req, res) => {
+router.get('/offer', async (req, res) => {
   try {
     const allOffer = await Offer.findAll({ raw: true });
     res.json({
