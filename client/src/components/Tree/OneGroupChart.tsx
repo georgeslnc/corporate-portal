@@ -52,8 +52,8 @@ export default function OneGroupChart({
                   alt={'Photo-dep'}
                   style={{ width: '65px', height: '65px', borderRadius: '50px' }}
                 />
-                <p style={{ margin: 0, fontSize: '14px' }}>{groupHead[0].firstName}</p>
-                <p style={{ margin: 0, fontSize: '14px' }}>{groupHead[0].lastName}</p>
+                <p style={{ margin: 0, fontSize: '14px' }}>{groupHead[0]?.firstName}</p>
+                <p style={{ margin: 0, fontSize: '14px' }}>{groupHead[0]?.lastName}</p>
               </div>
             </div>
           ),
