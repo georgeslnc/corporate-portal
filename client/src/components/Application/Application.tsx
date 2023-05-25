@@ -3,7 +3,19 @@ import { RootState, useAppDispatch, useAppSelector } from '../../redux/type';
 import { useForm, SubmitHandler } from 'react-hook-form';
 import { postOffer } from '../../redux/Thunk/offer';
 import Bid from './Bid';
-import { Box, Button, FormControl, InputLabel, MenuItem, Select, SelectChangeEvent, TextField, Typography } from '@mui/material';
+import {
+  Box,
+  Button,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  SelectChangeEvent,
+  TextField,
+  Typography,
+  Stack,
+  Alert,
+} from '@mui/material';
 import style from './application.module.scss';
 
 type Inputs = {
@@ -24,6 +36,7 @@ export default function Application() {
   const [titleDep, setTitleDep] = useState('');
   const [titleGroup, settitleGroup] = useState('');
   const [selectedValue, setSelectedValue] = useState<string>('1');
+  const [showAlert, setShowAlert] = useState(false);
   const { register, handleSubmit, reset } = useForm<Inputs>();
 
   const eventDepartment = (e: SelectChangeEvent) => {
@@ -42,6 +55,11 @@ export default function Application() {
   };
 
   const onSubmit: SubmitHandler<Inputs> = (data) => {
+    setShowAlert((prev) => !prev);
+    setTimeout(() => {
+      setShowAlert((prev) => !prev);
+    }, 1000);
+
     const { value, time } = data;
     const offerData: OfferData = {
       title: value,
@@ -133,6 +151,11 @@ export default function Application() {
             </Button>
           </Box>
         </>
+      )}
+      {showAlert && (
+        <Stack sx={{ width: '100%', marginTop: '16px' }} spacing={2}>
+          <Alert severity="success">Отправлено</Alert>
+        </Stack>
       )}
     </>
   );

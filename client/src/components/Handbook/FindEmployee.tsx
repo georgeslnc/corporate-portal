@@ -64,7 +64,7 @@ export default function FindEmployee() {
   const professionId = userData?.professionId;
 
   useEffect(() => {
-    document.title = `${selectedEmployee?.firstName} ${selectedEmployee?.lastName}`;
+    document.title = selectedEmployee ? `${selectedEmployee?.firstName} ${selectedEmployee?.lastName}` : 'SoftMaster';
     return () => {
       document.title = 'SoftMaster';
     };
