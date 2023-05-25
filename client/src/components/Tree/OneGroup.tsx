@@ -61,7 +61,7 @@ export default function OneGroup() {
         <>
           <Box
             sx={{
-              maxHeight: '620px',
+              maxHeight: '590px',
               width: '560px',
               overflowY: 'auto',
               '&::-webkit-scrollbar': {
