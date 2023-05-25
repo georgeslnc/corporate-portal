@@ -1,14 +1,20 @@
 import React from 'react';
 import ReactFlow from 'reactflow';
 import 'reactflow/dist/style.css';
+import { Employee } from '../../redux/type';
 
-export default function OneGroupChart({ selectedGroupAll, departmentHead }) {
-  function createFlowData(employees) {
-    const offset = 290;
-    // const departmentHead = employees.filter((employee) => employee.professionId === 4);
-    const groupHead = employees.filter((employee) => employee.professionId === 3);
-    const mainSpecGroup = employees.filter((employee) => employee.professionId === 2);
-    const specGroup = employees.filter((employee) => employee.professionId === 1);
+export default function OneGroupChart({
+  selectedGroupAll,
+  departmentHead,
+}: {
+  selectedGroupAll: Employee[];
+  departmentHead: Employee[];
+}) {
+  function createFlowData(employees: Employee[]) {
+    const offset = 400;
+    const groupHead = employees.filter((employee: Employee) => employee.professionId === 3);
+    const mainSpecGroup = employees.filter((employee: Employee) => employee.professionId === 2);
+    const specGroup = employees.filter((employee: Employee) => employee.professionId === 1);
     const nodes = [
       {
         id: '4',
@@ -21,7 +27,7 @@ export default function OneGroupChart({ selectedGroupAll, departmentHead }) {
               <div style={{ background: 'none' }}>
                 <img
                   src={departmentHead[0]?.photoUrl}
-                  alt={departmentHead.label}
+                  alt={'Photo-dep'}
                   style={{ width: '65px', height: '65px', borderRadius: '50px' }}
                 />
                 <p style={{ margin: 0, fontSize: '14px' }}>{departmentHead[0]?.firstName}</p>
@@ -43,7 +49,7 @@ export default function OneGroupChart({ selectedGroupAll, departmentHead }) {
               <div style={{ background: 'none' }}>
                 <img
                   src={groupHead[0]?.photoUrl}
-                  alt={departmentHead.label}
+                  alt={'Photo-dep'}
                   style={{ width: '65px', height: '65px', borderRadius: '50px' }}
                 />
                 <p style={{ margin: 0, fontSize: '14px' }}>{groupHead[0].firstName}</p>
@@ -92,7 +98,7 @@ export default function OneGroupChart({ selectedGroupAll, departmentHead }) {
                   >
                     <img
                       src={employee?.photoUrl}
-                      alt={employee.label}
+                      alt={'Photo-emp'}
                       style={{ width: '65px', height: '65px', borderRadius: '50px' }}
                     />
                     <p style={{ margin: 0, fontSize: '14px' }}>{employee.firstName}</p>
@@ -141,7 +147,7 @@ export default function OneGroupChart({ selectedGroupAll, departmentHead }) {
                   >
                     <img
                       src={employee?.photoUrl}
-                      alt={employee.label}
+                      alt={'Photo-emp'}
                       style={{ width: '65px', height: '65px', borderRadius: '50px' }}
                     />
                     <p style={{ margin: 0, fontSize: '14px' }}>{employee.firstName}</p>
