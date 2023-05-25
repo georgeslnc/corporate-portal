@@ -143,6 +143,7 @@ function NewChat() {
                   color: 'black',
                   backgroundColor: 'rgb(203, 210, 218)',
                   marginLeft: '10px',
+                  boxShadow: 0,
                   '&:hover': {
                     textDecoration: 'none',
                     backgroundColor: 'rgba(25, 118, 210, 0.4)',
@@ -166,13 +167,14 @@ function NewChat() {
               sx={{
                 color: 'black',
                 backgroundColor: 'rgb(203, 210, 218)',
+                boxShadow: 0,
                 '&:hover': {
                   textDecoration: 'none',
                   backgroundColor: 'rgba(25, 118, 210, 0.4)',
                 },
               }}
             >
-              <Typography sx={{ color: '#1976d2', display: 'flex' }}>
+              <Typography sx={{ color: '#1976d2', display: 'flex', boxShadow: 0 }}>
                 ВЫЙТИ
                 <ExitToAppIcon />
               </Typography>
