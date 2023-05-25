@@ -5,7 +5,7 @@
   border-radius: 5px;
 }
 .color {
-  background-color: aqua;
+  background-color: rgb(52, 119, 219);
 }
 .delScroll::-webkit-scrollbar {
   display: none;
