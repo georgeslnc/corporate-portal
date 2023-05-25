@@ -187,6 +187,7 @@ function NewChat() {
               sx={{
                 color: 'black',
                 backgroundColor: 'rgb(203, 210, 218)',
+                boxShadow: 0,
                 '&:hover': {
                   textDecoration: 'none',
                   backgroundColor: 'rgba(25, 118, 210, 0.4)',
