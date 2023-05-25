@@ -7,13 +7,14 @@ import { getFiles } from '../../redux/Thunk/files/getFiles';
 import { File } from '../../redux/type';
 import DocumentsAudit from './DocumentsAudit';
 import DocumentsHR from './DocumentsHR';
-import { Button, FormControl, MenuItem, Select, Typography, Input, Grid, List } from '@mui/material';
+import { Button, FormControl, MenuItem, Select, Typography, Input, Grid, List, Stack, Alert } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import style from '../Room/room.module.scss';
 
 export default function Documents() {
   const dispatch = useAppDispatch();
-  console.log('hi');
+
+  const [showLoad, setShowLoad] = useState(false);
 
   useEffect(() => {
     dispatch(getFiles());
@@ -33,6 +34,10 @@ export default function Documents() {
   const filesAudit = files.filter((file) => file.documentType === 'Документу бухгалтерии');
 
   const uploadFileHandler = async (e: ChangeEvent<HTMLFormElement>) => {
+    setShowLoad((prev) => !prev);
+    setTimeout(() => {
+      setShowLoad((prev) => !prev);
+    }, 1000);
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
     dispatch(setFiles(formData));
@@ -105,6 +110,11 @@ export default function Documents() {
                 >
                   Загрузить
                 </Button>
+                {showLoad ? (
+                  <Stack sx={{ width: '100%', marginTop: '16px', marginBottom: '16px' }} spacing={2}>
+                    <Alert severity="success">Документ загружен!</Alert>
+                  </Stack>
+                ) : null}
               </Grid>
             </Grid>
           </form>

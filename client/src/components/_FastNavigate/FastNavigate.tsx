@@ -141,7 +141,9 @@ const Navbar = () => {
               >
                 <CircleNotificationsIcon sx={{ cursor: 'pointer' }} fontSize="large" onClick={() => navigate('/room')} />
               </Badge>
-              <Typography variant="subtitle1">{userName}</Typography>
+              <Link to="/room" style={{ textDecoration: 'none', color: 'inherit', display: 'flex', alignItems: 'center' }}>
+                <Typography variant="subtitle1">{userName}</Typography>
+              </Link>
               <IconButton onClick={handleMenuOpen} color="inherit">
                 <Avatar alt="avatar" src={currUser.photoUrl} />
               </IconButton>

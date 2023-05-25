@@ -64,7 +64,7 @@ export default function FindEmployee() {
   const professionId = userData?.professionId;
 
   useEffect(() => {
-    document.title = `${selectedEmployee?.firstName} ${selectedEmployee?.lastName}`;
+    document.title = selectedEmployee ? `${selectedEmployee?.firstName} ${selectedEmployee?.lastName}` : 'SoftMaster';
     return () => {
       document.title = 'SoftMaster';
     };
@@ -141,12 +141,13 @@ export default function FindEmployee() {
         )}
       </CardContent>
       <CardActions>
-        <HighlightOffIcon fontSize="large" onClick={() => navigate(-1)}>
+        <HighlightOffIcon className="icon-cross-employee" fontSize="large" onClick={() => navigate(-1)}>
           Назад
         </HighlightOffIcon>
       </CardActions>
       {professionId === 5 ? (
         <DeleteIcon
+          className="icon-delete-employee"
           onClick={() => {
             if (selectedEmployee?.id) {
               deleteHandler(selectedEmployee.id);

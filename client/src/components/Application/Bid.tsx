@@ -17,15 +17,15 @@ export default function Bid() {
   const group = useAppSelector((state: RootState) => state.employeesSlice.group);
   const dispatch = useAppDispatch();
 
-  const filteredOffers = offer.filter((el: any) => el.groupId === groupId && !el.status);
+  const filteredOffers = offer.filter((el) => el.groupId === groupId && !el.status);
 
-  const completedOffers = offer.filter((el: any) => el.groupId === groupId && el.status);
+  const completedOffers = offer.filter((el) => el.groupId === groupId && el.status);
 
   const renderAuthorInfo = (employeeId: string) => {
-    const employee = employees.find((element: any) => element.id === Number(employeeId));
+    const employee = employees.find((element) => element.id === Number(employeeId));
     if (!employee) return null;
 
-    const authorGroup = group.find((elem: any) => elem.id === employee.groupId);
+    const authorGroup = group.find((elem) => elem.id === employee.groupId);
     if (!authorGroup) return null;
 
     return (
@@ -37,7 +37,7 @@ export default function Bid() {
       </div>
     );
   };
-
+  const Probel = '     ';
   return (
     <List
       sx={{
@@ -63,10 +63,21 @@ export default function Bid() {
             Необходимо сделать
           </Typography>
         </ListSubheader>
-        {filteredOffers.map((el: any) => (
+        {filteredOffers.map((el) => (
           <li key={`${el.id}offers`} className={style.containerElement}>
             <div className={style.containerValueButton}>
-              <Typography sx={{ fontSize: '18px', fontWeight: '700' }}>{el.title}</Typography>
+              <Typography sx={{ fontSize: '18px', fontWeight: '700' }}>
+                {el.title}
+                <Typography>
+                  <Typography component="span" sx={{ fontSize: '16px', fontWeight: '400', marginRight: '40px' }}>
+                    {`Время заявки ${new Date(el.createdAt).toLocaleString().slice(0, -3)}`}
+                  </Typography>
+                  <Typography
+                    component="span"
+                    sx={{ fontSize: '16px', fontWeight: '400' }}
+                  >{`Время обработки:${el.deadline} час`}</Typography>
+                </Typography>
+              </Typography>
               <Button sx={{ background: 'rgb(203, 210, 218)' }} onClick={() => dispatch(changeStatusOffer([el.id, currUserId]))}>
                 сделано
               </Button>
@@ -81,7 +92,7 @@ export default function Bid() {
             Выполненные задания
           </Typography>
         </ListSubheader>
-        {completedOffers.map((el: any) => (
+        {completedOffers.map((el) => (
           <li key={`${el.id}status`} className={style.containerElement}>
             <Typography sx={{ display: 'flex', fontSize: '18px', fontWeight: '700' }}>
               {el.title}

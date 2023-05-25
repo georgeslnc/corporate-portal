@@ -24,3 +24,5 @@ dist-ssr
 *.sw?
 
 _trash
+.src/example
+src/example
