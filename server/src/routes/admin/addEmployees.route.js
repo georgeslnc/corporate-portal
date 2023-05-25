@@ -2,6 +2,11 @@ const router = require('express').Router();
 const multer = require('multer');
 const path = require('path');
 const { Employee, Group, Profession } = require('../../../db/models');
+const mailer = require('../../services/nodemailer.config');
+const createMessage = require('../../services/nodemailer.sender.js');
+
+const phoneFormatter = require('../../utils/phoneFormatter');
+const validateModel = require('../../utils/validateModel');
 
 const storage = multer.diskStorage({
   destination(req, file, cb) {
@@ -23,9 +28,6 @@ const fileFilter = (req, file, cb) => {
 
 const upload = multer({ storage, fileFilter });
 
-const phoneFormatter = require('../../utils/phoneFormatter');
-const validateModel = require('../../utils/validateModel');
-
 router
   .post('/employees', upload.single('photo'), async (req, res) => {
     try {
@@ -35,9 +37,6 @@ router
 
       const phone = phoneFormatter(phoneNumber);
       const photoUrl = req.file && process.env.BASE_URL + req.file.path.replace('public/', '');
-
-      console.log('|______|  photoUrl:', photoUrl);
-
       const groupId = await validateModel(Group, { title: groupTitle });
       const professionId = await validateModel(Profession, { position: profession });
 
@@ -60,7 +59,8 @@ router
         firstName, middleName, lastName, groupId, professionId, email, phone, birthday, photoUrl
       });
 
-      console.log('|______|  user:', user);
+      const message = createMessage(firstName, lastName, email);
+      mailer(message);
 
       return res.json({ status: 200, message: 'Сотрудник успешно добавлен' });
     } catch (error) {
