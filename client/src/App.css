@@ -6,12 +6,16 @@
 
 .react-flow__node-default {
   background-color: transparent;
+  font-family: "Roboto","Helvetica","Arial",sans-serif;
   border: none;
   width: 300px;
+  box-shadow: none;
 }
 
 .react-flow__node-default:hover {
   border: none;
+  transition: none;
+  box-shadow: none;
 }
 
 .react-flow__node-defaultselected {
@@ -32,4 +36,17 @@
 
 .react-flow__handle {
   opacity: 0;
+}
+.icon-delete-employee {
+  padding: 10px 10px 0 0;
+}
+
+.icon-delete-employee:hover {
+  color: rgb(83, 83, 83);
+  cursor: pointer;
+}
+
+.icon-cross-employee:hover {
+  color: rgb(83, 83, 83);
+  cursor: pointer;
 }

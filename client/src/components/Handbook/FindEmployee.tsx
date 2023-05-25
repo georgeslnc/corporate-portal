@@ -141,12 +141,13 @@ export default function FindEmployee() {
         )}
       </CardContent>
       <CardActions>
-        <HighlightOffIcon fontSize="large" onClick={() => navigate(-1)}>
+        <HighlightOffIcon className="icon-cross-employee" fontSize="large" onClick={() => navigate(-1)}>
           Назад
         </HighlightOffIcon>
       </CardActions>
       {professionId === 5 ? (
         <DeleteIcon
+          className="icon-delete-employee"
           onClick={() => {
             if (selectedEmployee?.id) {
               deleteHandler(selectedEmployee.id);
