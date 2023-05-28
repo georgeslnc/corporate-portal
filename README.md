@@ -14,7 +14,7 @@ Explore the different features available:
 Employee Directory: Search and browse through the company's employee directory.
 ![Employee Directory: Search and browse through the company's employee directory.](screenshots/handbook.png)
 News Feed: Stay up-to-date with the latest company news and announcements.
-![News Feed: Stay up-to-date with the latest company news and announcements.](news/handbook.png)
+![News Feed: Stay up-to-date with the latest company news and announcements.](screenshots/news.png))
 Chat: Communicate and collaborate with colleagues using the built-in chat functionality. Create channels, send direct messages, and share files.
 Documents: Access a repository of downloadable company documents, including policies, guidelines, and forms.
 Request Submission: Submit various types of requests, such as vacation requests, IT support tickets, or facility booking requests.
