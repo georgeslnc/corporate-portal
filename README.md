@@ -17,6 +17,7 @@ News Feed: Stay up-to-date with the latest company news and announcements.
 ![News Feed: Stay up-to-date with the latest company news and announcements.](screenshots/news.png)
 Chat: Communicate and collaborate with colleagues using the built-in chat functionality.
 ![Chat: Communicate and collaborate with colleagues using the built-in chat functionality.](screenshots/chat.png)
-
 Documents: Access a repository of downloadable company documents, including policies, guidelines, and forms.
+![Documents: Access a repository of downloadable company documents, including policies, guidelines, and forms.](screenshots/docs.png)
 Request Submission: Submit various types of requests, such as vacation requests, IT support tickets, or facility booking requests.
+![Request Submission: Submit various types of requests, such as vacation requests, IT support tickets, or facility booking requests.](screenshots/app.png)
