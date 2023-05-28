@@ -2,7 +2,6 @@ Corporate Company Portal
 A comprehensive corporate portal that provides various features for employees, including an employee directory, news feed, chat functionality, downloadable documents, and the ability to submit requests.
 
 Installation
-Clone the repository: git clone https://github.com/yourusername/company-portal.git
 Install dependencies: npm install
 Configure the database connection in the config.js file.
 Run the application: npm run dev
