@@ -2,6 +2,7 @@ import React from 'react';
 import ReactFlow from 'reactflow';
 import 'reactflow/dist/style.css';
 import { Employee } from '../../redux/type';
+const proOptions = { hideAttribution: true };
 
 export default function OneGroupChart({
   selectedGroupAll,
@@ -184,6 +185,7 @@ export default function OneGroupChart({
         nodesDraggable={true}
         zoomOnScroll={false}
         zoomOnPinch={false}
+        proOptions={proOptions}
       />
     </div>
   );

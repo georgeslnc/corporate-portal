@@ -24,7 +24,6 @@ const io = new Server(server, {
 });
 // end new
 
-// mazaev
 const WebSocket = require('ws');
 const { WebSocketServer } = require('ws');
 const dbCheck = require('./utils/dbCheck');
@@ -42,7 +41,6 @@ wss.on('connection', (ws) => {
     });
   });
 });
-// end mazaev
 
 // рекварим МИДЛВЕЙРЫ
 const isAuth = require('./middlewares/isAuth');

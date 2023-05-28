@@ -18,6 +18,7 @@ import NewChat from './components/Chat/NewChat';
 import ProtectedRoute from './components/ProtectedRoute/ProtectedRoute';
 import NotFound from './components/NotFound/NotFound';
 import './App.css';
+import { fetchNews } from './redux/Thunk/news';
 
 function App() {
   const dispatch = useAppDispatch();
@@ -27,6 +28,7 @@ function App() {
 
   useEffect(() => {
     dispatch(getEmployees());
+    dispatch(fetchNews());
   }, []);
 
   useEffect(() => {

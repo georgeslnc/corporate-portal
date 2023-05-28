@@ -13,9 +13,9 @@ const NewsSlider = () => {
   const dispatch = useAppDispatch();
   const news = useAppSelector((state: RootState) => state.newsSlice);
 
-  useEffect(() => {
-    dispatch(fetchNews());
-  }, [dispatch]);
+  // useEffect(() => {
+
+  // }, [dispatch]);
 
   const [nav1, setNav1] = useState<typeof Slider | null>(null);
   const [nav2, setNav2] = useState<typeof Slider | null>(null);
@@ -66,7 +66,7 @@ const NewsSlider = () => {
               sx={{
                 backgroundColor: '#f0f0f0',
                 height: '250px',
-                marginLeft: '-12px',
+                marginLeft: '-15px',
                 minWidth: '100%',
                 borderRadius: '10px',
                 display: 'flex !important',

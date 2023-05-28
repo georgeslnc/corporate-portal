@@ -1021,7 +1021,7 @@ module.exports = {
         },
         {
           firstName: 'Дмитрий',
-          middleName: 'Сергеевич',
+          middleName: 'Адаптивович',
           lastName: 'Малофеев',
           groupId: 2,
           professionId: 1,
